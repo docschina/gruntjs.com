@@ -140,6 +140,52 @@ module.exports = function(grunt) {
       }
     },
 
+    filerev: {
+      css: {
+        src: 'build/css/**/*.css'
+      },
+      js: {
+        src: [
+          'build/js/**/*.js'
+        ]
+      },
+      fonts: {
+        src: [
+          'build/fonts/**/*.{svg,ttf,woff,woff2}'
+        ]
+      },
+      images: {
+        src: [
+          'build/img/**/*.{jpg,jpeg,gif,png,svg}',
+          '!build/img/favicons/*.{jpg,jpeg,gif,png,svg}',
+          '!build/img/og.png'
+        ]
+      }
+    },
+
+    useminPrepare: {
+      html: [
+        'build/index.html'
+      ],
+      options: {
+        dest: 'build',
+        root: 'build'
+      }
+    },
+
+    usemin: {
+      options: {
+        assetsDirs: [
+          'build/',
+          'build/img/'
+        ]
+      },
+      css: 'build/css/main*.css',
+      html: [
+        'build/**/*.html'
+      ]
+    },
+
     sitemap: {
       dist: {
         extension: {
@@ -202,8 +248,11 @@ module.exports = function(grunt) {
   grunt.registerTask('default', 'Build the site, download plugins, production ready', [
     'build',
     'downloadPlugins',
+    'useminPrepare',
     'less:production',
-    'autoprefixer'
+    'autoprefixer',
+    'filerev',
+    'usemin'
   ]);
   grunt.registerTask('test', [
     'build',
@@ -213,8 +262,11 @@ module.exports = function(grunt) {
   ]);
   grunt.registerTask('dev', 'Development Mode', [
     'build',
+    'useminPrepare',
     'less:development',
     'autoprefixer',
+    'filerev',
+    'usemin',
     'jshint',
     'concurrent'
   ]);

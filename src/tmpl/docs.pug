@@ -17,12 +17,15 @@ block content
               ul.nav.nav-list
                 each link in sidebar
                   if link.url
-                    if locals.rootSidebar
+                    if link.url === 'api'
+                      li
+                        a(href='/api/grunt.html', class=locals.pageSegment == link.url && 'active')= link.name
+                    else if locals.rootSidebar
                       li
                         a(href='/docs/' + link.url + '.html', class=locals.pageSegment == link.url && 'active')= link.name
                     else
                       li
-                        a(href='/' + page + '/' + link.url, class=locals.pageSegment == link.url && 'active')= link.name
+                        a(href='/' + page + '/' + link.url + '.html', class=locals.pageSegment == link.url && 'active')= link.name
                   else
                     li.nav-header
                       if link.icon

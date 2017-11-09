@@ -32,6 +32,44 @@ module.exports = function (grunt) {
        *
        */
 
+      let titleMapping = {
+        'Getting Started' : '快速入门',
+        'Getting started': '快速入门',
+        'Configuring Tasks' : '配置任务',
+        'Configuring tasks': '配置任务',
+        'Sample Gruntfile' : 'Gruntfile 实例',
+        'Creating Tasks' : '创建任务',
+        'Creating tasks': '创建任务',
+        'Creating plugins' : '创建插件',
+        'Using the CLI' : '用命令行工具',
+        'API' : 'API',
+        'Installing Grunt' : '安装 Grunt',
+        'Installing grunt': '安装 Grunt',
+        'Frequently Asked Questions' : '常见问题',
+        'Project Scaffolding' : '项目脚手架',
+        'Help Resources' : '帮助资源',
+        'Who uses Grunt' : '谁在用 Grunt',
+        'Built with Grunt Badge' : 'Grunt 勋章',
+        'Contributing' : '贡献',
+        'Development Team' : '开发团队',
+        'Upgrading from 0.3 to 0.4' : '从 0.3 升级至 0.4',
+        'Upgrading from 0.4 to 1.0' : '从 0.4 升级至 1.0',
+        'Community': '社区',
+        'Documentation': '文档',
+        'Exit Codes': '退出码',
+        'Roadmap': '路线图',
+        'Testing Tasks': '测试任务',
+        'Home': '主页',
+        'Inside Tasks': '深入任务内幕',
+        'Using plugins': '使用插件',
+        'Development helpers': '开发助手',
+        'Grunt Brand Guide': 'Grunt 品牌指南',
+        'Grunt Plugins': 'Grunt 插件',
+        'Plugin Release Candidate Versions': '插件 RC 版本',
+        'Advanced': '进阶知识',
+        'Built with Grunt Badge Grunt': 'Grunt 徽章'
+      };
+
       /**
        * Get sidebar list for section from Home.md
        */
@@ -60,17 +98,17 @@ module.exports = function (grunt) {
               // TODO: clean this up...
               if (iconClass) {
                 items.push({
-                  name: item.substring(1, item.length),
+                  name: titleMapping[item.substring(1, item.length)] || item.substring(1, item.length),
                   icon: iconClass
                 });
               } else {
                 items.push({
-                  name: item.substring(1, item.length)
+                  name: titleMapping[item.substring(1, item.length)] || item.substring(1, item.length)
                 });
               }
             } else {
               items.push({
-                name: item,
+                name: titleMapping[item] || item,
                 url: url.replace(/ /g, '-').toLowerCase()
               });
             }
@@ -96,11 +134,12 @@ module.exports = function (grunt) {
 
         names.forEach(function (name) {
 
-          var title = name.replace(/-/g, ' ').replace('.md', '');
+          var title = titleMapping[name.replace('.md', '').replace(/-/g, ' ').replace(/(\')/g, '')]; // name.replace(/-/g, ' ').replace('.md', '');
           var segment = name.replace(/ /g, '-').replace('.md', '').toLowerCase();
           var src = base + name;
           var dest = 'build/docs/' + name.replace('.md', '').toLowerCase() + '.html';
 
+          // console.log(name.replace('.md', '').replace(/-/g, ' ').replace(/(\')/g, ''), titleMapping[name.replace('.md', '').replace(/-/g, ' ').replace(/(\')/g, '')])
           grunt.file.copy(src, dest, {
             process: function (src) {
               try {

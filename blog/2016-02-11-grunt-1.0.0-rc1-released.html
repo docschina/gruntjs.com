@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title> Grunt 1.0.0 rc1 released - Grunt: The JavaScript Task Runner</title><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"><link rel="stylesheet" href="/css/main.css"><link rel="apple-touch-icon" href="/img/favicons/apple-touch-icon.png" sizes="180x180"><link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="/img/favicons/manifest.json"><link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#e48632"><link rel="shortcut icon" href="/img/favicons/favicon.ico" type="image/x-icon"><meta name="msapplication-config" content="/img/favicons/browserconfig.xml"><meta name="theme-color" content="#e48632"><meta property="og:title" content=" Grunt 1.0.0 rc1 released - Grunt: The JavaScript Task Runner"><meta property="og:type" content="website"><meta property="og:url" content="https://gruntjs.com/"><meta property="og:image" content="https://gruntjs.com/img/og.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="256"><meta property="og:image:height" content="256"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@gruntjs"><meta name="twitter:site" content="@gruntjs"><meta name="twitter:title" content=" Grunt 1.0.0 rc1 released - Grunt: The JavaScript Task Runner"><meta itemprop="name" content="Grunt"><meta itemprop="image" content="/img/og.png"><link href="/rss" rel="alternate" title="Grunt Blog Feed" type="application/atom+xml"></head><body class="page-news page-secondary"><div class="navbar navbar-inverse"><div class="navbar-inner"><div class="container"><a class="brand" href="/"><span class="logo"></span></a><div class="nav-collapse collapse"><ul class="nav"><li><a href="/getting-started"><i class="icon-arrow-right"></i><span>Getting Started</span></a></li><li><a href="/configuring-tasks"><i class="icon-cog"></i><span>Configuring Tasks</span></a></li><li><a href="/plugins"><i class="icon-power-cord"></i><span>Plugins</span></a></li><li><a href="/getting-started"><i class="icon-file-text"></i><span>Documentation</span></a></li></ul><form class="navbar-search pull-right"><input class="search-query" type="text" placeholder="Search"></form></div><!--.nav-collapse--></div></div></div><div class="content"><div class="container"><div class="row-fluid"><div class="span9 page"><div class="hero-unit"><h1 class="news-title"> Grunt 1.0.0 rc1 released</h1><span class="post-date">Posted on February 11, 2016</span><p><strong>The Grunt team is pleased to announce the first release candidate for <code>1.0.0</code>.</strong></p>
+<p>This release is made possible by <a href="https://github.com/shama">@shama</a>, <a href="https://github.com/vladikoff">@vladikoff</a>, <a href="https://github.com/jkaussieskater">@jkaussieskater</a>. With support from the jQuery foundation, in particular <a href="https://github.com/dmethvin">@dmethvin</a> and <a href="https://github.com/aulvi">@aulvi</a>.</p>
+<p>Also thanks to contributions by <a href="https://github.com/XhmikosR">@XhmikosR</a>, <a href="https://github.com/paladox">@paladox</a>, <a href="https://github.com/FredyC">@FredyC</a>, <a href="https://github.com/sindresorhus">@sindresorhus</a>, <a href="https://github.com/mrjoelkemp">@mrjoelkemp</a> and more.</p>
+<p>This release focuses on fixing critical issues and improved support with Node.js
+v0.10, v0.12, v4.0, v5.0 and io.js on Windows, OSX and Linux. We ask you to test the <code>rc1</code> and <a href="https://github.com/gruntjs/grunt/issues">report any issues</a> you are experiencing.</p>
+<blockquote>
+<p>npm install grunt@1.0.0-rc1 --save-dev</p>
+</blockquote>
+<p>Be advised Grunt <code>1.0.0</code> will no longer support Node.js v0.8.</p>
+<h2><a class="anchor" href="#peer-dependencies" id="peer-dependencies"></a>Peer Dependencies</h2>
+<p>If you have a Grunt plugin that includes <code>grunt</code> in the <code>peerDependencies</code> section of your <code>package.json</code>, we recommend tagging with <code>&quot;grunt&quot;: &quot;&gt;=0.4.0&quot;</code>. Otherwise when <code>grunt@1.0.0</code> is released, npm@2 users will receive a hard error when trying to install your plugin and npm@3 users will get a warning.</p>
+<p>Be aware, peer dependencies are no longer installed for users as of npm@3. Users of Grunt plugins are expected to <code>npm install grunt --save-dev</code> alongside any Grunt plugin install.</p>
+<p><strong>We ask you to send pull requests to your favourite plugins and ask them to update the <code>peerDependencies</code> section of their <code>package.json</code>.</strong></p>
+<h2><a class="anchor" href="#request-for-comments" id="request-for-comments"></a>Request For Comments</h2>
+<p>We have created an <a href="https://github.com/gruntjs/rfcs">new repo</a> to encourage
+members of the community interested in shaping the future of Grunt to submit a
+RFC.</p>
+<p>Submitting an RFC will allow you to formally propose a significant change to
+Grunt and elicit feedback from the core team and community.</p>
+<p>The active proposals will help portray the future roadmap for Grunt and hopefully
+expedite community contributions into future Grunt releases.</p>
+<h2><a class="anchor" href="#npm-scripts" id="npm-scripts"></a>npm scripts</h2>
+<p>We now install <code>grunt-cli</code> as part of <code>grunt</code>. Many users do not wish to perform
+the extra step of <code>npm install grunt-cli -g</code>. To better conform to the idioms
+of Node.js, you can now <code>npm install grunt --save-dev</code> then include Grunt in your
+npm scripts:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">"scripts"</span>: {
+    <span class="hljs-string">"grunt"</span>: <span class="hljs-string">"grunt"</span>
+  }
+}</code></pre>
+<p>Your users now only have to <code>npm install</code> and <code>npm run grunt</code> to run your
+<code>Gruntfile.js</code>.</p>
+<p>Users on <code>npm &gt;= 2.0.0</code> can also pass tasks and options with:
+<code>npm run grunt -- task --option=foo</code> which is equivalent to
+<code>grunt task --option=foo</code>.</p>
+<p>If you would like the <code>grunt</code> command on your computer, please continue to
+<code>npm install grunt-cli -g</code> and use as before.</p>
+<h2><a class="anchor" href="#api-changes" id="api-changes"></a>API Changes</h2>
+<p>Be aware, some APIs have changed warranting a major version update:</p>
+<ul>
+<li><code>coffee-script</code> is upgraded to <code>~1.10.0</code> which could incur breaking changes
+when using the language with plugins and Gruntfiles.</li>
+<li><code>nopt</code> is upgraded to <code>~3.0.6</code> which has fixed many issues, including passing
+multiple arguments and dealing with numbers as options. Be aware previously
+<code>--foo bar</code> used to pass the value <code>&#39;bar&#39;</code> to the option <code>foo</code>. It will now
+set the option <code>foo</code> to <code>true</code> and run the task <code>bar</code>.</li>
+<li><code>glob</code> is upgraded to <code>~6.0.4</code> and <code>minimatch</code> is upgraded to <code>~3.0.0</code>. Results
+are now sorted by default with <code>grunt.file.expandMapping()</code>. Pass the
+<code>nosort: true</code> option if you don&#39;t want the results to be sorted.</li>
+<li><code>lodash</code> was upgraded to <code>~4.3.0</code>. Many changes have occurred. Some of which
+that directly affect Grunt are <code>grunt.util._.template()</code> returns a compile
+function and <code>grunt.util._.flatten</code> no longer flattens deeply.
+<code>grunt.util._</code> is deprecated and we highly encourage you to
+<code>npm install lodash</code> and <code>var _ = require(&#39;lodash&#39;)</code> to use <code>lodash</code>.
+Please see the lodash changelog for a full list of changes: <a href="https://github.com/lodash/lodash/wiki/Changelog">https://github.com/lodash/lodash/wiki/Changelog</a></li>
+<li><code>iconv-lite</code> is upgraded to <code>~0.4.13</code> and strips the BOM by default.</li>
+<li><code>js-yaml</code> is upgraded to <code>~3.5.2</code> and may affect <code>grunt.file.readYAML</code>.
+We encourage you to please <code>npm install js-yaml</code> and use
+<code>var YAML = require(&#39;js-yaml&#39;)</code> directly in case of future deprecations.</li>
+<li>A file <code>mode</code> option can be passed into
+<a href="https://gruntjs.com/api/grunt.file#grunt.file.write">grunt.file.write()</a>.</li>
+<li><code>Done, without errors.</code> was changed to <code>Done.</code> to avoid failing by mistake on the word <code>errors</code>.</li>
+</ul>
+<p>We encourage you to try out this release.</p>
+<p>We are also looking for contributors to all <a href="https://github.com/gruntjs/">Grunt repositories</a> and are willing to mentor you to get more experience with open source.</p>
+<hr class="disqus"><div id="disqus_thread"></div><script>var disqus_shortname = 'gruntjs';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript><a class="dsq-brlink" href="http://disqus.com">comments powered by<span class="logo-disqus">Disqus</span></a></div></div><div class="span3"><div class="well sidebar-nav news"><ul class="nav nav-list"><li class="nav-header"><i class="icon-newspaper"></i><span>Blog</span></li><li><a href="/blog/2016-04-04-grunt-1.0.0-released"> Grunt 1.0.0 released</a></li><li><a class="active" href="/blog/2016-02-11-grunt-1.0.0-rc1-released"> Grunt 1.0.0 rc1 released</a></li><li><a href="/blog/2014-05-12-grunt-0.4.5-released"> Grunt 0.4.5 released</a></li><li><a href="/blog/2014-03-14-grunt-0.4.4-released"> Grunt 0.4.4 released</a></li><li><a href="/blog/2014-03-07-grunt-0.4.3-released"> Grunt 0.4.3 released</a></li><li><a href="/blog/2013-11-21-grunt-0.4.2-released"> Grunt 0.4.2 released</a></li><li><a href="/blog/2013-03-13-grunt-0.4.1-released"> Grunt 0.4.1 released</a></li><li><a href="/blog/2013-02-18-grunt-0.4.0-released"> Grunt 0.4.0 released</a></li><li><a href="/blog/2013-02-15-updating-plugins-to-grunt-0.4"> Updating plugins to Grunt 0.4</a></li></ul></div></div></div></div></div><footer class="grunt-footer"><div class="inner"><div class="container"><ul class="pull-right"><li><a href="/blog">Blog</a></li><li><a href="/upgrading-from-0.3-to-0.4">Migration Guides</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li><li class="social"><a href="https://github.com/gruntjs/" title="Grunt on GitHub"><span class="icon-github"></span></a></li><li class="social"><a href="https://twitter.com/gruntjs/" title="Grunt on Twitter"><span class="icon-twitter"></span></a></li><li class="social"><a href="/rss" title="Grunt blog RSS feed"><span class="icon-rss"></span></a></li></ul></div></div></footer><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34623937-1', 'gruntjs.com');
+ga('send', 'pageview');</script></body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>grunt.log - Grunt: The JavaScript Task Runner</title><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"><link rel="stylesheet" href="/css/main.css"><link rel="apple-touch-icon" href="/img/favicons/apple-touch-icon.png" sizes="180x180"><link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="/img/favicons/manifest.json"><link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#e48632"><link rel="shortcut icon" href="/img/favicons/favicon.ico" type="image/x-icon"><meta name="msapplication-config" content="/img/favicons/browserconfig.xml"><meta name="theme-color" content="#e48632"><meta property="og:title" content="grunt.log - Grunt: The JavaScript Task Runner"><meta property="og:type" content="website"><meta property="og:url" content="https://gruntjs.com/"><meta property="og:image" content="https://gruntjs.com/img/og.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="256"><meta property="og:image:height" content="256"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@gruntjs"><meta name="twitter:site" content="@gruntjs"><meta name="twitter:title" content="grunt.log - Grunt: The JavaScript Task Runner"><meta itemprop="name" content="Grunt"><meta itemprop="image" content="/img/og.png"><link href="/rss" rel="alternate" title="Grunt Blog Feed" type="application/atom+xml"></head><body class="page-api page-secondary"><div class="navbar navbar-inverse"><div class="navbar-inner"><div class="container"><a class="brand" href="/"><span class="logo"></span></a><div class="nav-collapse collapse"><ul class="nav"><li><a href="/getting-started"><i class="icon-arrow-right"></i><span>Getting Started</span></a></li><li><a href="/configuring-tasks"><i class="icon-cog"></i><span>Configuring Tasks</span></a></li><li><a href="/plugins"><i class="icon-power-cord"></i><span>Plugins</span></a></li><li><a href="/getting-started"><i class="icon-file-text"></i><span>Documentation</span></a></li></ul><form class="navbar-search pull-right"><input class="search-query" type="text" placeholder="Search"></form></div><!--.nav-collapse--></div></div></div><div class="content"><div class="container grunt.log"><div class="row-fluid"><div class="span9 page"><div class="hero-unit"><h1>grunt.log</h1><h1><a class="anchor" href="#grunt.log" id="grunt.log"></a>grunt.log</h1>
+<p>向控制台输出信息。</p>
+<p>参见 <a href="https://github.com/gruntjs/grunt/blob/master/lib/grunt/log.js">log lib source</a> 以获取更多信息。</p>
+<h2><a class="anchor" href="#the-log-api" id="the-log-api"></a>The log API</h2>
+<p>Grunt的输出应当看上去一致、美观。因此， 就有了这些log方法和一些有用的模式。所有用于输出日志的方法都可以链式调用。</p>
+<p><em>注意：只有在命令行中指定 <code>--verbose</code> 选项时，所有 <code>grunt.verbose</code> 中的方法才会输出日志，并且完全像 <code>grunt.log</code> 中的方法一样工作。</em></p>
+<h3><a class="anchor" href="#grunt.log.write-grunt.verbose.write" id="grunt.log.write-grunt.verbose.write"></a>grunt.log.write / grunt.verbose.write</h3>
+<p>输出指定的 <code>msg</code> 字符串日志，结尾不带换行符（newline）。</p>
+<pre><code class="lang-js">grunt.log.write(msg)</code></pre>
+<h3><a class="anchor" href="#grunt.log.writeln-grunt.verbose.writeln" id="grunt.log.writeln-grunt.verbose.writeln"></a>grunt.log.writeln / grunt.verbose.writeln</h3>
+<p>输出指定的 <code>msg</code> 字符串日志，结尾带换行符（newline）。</p>
+<pre><code class="lang-js">grunt.log.writeln([msg])</code></pre>
+<h3><a class="anchor" href="#grunt.log.error-grunt.verbose.error" id="grunt.log.error-grunt.verbose.error"></a>grunt.log.error / grunt.verbose.error</h3>
+<p>如果省略<code>msg</code> 字符串，将会以红色字体输出<code>ERROR</code>，否则输出<code>&gt;&gt; msg</code>，并且尾部带有换行符。</p>
+<pre><code class="lang-js">grunt.log.error([msg])</code></pre>
+<h3><a class="anchor" href="#grunt.log.errorlns-grunt.verbose.errorlns" id="grunt.log.errorlns-grunt.verbose.errorlns"></a>grunt.log.errorlns / grunt.verbose.errorlns</h3>
+<p>使用<code>grunt.log.error</code>记录一个错误日志，使用<code>grunt.log.wraptext</code>可以将日志以每行80个字符的形式输出。</p>
+<pre><code class="lang-js">grunt.log.errorlns(msg)</code></pre>
+<h3><a class="anchor" href="#grunt.log.ok-grunt.verbose.ok" id="grunt.log.ok-grunt.verbose.ok"></a>grunt.log.ok / grunt.verbose.ok</h3>
+<p>如果省略<code>msg</code>字符串，将会以绿色字体输出<code>OK</code>, 否则输出<code>&gt;&gt; msg</code>，并且尾部带有换行符。</p>
+<pre><code class="lang-js">grunt.log.ok([msg])</code></pre>
+<h3><a class="anchor" href="#grunt.log.oklns-grunt.verbose.oklns" id="grunt.log.oklns-grunt.verbose.oklns"></a>grunt.log.oklns / grunt.verbose.oklns</h3>
+<p>使用<code>grunt.log.ok</code>记录一条ok消息，使用<code>grunt.log.wraptext</code>可以将日志以每行80个字符的形式输出。</p>
+<pre><code class="lang-js">grunt.log.oklns(msg)</code></pre>
+<h3><a class="anchor" href="#grunt.log.subhead-grunt.verbose.subhead" id="grunt.log.subhead-grunt.verbose.subhead"></a>grunt.log.subhead / grunt.verbose.subhead</h3>
+<p>记录指定的<code>msg</code>字符串并<strong>加粗</strong>，尾部带有换行符。</p>
+<pre><code class="lang-js">grunt.log.subhead(msg)</code></pre>
+<h3><a class="anchor" href="#grunt.log.writeflags-grunt.verbose.writeflags" id="grunt.log.writeflags-grunt.verbose.writeflags"></a>grunt.log.writeflags / grunt.verbose.writeflags</h3>
+<p>记录<code>obj</code>的属性列表（用于调试标志最好）。</p>
+<pre><code class="lang-js">grunt.log.writeflags(obj, prefix)</code></pre>
+<h3><a class="anchor" href="#grunt.log.debug-grunt.verbose.debug" id="grunt.log.debug-grunt.verbose.debug"></a>grunt.log.debug / grunt.verbose.debug</h3>
+<p>记录一条调试信息，但是，仅当在命令行中指定 <code>--debug</code>选项时才会输出。</p>
+<pre><code class="lang-js">grunt.log.debug(msg)</code></pre>
+<h2><a class="anchor" href="#verbose-notverbose" id="verbose-notverbose"></a>Verbose 和 Notverbose</h2>
+<p>所有<code>grunt.verbose</code>下可用的日志记录方法的工作都酷似它们所对应的<code>grunt.log</code>方法，但是它们只在指定<code>--verbose</code>命令行选项的情况下才一样。还有一个对应&quot;notverbose&quot;适用于<code>grunt.log.notverbose</code>和<code>grunt.log.verbose.or</code>。实际上，<code>.or</code>属性也可以用于在<code>verbose</code>和<code>notverbose</code>两者之间有效的进行切换。</p>
+<h3><a class="anchor" href="#grunt.verbose-grunt.log.verbose" id="grunt.verbose-grunt.log.verbose"></a>grunt.verbose / grunt.log.verbose</h3>
+<p>这个对象包含<code>grunt.log</code>下的所有方法，但是只在指定<code>--verbose</code>命令行选项情况下它才会输出日志信息。</p>
+<pre><code class="lang-js">grunt.verbose</code></pre>
+<h3><a class="anchor" href="#grunt.verbose.or-grunt.log.notverbose" id="grunt.verbose.or-grunt.log.notverbose"></a>grunt.verbose.or / grunt.log.notverbose</h3>
+<p>这个对象也包含<code>grunt.log</code>下的所有方法，但是只在不指定<code>--verbose</code>命令行选项情况下它才会输出日志信息。</p>
+<pre><code class="lang-js">grunt.verbose.or</code></pre>
+<h2>工具方法</h2>
+<p>这些方法实际上不记录日志，它们只返回字符串，返回的字符串可以用于其他方法。</p>
+<h3><a class="anchor" href="#grunt.log.wordlist" id="grunt.log.wordlist"></a>grunt.log.wordlist</h3>
+<p>Returns a comma-separated list of <code>arr</code> array items.
+<code>arr</code> 数组中的条目将会以逗号分割的形式返回。</p>
+<pre><code class="lang-js">grunt.log.wordlist(arr [, options])</code></pre>
+<p><code>options</code> 对象拥有以下属性和默认值：</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> options = {
+  <span class="hljs-comment">// The separator string (can be colored).</span>
+  separator: <span class="hljs-string">', '</span>,
+  <span class="hljs-comment">// The array item color (specify false to not colorize).</span>
+  color: <span class="hljs-string">'cyan'</span>,
+};</code></pre>
+<h3><a class="anchor" href="#grunt.log.uncolor" id="grunt.log.uncolor"></a>grunt.log.uncolor</h3>
+<p>从字符串中移除所有颜色信息，使其适合检测其 <code>.length</code> 或写入日志文件。、</p>
+<pre><code class="lang-js">grunt.log.uncolor(str)</code></pre>
+<h3><a class="anchor" href="#grunt.log.wraptext" id="grunt.log.wraptext"></a>grunt.log.wraptext</h3>
+<p>以 <code>width</code> 个字符为一组将 <code>text</code> 字符串进行分解并添加  <code>\n</code> 字符，除非绝对必要，否则将尽量确保不会从中间截断单词。</p>
+<pre><code class="lang-js">grunt.log.wraptext(width, text)</code></pre>
+<h3><a class="anchor" href="#grunt.log.table" id="grunt.log.table"></a>grunt.log.table</h3>
+<p>以 <code>width</code> 个字符为一组将 <code>text</code> 字符串进行分解。Wrap <code>texts</code> array of strings to columns <code>widths</code> characters wide. A wrapper for the <code>grunt.log.wraptext</code> method that can be used to generate output in columns.</p>
+<pre><code class="lang-js">grunt.log.table(widths, texts)</code></pre>
+<h2>案例</h2>
+<p>通常的模式是，只有在 <code>--verbose</code> 模式或发生错误时才输出日志，如下所示：</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'something'</span>, <span class="hljs-string">'Do something interesting.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">arg</span>) </span>{
+  <span class="hljs-keyword">var</span> msg = <span class="hljs-string">'Doing something...'</span>;
+  grunt.verbose.write(msg);
+  <span class="hljs-keyword">try</span> {
+    doSomethingThatThrowsAnExceptionOnError(arg);
+    <span class="hljs-comment">// Success!</span>
+    grunt.verbose.ok();
+  } <span class="hljs-keyword">catch</span>(e) {
+    <span class="hljs-comment">// Something went wrong.</span>
+    grunt.verbose.or.write(msg).error().error(e.message);
+    grunt.fail.warn(<span class="hljs-string">'Something went wrong.'</span>);
+  }
+});</code></pre>
+<p>解释以上代码：</p>
+<ol>
+<li><code>grunt.verbose.write(msg);</code> 只有在 <code>--verbose</code> 模式时才会输出日志信息（没有换行符）。</li>
+<li><code>grunt.verbose.ok();</code> 以绿色输出日志信息，末尾输出换行符。</li>
+<li><code>grunt.verbose.or.write(msg).error().error(e.message);</code> 做了以下几件事：<ol>
+<li><code>grunt.verbose.or.write(msg)</code> 如果不在 <code>--verbose</code> 模式则输出日志信息，然后返回 <code>notverbose</code> 对象。</li>
+<li><code>.error()</code> 以红色输出ERROR日志，结尾输出换行符，然后返回 <code>notverbose</code> 对象。</li>
+<li><code>.error(e.message);</code> 输出实际的错误信息（并返回 <code>notverbose</code> 对象）。</li>
+</ol>
+</li>
+<li><code>grunt.fail.warn(&#39;Something went wrong.&#39;);</code> 以嫩黄色输出警告信息。除非在命令行指定了 <code>--force</code> 选项，否则输出退出码1，然后退出 Grunt。</li>
+</ol>
+<p>查看 <a href="https://github.com/gruntjs">grunt-contrib-* 任务的源码</a> 以获取更多案例。</p>
+<div class="end-link">Found an error in the documentation?
+<a href='https://github.com/gruntjs/grunt-docs/issues'>File an issue</a>.</div></div></div><div class="span3"><div class="well sidebar-nav"><ul class="nav nav-list"><li class="nav-header"><i class="icon-cog"></i><span>API</span></li><li><a href="/api/grunt">grunt</a></li><li><a href="/api/grunt.config">grunt.config</a></li><li><a href="/api/grunt.event">grunt.event</a></li><li><a href="/api/grunt.fail">grunt.fail</a></li><li><a href="/api/grunt.file">grunt.file</a></li><li><a class="active" href="/api/grunt.log">grunt.log</a></li><li><a href="/api/grunt.option">grunt.option</a></li><li><a href="/api/grunt.task">grunt.task</a></li><li><a href="/api/grunt.template">grunt.template</a></li><li><a href="/api/grunt.util">grunt.util</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Other</span></li><li><a href="/api/inside-tasks">Inside Tasks</a></li><li><a href="/api/exit-codes">Exit Codes</a></li></ul><div class="advertisements"><script>var m3_u = (location.protocol=='https:'?'https://revive.bocoup.com/www/delivery/ajs.php':'http://revive.bocoup.com/www/delivery/ajs.php');var m3_r = Math.floor(Math.random()*99999999999);if (!document.MAX_used) document.MAX_used = ',';document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);document.write ("?zoneid=5");document.write ('&amp;cb=' + m3_r);if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));document.write ("&amp;loc=" + escape(window.location));if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));if (document.context) document.write ("&context=" + escape(document.context));if (document.mmm_fo) document.write ("&amp;mmm_fo=1");document.write ("'><\/scr"+"ipt>");</script><noscript><a href='http://revive.bocoup.com/www/delivery/ck.php?n=a656788f&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://revive.bocoup.com/www/delivery/avw.php?zoneid=5&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a656788f' alt='' /></a></noscript><span class="adsbybocoup">Ads by <a href="http://bocoup.com">Bocoup</a>.</span></div></div></div></div></div></div><footer class="grunt-footer"><div class="inner"><div class="container"><ul class="pull-right"><li><a href="/blog">Blog</a></li><li><a href="/upgrading-from-0.3-to-0.4">Migration Guides</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li><li class="social"><a href="https://github.com/gruntjs/" title="Grunt on GitHub"><span class="icon-github"></span></a></li><li class="social"><a href="https://twitter.com/gruntjs/" title="Grunt on Twitter"><span class="icon-twitter"></span></a></li><li class="social"><a href="/rss" title="Grunt blog RSS feed"><span class="icon-rss"></span></a></li></ul></div></div></footer><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34623937-1', 'gruntjs.com');
+ga('send', 'pageview');</script></body></html>

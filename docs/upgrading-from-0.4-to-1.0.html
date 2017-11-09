@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Upgrading from 0.4 to 1.0 - Grunt: The JavaScript Task Runner</title><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"><link rel="stylesheet" href="/css/main.css"><link rel="apple-touch-icon" href="/img/favicons/apple-touch-icon.png" sizes="180x180"><link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="/img/favicons/manifest.json"><link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#e48632"><link rel="shortcut icon" href="/img/favicons/favicon.ico" type="image/x-icon"><meta name="msapplication-config" content="/img/favicons/browserconfig.xml"><meta name="theme-color" content="#e48632"><meta property="og:title" content="Upgrading from 0.4 to 1.0 - Grunt: The JavaScript Task Runner"><meta property="og:type" content="website"><meta property="og:url" content="https://gruntjs.com/"><meta property="og:image" content="https://gruntjs.com/img/og.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="256"><meta property="og:image:height" content="256"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@gruntjs"><meta name="twitter:site" content="@gruntjs"><meta name="twitter:title" content="Upgrading from 0.4 to 1.0 - Grunt: The JavaScript Task Runner"><meta itemprop="name" content="Grunt"><meta itemprop="image" content="/img/og.png"><link href="/rss" rel="alternate" title="Grunt Blog Feed" type="application/atom+xml"></head><body class="page-docs page-secondary"><div class="navbar navbar-inverse"><div class="navbar-inner"><div class="container"><a class="brand" href="/"><span class="logo"></span></a><div class="nav-collapse collapse"><ul class="nav"><li><a href="/getting-started"><i class="icon-arrow-right"></i><span>Getting Started</span></a></li><li><a href="/configuring-tasks"><i class="icon-cog"></i><span>Configuring Tasks</span></a></li><li><a href="/plugins"><i class="icon-power-cord"></i><span>Plugins</span></a></li><li><a href="/getting-started"><i class="icon-file-text"></i><span>Documentation</span></a></li></ul><form class="navbar-search pull-right"><input class="search-query" type="text" placeholder="Search"></form></div><!--.nav-collapse--></div></div></div><div class="content"><div class="container upgrading-from-0.4-to-1.0"><div class="row-fluid"><div class="span9 page"><div class="hero-unit"><h1>Upgrading from 0.4 to 1.0</h1><p>This guide is here to help you update your projects and plugins from Grunt 0.4.x to Grunt 1.0.</p>
+<p><strong>Be advised Grunt 1.0.0 no longer supports Node.js v0.8.</strong></p>
+<h2><a class="anchor" href="#for-projects-that-use-grunt" id="for-projects-that-use-grunt"></a>For Projects that use Grunt</h2>
+<h3><a class="anchor" href="#peer-dependencies" id="peer-dependencies"></a>Peer Dependencies</h3>
+<p>You might receive <code>peerDependencies</code> errors when you install a project with Grunt 1.0.
+We ask you to send pull requests to your favourite plugins and ask them to update the peerDependencies section of their package.json.
+See below for details about plugin updates.</p>
+<h2><a class="anchor" href="#for-plugins-and-plugin-developers" id="for-plugins-and-plugin-developers"></a>For Plugins and Plugin developers</h2>
+<h3><a class="anchor" href="#peer-dependencies-dev" id="peer-dependencies-dev"></a>Peer Dependencies</h3>
+
+<p>If you have a Grunt plugin that includes grunt in the peerDependencies section of your package.json,
+we recommend tagging with &quot;grunt&quot;: &quot;&gt;=0.4.0&quot;. Otherwise when grunt@1.0.0 is released, npm@2 users will
+receive a hard error when trying to install your plugin and npm@3 users will get a warning.</p>
+<p>Be aware, peer dependencies are no longer installed for users as of npm@3.
+Users of Grunt plugins are expected to npm install grunt --save-dev alongside any Grunt plugin install.</p>
+<p>We ask you to update your plugin with <code>&quot;grunt&quot;: &quot;&gt;=0.4.0&quot;</code> in it and publish that on npm.</p>
+<h3><a class="anchor" href="#changes-in-1.0.0" id="changes-in-1.0.0"></a>Changes in 1.0.0</h3>
+<ul>
+<li>Prevent async callback from being called multiple times. Pull #1464.</li>
+<li>Update copyright to jQuery Foundation and remove redundant headers. Fixes #1478.</li>
+<li>Update glob to 7.0.x. Fixes #1467.</li>
+<li>Removing duplicate BOM strip code. Pull #1482.</li>
+<li>Updated to latest cli ~1.2.0</li>
+<li>Ensure a grunt bin gets created upon install.</li>
+</ul>
+<h3><a class="anchor" href="#changes-in-grunt-1.0-rc1:" id="changes-in-grunt-1.0-rc1:"></a>Changes in Grunt 1.0 RC1:</h3>
+<p>Be aware, some APIs have changed warranting a major version update:</p>
+<ul>
+<li><code>coffee-script</code> is upgraded to <code>~1.10.0</code> which could incur breaking changes
+when using the language with plugins and Gruntfiles.</li>
+<li><code>nopt</code> is upgraded to <code>~3.0.6</code> which has fixed many issues, including passing
+multiple arguments and dealing with numbers as options. Be aware previously
+<code>--foo bar</code> used to pass the value <code>&#39;bar&#39;</code> to the option <code>foo</code>. It will now
+set the option <code>foo</code> to <code>true</code> and run the task <code>bar</code>.</li>
+<li><code>glob</code> is upgraded to <code>~6.0.4</code> and <code>minimatch</code> is upgraded to <code>~3.0.0</code>. Results
+are now sorted by default with <code>grunt.file.expandMapping()</code>. Pass the
+<code>nosort: true</code> option if you don&#39;t want the results to be sorted.</li>
+<li><code>lodash</code> was upgraded to <code>~4.3.0</code>. Many changes have occurred. Some of which
+that directly effect Grunt are <code>grunt.util._.template()</code> returns a compile
+function and <code>grunt.util._.flatten</code> no longer flattens deeply.
+<code>grunt.util._</code> is deprecated and we highly encourage you to
+<code>npm install lodash</code> and <code>var _ = require(&#39;lodash&#39;)</code> to use <code>lodash</code>.
+Please see the lodash changelog for a full list of changes: <a href="https://github.com/lodash/lodash/wiki/Changelog">https://github.com/lodash/lodash/wiki/Changelog</a></li>
+<li><code>iconv-lite</code> is upgraded to <code>~0.4.13</code> and strips the BOM by default.</li>
+<li><code>js-yaml</code> is upgraded to <code>~3.5.2</code> and may affect <code>grunt.file.readYAML</code>.
+We encourage you to please <code>npm install js-yaml</code> and use
+<code>var YAML = require(&#39;js-yaml&#39;)</code> directly in case of future deprecations.</li>
+<li>A file <code>mode</code> option can be passed into
+<a href="https://gruntjs.com/api/grunt.file#grunt.file.write">grunt.file.write()</a>.</li>
+<li><code>Done, without errors.</code> was changed to <code>Done.</code> to avoid failing by mistake on the word <code>errors</code>.</li>
+</ul>
+<div class="end-link">Found an error in the documentation?
+<a href='https://github.com/gruntjs/grunt-docs/issues'>File an issue</a>.</div></div></div><div class="span3"><div class="well sidebar-nav"><ul class="nav nav-list"><li class="nav-header"><i class="icon-file-text"></i><span>Documentation</span></li><li><a href="/getting-started">Getting Started</a></li><li><a href="/configuring-tasks">Configuring Tasks</a></li><li><a href="/sample-gruntfile">Sample Gruntfile</a></li><li><a href="/creating-tasks">Creating Tasks</a></li><li><a href="/creating-plugins">Creating Plugins</a></li><li><a href="/using-the-cli">Using the CLI</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Advanced</span></li><li><a href="/api">API</a></li><li><a href="/installing-grunt">Installing Grunt</a></li><li><a href="/frequently-asked-questions">Frequently Asked Questions</a></li><li><a href="/project-scaffolding">Project Scaffolding</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Community</span></li><li><a href="/help-resources">Help Resources</a></li><li><a href="/who-uses-grunt">Who uses Grunt</a></li><li><a href="/built-with-grunt-badge">Built with Grunt Badge</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Migration guides</span></li><li><a href="/upgrading-from-0.3-to-0.4">Upgrading from 0.3 to 0.4</a></li><li><a class="active" href="/upgrading-from-0.4-to-1.0">Upgrading from 0.4 to 1.0</a></li></ul><div class="advertisements"><script>var m3_u = (location.protocol=='https:'?'https://revive.bocoup.com/www/delivery/ajs.php':'http://revive.bocoup.com/www/delivery/ajs.php');var m3_r = Math.floor(Math.random()*99999999999);if (!document.MAX_used) document.MAX_used = ',';document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);document.write ("?zoneid=5");document.write ('&amp;cb=' + m3_r);if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));document.write ("&amp;loc=" + escape(window.location));if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));if (document.context) document.write ("&context=" + escape(document.context));if (document.mmm_fo) document.write ("&amp;mmm_fo=1");document.write ("'><\/scr"+"ipt>");</script><noscript><a href='http://revive.bocoup.com/www/delivery/ck.php?n=a656788f&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://revive.bocoup.com/www/delivery/avw.php?zoneid=5&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a656788f' alt='' /></a></noscript><span class="adsbybocoup">Ads by <a href="http://bocoup.com">Bocoup</a>.</span></div></div></div></div></div></div><footer class="grunt-footer"><div class="inner"><div class="container"><ul class="pull-right"><li><a href="/blog">Blog</a></li><li><a href="/upgrading-from-0.3-to-0.4">Migration Guides</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li><li class="social"><a href="https://github.com/gruntjs/" title="Grunt on GitHub"><span class="icon-github"></span></a></li><li class="social"><a href="https://twitter.com/gruntjs/" title="Grunt on Twitter"><span class="icon-twitter"></span></a></li><li class="social"><a href="/rss" title="Grunt blog RSS feed"><span class="icon-rss"></span></a></li></ul></div></div></footer><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34623937-1', 'gruntjs.com');
+ga('send', 'pageview');</script></body></html>

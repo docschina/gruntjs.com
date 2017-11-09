@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Creating tasks - Grunt: The JavaScript Task Runner</title><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"><link rel="stylesheet" href="/css/main.css"><link rel="apple-touch-icon" href="/img/favicons/apple-touch-icon.png" sizes="180x180"><link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="/img/favicons/manifest.json"><link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#e48632"><link rel="shortcut icon" href="/img/favicons/favicon.ico" type="image/x-icon"><meta name="msapplication-config" content="/img/favicons/browserconfig.xml"><meta name="theme-color" content="#e48632"><meta property="og:title" content="Creating tasks - Grunt: The JavaScript Task Runner"><meta property="og:type" content="website"><meta property="og:url" content="https://gruntjs.com/"><meta property="og:image" content="https://gruntjs.com/img/og.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="256"><meta property="og:image:height" content="256"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@gruntjs"><meta name="twitter:site" content="@gruntjs"><meta name="twitter:title" content="Creating tasks - Grunt: The JavaScript Task Runner"><meta itemprop="name" content="Grunt"><meta itemprop="image" content="/img/og.png"><link href="/rss" rel="alternate" title="Grunt Blog Feed" type="application/atom+xml"></head><body class="page-docs page-secondary"><div class="navbar navbar-inverse"><div class="navbar-inner"><div class="container"><a class="brand" href="/"><span class="logo"></span></a><div class="nav-collapse collapse"><ul class="nav"><li><a href="/getting-started"><i class="icon-arrow-right"></i><span>Getting Started</span></a></li><li><a href="/configuring-tasks"><i class="icon-cog"></i><span>Configuring Tasks</span></a></li><li><a href="/plugins"><i class="icon-power-cord"></i><span>Plugins</span></a></li><li><a href="/getting-started"><i class="icon-file-text"></i><span>Documentation</span></a></li></ul><form class="navbar-search pull-right"><input class="search-query" type="text" placeholder="Search"></form></div><!--.nav-collapse--></div></div></div><div class="content"><div class="container creating-tasks"><div class="row-fluid"><div class="span9 page"><div class="hero-unit"><h1>Creating tasks</h1><h1>创建任务</h1>
+<p>任务是Grunt的面包和奶油。就像你常用的工具，如： <code>jshint</code>  或 <code>nodeunit</code>。每当运行Grunt时, 你可以为其指定一个或多个任务, 这些任务用于告诉Grunt你想要它做什么事情。</p>
+<p>如果你没有指定一个任务，并且你已经定义一个名为 &quot;default&quot; 的任务，那么该任务将会默认被执行（不用诧异，总要做点儿什么啊！）。</p>
+<h2>任务别名</h2>
+<p>如果指定了一个任务列表，新任务将是这一个或多个指定任务的别名。当运行此 &quot;任务别名&quot; 时，在 <code>taskList</code> 中指定的每个任务都会按照其出现的顺序依次执行。<code>taskList</code>参数必须时一个任务数组。</p>
+<pre><code class="lang-js">grunt.registerTask(taskName, [description, ] taskList)</code></pre>
+<p>下面的任务别名案例中定义了一个 &#39;default&#39; 任务，如果运行Grunt时没有指定任何任务，它将自动执行&#39;jshint&#39;、&#39;qunit&#39;、&#39;concat&#39; 和 &#39;uglify&#39; 任务。</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'jshint'</span>, <span class="hljs-string">'qunit'</span>, <span class="hljs-string">'concat'</span>, <span class="hljs-string">'uglify'</span>]);</code></pre>
+<p>还可以给任务指定参数。在下面的案例中，别名 &quot;dist&quot; 将执行 &quot;concat&quot; 和 &quot;uglify&quot; 两个任务，并且它们都带有一个 &quot;dist&quot;  参数：</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'dist'</span>, [<span class="hljs-string">'concat:dist'</span>, <span class="hljs-string">'uglify:dist'</span>]);</code></pre>
+<h2>多任务</h2>
+<p>当运行一个多任务时，Grunt会自动从项目的配置对象中查找同名属性。多任务可以有多个配置，并且可以使用任意命名的&#39;targets&#39;。</p>
+<p>同时指定像<code>grunt concat:foo</code>或者<code>grunt concat:bar</code>这样的任务和目标，在运行时Grunt只会处理指定目标的配置；然而如果运行<code>grunt concat</code>，将会遍历所有的目标, 并按任务指定的顺序处理每个目标。注意，如果一个任务已经使用<a href="/grunt.task#grunt.task.renametask">grunt.task.renameTask</a>重命名过，Grunt将会自动在配置对象中查找新任务名称属性。</p>
+<p>大部分的contrib任务(主要是指官方提供的任务)，包括<a href="https://github.com/gruntjs/grunt-contrib-jshint#jshint-task">grunt-contrib-jshint插件的jshint任务</a>，以及<a href="https://github.com/gruntjs/grunt-contrib-concat#concat-task">grunt-contrib-concat插件的concat任务</a>都是多任务形式的。</p>
+<pre><code class="lang-js">grunt.registerMultiTask(taskName, [description, ] taskFunction)</code></pre>
+<p>对于指定的配置，这里有一个案例演示了如果通过<code>grunt log:foo</code>运行Grunt，它会输出<code>foo: 1,2,3</code>；如果通过<code>grunt log:bar</code>来运行Grunt， 它会输出<code>bar: hello world</code>。然而如果通过<code>grunt log</code>运行Grunt, 它会输出<code>foo: 1,2,3</code>，然后是<code>bar: hello world</code>，最后是<code>baz: false</code>(任务目标会按照指定的顺序进行处理)。</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">log</span>: {
+    <span class="hljs-attr">foo</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>],
+    <span class="hljs-attr">bar</span>: <span class="hljs-string">'hello world'</span>,
+    <span class="hljs-attr">baz</span>: <span class="hljs-literal">false</span>
+  }
+});
+
+grunt.registerMultiTask(<span class="hljs-string">'log'</span>, <span class="hljs-string">'Log stuff.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  grunt.log.writeln(<span class="hljs-keyword">this</span>.target + <span class="hljs-string">': '</span> + <span class="hljs-keyword">this</span>.data);
+});</code></pre>
+<h2>&quot;基本&quot; 任务</h2>
+<p>当一个基本任务执行时，Grunt并不会检查配置和环境 -- 它仅仅执行指定的任务函数，并传递任何使用冒号分割的参数作为函数的参数。</p>
+<pre><code class="lang-js">grunt.registerTask(taskName, [description, ] taskFunction)</code></pre>
+<p>下面的案例中，如果执行 <code>grunt foo:testing:123</code>，将输出日志 <code>foo, testing 123</code>。  如果执行这个任务时不传递参数，只是执行 <code>grunt foo</code>，那么将输出日志  <code>foo, no args</code>。</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'A sample task that logs stuff.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">arg1, arg2</span>) </span>{
+  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.length === <span class="hljs-number">0</span>) {
+    grunt.log.writeln(<span class="hljs-keyword">this</span>.name + <span class="hljs-string">", no args"</span>);
+  } <span class="hljs-keyword">else</span> {
+    grunt.log.writeln(<span class="hljs-keyword">this</span>.name + <span class="hljs-string">", "</span> + arg1 + <span class="hljs-string">" "</span> + arg2);
+  }
+});</code></pre>
+<h2>自定义任务</h2>
+<p>你可以和任务一起疯狂。如果你的任务并没有遵循 &quot;多任务&quot; 结构，那就使用自定义任务。</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'default'</span>, <span class="hljs-string">'My "default" task description.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  grunt.log.writeln(<span class="hljs-string">'Currently running the "default" task.'</span>);
+});</code></pre>
+<p>在一个任务内部，你可以执行其他的任务。</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'My "foo" task.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// Enqueue "bar" and "baz" tasks, to run after "foo" finishes, in-order.</span>
+  grunt.task.run(<span class="hljs-string">'bar'</span>, <span class="hljs-string">'baz'</span>);
+  <span class="hljs-comment">// Or:</span>
+  grunt.task.run([<span class="hljs-string">'bar'</span>, <span class="hljs-string">'baz'</span>]);
+});</code></pre>
+<p>任务也可以是异步的。</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'asyncfoo'</span>, <span class="hljs-string">'My "asyncfoo" task.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// Force task into async mode and grab a handle to the "done" function.</span>
+  <span class="hljs-keyword">var</span> done = <span class="hljs-keyword">this</span>.async();
+  <span class="hljs-comment">// Run some sync stuff.</span>
+  grunt.log.writeln(<span class="hljs-string">'Processing task...'</span>);
+  <span class="hljs-comment">// And some async stuff.</span>
+  setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    grunt.log.writeln(<span class="hljs-string">'All done!'</span>);
+    done();
+  }, <span class="hljs-number">1000</span>);
+});</code></pre>
+<p>任务也可以访问它们自身名称和参数。</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'My "foo" task.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b</span>) </span>{
+  grunt.log.writeln(<span class="hljs-keyword">this</span>.name, a, b);
+});
+
+<span class="hljs-comment">// 用法：</span>
+<span class="hljs-comment">// grunt foo</span>
+<span class="hljs-comment">//   logs: "foo", undefined, undefined</span>
+<span class="hljs-comment">// grunt foo:bar</span>
+<span class="hljs-comment">//   logs: "foo", "bar", undefined</span>
+<span class="hljs-comment">// grunt foo:bar:baz</span>
+<span class="hljs-comment">//   logs: "foo", "bar", "baz"</span></code></pre>
+<p>如果记录到任何错误，那么任务就会失败。</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'My "foo" task.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">if</span> (failureOfSomeKind) {
+    grunt.log.error(<span class="hljs-string">'This is an error message.'</span>);
+  }
+
+  <span class="hljs-comment">// 如果这个任务出现错误则返回false</span>
+  <span class="hljs-keyword">if</span> (ifErrors) { <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; }
+
+  grunt.log.writeln(<span class="hljs-string">'This is the success message'</span>);
+});</code></pre>
+<p>当任务失败时，所有后续任务都将终止，除非指定 <code>--force</code> 。</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'My "foo" task.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// Fail synchronously.</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+});
+
+grunt.registerTask(<span class="hljs-string">'bar'</span>, <span class="hljs-string">'My "bar" task.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> done = <span class="hljs-keyword">this</span>.async();
+  setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// Fail asynchronously.</span>
+    done(<span class="hljs-literal">false</span>);
+  }, <span class="hljs-number">1000</span>);
+});</code></pre>
+<p>任务还可以依赖于其他任务的成功执行。注意 <code>grunt.task.requires</code> 并不会真正的运行其他任务，它仅仅检查其它任务是否已经执行，并且没有失败。</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'My "foo" task.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+});
+
+grunt.registerTask(<span class="hljs-string">'bar'</span>, <span class="hljs-string">'My "bar" task.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// 如果"foo"任务运行失败或者没有运行则任务失败。</span>
+  grunt.task.requires(<span class="hljs-string">'foo'</span>);
+  <span class="hljs-comment">// 如果"foo"任务运行成功则执行这里的代码。</span>
+  grunt.log.writeln(<span class="hljs-string">'Hello, world.'</span>);
+});
+
+<span class="hljs-comment">// 用法：</span>
+<span class="hljs-comment">// grunt foo bar</span>
+<span class="hljs-comment">//   没有输出，因为"foo"失败。</span>
+<span class="hljs-comment">//   ***Note: This is an example of space-separated sequential commands,</span>
+<span class="hljs-comment">//   (similar to executing two lines of code: `grunt foo` then `grunt bar`)</span>
+<span class="hljs-comment">// grunt bar</span>
+<span class="hljs-comment">//   没有输出，因为"foo"从未运行。</span></code></pre>
+<p>如果任务需要的配置属性不存在，其也可能失败。</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'My "foo" task.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// Fail task if "meta.name" config prop is missing</span>
+  <span class="hljs-comment">// Format 1: String</span>
+  grunt.config.requires(<span class="hljs-string">'meta.name'</span>);
+  <span class="hljs-comment">// or Format 2: Array</span>
+  grunt.config.requires([<span class="hljs-string">'meta'</span>, <span class="hljs-string">'name'</span>]);
+  <span class="hljs-comment">// Log... conditionally.</span>
+  grunt.log.writeln(<span class="hljs-string">'This will only log if meta.name is defined in the config.'</span>);
+});</code></pre>
+<p>任务还可以访问配置属性。</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'My "foo" task.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// 记录属性值，如果属性未定义（undefined）则返回null。</span>
+  grunt.log.writeln(<span class="hljs-string">'The meta.name property is: '</span> + grunt.config(<span class="hljs-string">'meta.name'</span>));
+  <span class="hljs-comment">// 同样的记录属性值，如果属性未定义（undefined）则返回null。</span>
+  grunt.log.writeln(<span class="hljs-string">'The meta.name property is: '</span> + grunt.config([<span class="hljs-string">'meta'</span>, <span class="hljs-string">'name'</span>]));
+});</code></pre>
+<p>在 <a href="https://github.com/gruntjs/">contrib tasks</a> 中可以查看更多案例。</p>
+<h2><a class="anchor" href="#cli" id="cli"></a>CLI 参数 / 环境</h2>
+<p>通过 <code>process.env</code> 来访问<a href="https://en.wikipedia.org/wiki/Environment_variable">环境变量</a>。</p>
+<p>请参考 <a href="https://gruntjs.com/using-the-cli">使用命令行工具</a>章节，查看完整的的命令行选项列表。</p>
+<h2><a class="anchor" href="#task" id="task"></a>为什么我的异步task没有完成？</h2>
+<p>Chances are this is happening because you have forgotten to call the <a href="https://gruntjs.com/api/inside-tasks#this.async">this.async</a> method to tell Grunt that your task is asynchronous. For simplicity&#39;s sake, Grunt uses a synchronous coding style, which can be switched to asynchronous by calling <code>this.async()</code> within the task body.</p>
+<p>注意，传递 <code>false</code> 给 <code>done()</code> 函数就会告诉Grunt你的任务已经失败。</p>
+<p>例如：</p>
+<pre><code class="lang-js">grunt.registerTask(<span class="hljs-string">'asyncme'</span>, <span class="hljs-string">'My asynchronous task.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> done = <span class="hljs-keyword">this</span>.async();
+  doSomethingAsync(done);
+});</code></pre>
+<h2>额外参考资料</h2>
+<p>如果你需要更多参考资料来创建自己的 task ，请参考 <a href="https://gruntjs.com/api">API</a> 文档。</p>
+<div class="end-link">Found an error in the documentation?
+<a href='https://github.com/gruntjs/grunt-docs/issues'>File an issue</a>.</div></div></div><div class="span3"><div class="well sidebar-nav"><ul class="nav nav-list"><li class="nav-header"><i class="icon-file-text"></i><span>Documentation</span></li><li><a href="/getting-started">Getting Started</a></li><li><a href="/configuring-tasks">Configuring Tasks</a></li><li><a href="/sample-gruntfile">Sample Gruntfile</a></li><li><a class="active" href="/creating-tasks">Creating Tasks</a></li><li><a href="/creating-plugins">Creating Plugins</a></li><li><a href="/using-the-cli">Using the CLI</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Advanced</span></li><li><a href="/api">API</a></li><li><a href="/installing-grunt">Installing Grunt</a></li><li><a href="/frequently-asked-questions">Frequently Asked Questions</a></li><li><a href="/project-scaffolding">Project Scaffolding</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Community</span></li><li><a href="/help-resources">Help Resources</a></li><li><a href="/who-uses-grunt">Who uses Grunt</a></li><li><a href="/built-with-grunt-badge">Built with Grunt Badge</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Migration guides</span></li><li><a href="/upgrading-from-0.3-to-0.4">Upgrading from 0.3 to 0.4</a></li><li><a href="/upgrading-from-0.4-to-1.0">Upgrading from 0.4 to 1.0</a></li></ul><div class="advertisements"><script>var m3_u = (location.protocol=='https:'?'https://revive.bocoup.com/www/delivery/ajs.php':'http://revive.bocoup.com/www/delivery/ajs.php');var m3_r = Math.floor(Math.random()*99999999999);if (!document.MAX_used) document.MAX_used = ',';document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);document.write ("?zoneid=5");document.write ('&amp;cb=' + m3_r);if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));document.write ("&amp;loc=" + escape(window.location));if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));if (document.context) document.write ("&context=" + escape(document.context));if (document.mmm_fo) document.write ("&amp;mmm_fo=1");document.write ("'><\/scr"+"ipt>");</script><noscript><a href='http://revive.bocoup.com/www/delivery/ck.php?n=a656788f&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://revive.bocoup.com/www/delivery/avw.php?zoneid=5&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a656788f' alt='' /></a></noscript><span class="adsbybocoup">Ads by <a href="http://bocoup.com">Bocoup</a>.</span></div></div></div></div></div></div><footer class="grunt-footer"><div class="inner"><div class="container"><ul class="pull-right"><li><a href="/blog">Blog</a></li><li><a href="/upgrading-from-0.3-to-0.4">Migration Guides</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li><li class="social"><a href="https://github.com/gruntjs/" title="Grunt on GitHub"><span class="icon-github"></span></a></li><li class="social"><a href="https://twitter.com/gruntjs/" title="Grunt on Twitter"><span class="icon-twitter"></span></a></li><li class="social"><a href="/rss" title="Grunt blog RSS feed"><span class="icon-rss"></span></a></li></ul></div></div></footer><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34623937-1', 'gruntjs.com');
+ga('send', 'pageview');</script></body></html>

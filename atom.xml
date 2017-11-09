@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?><feed xmlns="http://www.w3.org/2005/Atom"><title>Grunt Blog Feed</title><link href="https://gruntjs.com/rss" rel="self"></link><link href="https://gruntjs.com/"></link><updated>2016-04-04T00:00:00.000Z</updated><id>https://gruntjs.com/</id><entry><title> Grunt 1.0.0 released</title><link href="https://gruntjs.com/blog/2016-04-04-grunt-1.0.0-released"></link><content type="html"><![CDATA[
+<p>The Grunt team is pleased to announce the release Grunt <code>1.0.0</code>.</p>
+<p>This release is made possible by <a href="https://github.com/shama">@shama</a>, <a href="https://github.com/vladikoff">@vladikoff</a>, <a href="https://github.com/jkaussieskater">@jkaussieskater</a>, <a href="https://github.com/dmethvin">@dmethvin</a>.</p>
+<p>Also thanks to contributions by <a href="https://github.com/XhmikosR">@XhmikosR</a>, <a href="https://github.com/AurelioDeRosa">@AurelioDeRosa</a>, <a href="https://github.com/Arkni">@Arkni</a>, <a href="https://github.com/arithmetric">@arithmetric</a>, <a href="https://github.com/ascripcaru">@ascripcaru</a>.</p>
+<p><strong>Be advised Grunt <code>1.0.0</code> will no longer support Node.js v0.8.</strong></p>
+<p>We ask you to test this release and <a href="https://github.com/gruntjs/grunt/issues">report any issues</a> you are experiencing.</p>
+<p>Update to Grunt 1.0.0 today using:</p>
+<blockquote>
+<p>npm install grunt@1.0.0 --save-dev</p>
+</blockquote>
+<p><strong><a href="https://gruntjs.com/blog/2016-02-11-grunt-1.0.0-rc1-released">Please read the RC1 blog post</a> for more details about changes to Grunt with version 1.0.</strong></p>
+<h2>Peer Dependencies</h2>
+<p>If you have a Grunt plugin that includes <code>grunt</code> in the <code>peerDependencies</code> section of your <code>package.json</code>, we recommend tagging with <code>&quot;grunt&quot;: &quot;&gt;=0.4.0&quot;</code>.
+Otherwise for npm@2 users <code>grunt@1.0.0</code> will receive a hard error when trying to install your plugin and npm@3 users will get a warning.
+We have sent over two thousand pull requests to existing plugins to make this change.</p>
+<p><strong>We ask you to send pull requests to your favourite plugins and ask them to update the <code>peerDependencies</code> section of their <code>package.json</code>.</strong></p>
+<h2>Changes in 1.0.0</h2>
+<ul>
+<li>Prevent async callback from being called multiple times. Pull #1464.</li>
+<li>Update copyright to jQuery Foundation and remove redundant headers. Fixes #1478.</li>
+<li>Update glob to 7.0.x. Fixes #1467.</li>
+<li>Removing duplicate BOM strip code. Pull #1482.</li>
+<li>Updated to latest cli ~1.2.0</li>
+<li>Ensure a grunt bin gets created upon install.</li>
+</ul>
+<h3>Changes in RC1</h3>
+<ul>
+<li><code>coffee-script</code> is upgraded to <code>~1.10.0</code> which could incur breaking changes
+when using the language with plugins and Gruntfiles.</li>
+<li><code>nopt</code> is upgraded to <code>~3.0.6</code> which has fixed many issues, including passing
+multiple arguments and dealing with numbers as options. Be aware previously
+<code>--foo bar</code> used to pass the value <code>&#39;bar&#39;</code> to the option <code>foo</code>. It will now
+set the option <code>foo</code> to <code>true</code> and run the task <code>bar</code>.</li>
+<li><code>glob</code> is upgraded to <code>~6.0.4</code> and <code>minimatch</code> is upgraded to <code>~3.0.0</code>. Results
+are now sorted by default with <code>grunt.file.expandMapping()</code>. Pass the
+<code>nosort: true</code> option if you don&#39;t want the results to be sorted.</li>
+<li><code>lodash</code> was upgraded to <code>~4.3.0</code>. Many changes have occurred. Some of which
+that directly effect Grunt are <code>grunt.util._.template()</code> returns a compile
+function and <code>grunt.util._.flatten</code> no longer flattens deeply.
+<code>grunt.util._</code> is deprecated and we highly encourage you to
+<code>npm install lodash</code> and <code>var _ = require(&#39;lodash&#39;)</code> to use <code>lodash</code>.
+Please see the lodash changelog for a full list of changes: <a href="https://github.com/lodash/lodash/wiki/Changelog">https://github.com/lodash/lodash/wiki/Changelog</a></li>
+<li><code>iconv-lite</code> is upgraded to <code>~0.4.13</code> and strips the BOM by default.</li>
+<li><code>js-yaml</code> is upgraded to <code>~3.5.2</code> and may affect <code>grunt.file.readYAML</code>.
+We encourage you to please <code>npm install js-yaml</code> and use
+<code>var YAML = require(&#39;js-yaml&#39;)</code> directly in case of future deprecations.</li>
+<li>A file <code>mode</code> option can be passed into
+<a href="https://gruntjs.com/api/grunt.file#grunt.file.write">grunt.file.write()</a>.</li>
+<li><code>Done, without errors.</code> was changed to <code>Done.</code> to avoid failing by mistake on the word <code>errors</code>.</li>
+</ul>
+<p>As we mentioned before, we are also looking for contributors to all <a href="https://github.com/gruntjs/">Grunt repositories</a> and are willing to mentor you to get more experience with open source.</p>
+<p><a href="https://gruntjs.com/blog/2016-04-04-grunt-1.0.0-released" rel="nofollow">Read more</a></p>]]></content><id>tag:2016-04-04-grunt-1.0.0-released,2016-04-04:/20160404000000000,2016-04-04T08:00:00-08:00</id><updated>2016-04-04T00:00:00.000Z</updated><author><name>Grunt Team</name></author></entry><entry><title> Grunt 1.0.0 rc1 released</title><link href="https://gruntjs.com/blog/2016-02-11-grunt-1.0.0-rc1-released"></link><content type="html"><![CDATA[
+<p><strong>The Grunt team is pleased to announce the first release candidate for <code>1.0.0</code>.</strong></p>
+<p>This release is made possible by <a href="https://github.com/shama">@shama</a>, <a href="https://github.com/vladikoff">@vladikoff</a>, <a href="https://github.com/jkaussieskater">@jkaussieskater</a>. With support from the jQuery foundation, in particular <a href="https://github.com/dmethvin">@dmethvin</a> and <a href="https://github.com/aulvi">@aulvi</a>.</p>
+<p>Also thanks to contributions by <a href="https://github.com/XhmikosR">@XhmikosR</a>, <a href="https://github.com/paladox">@paladox</a>, <a href="https://github.com/FredyC">@FredyC</a>, <a href="https://github.com/sindresorhus">@sindresorhus</a>, <a href="https://github.com/mrjoelkemp">@mrjoelkemp</a> and more.</p>
+<p>This release focuses on fixing critical issues and improved support with Node.js
+v0.10, v0.12, v4.0, v5.0 and io.js on Windows, OSX and Linux. We ask you to test the <code>rc1</code> and <a href="https://github.com/gruntjs/grunt/issues">report any issues</a> you are experiencing.</p>
+<blockquote>
+<p>npm install grunt@1.0.0-rc1 --save-dev</p>
+</blockquote>
+<p>Be advised Grunt <code>1.0.0</code> will no longer support Node.js v0.8.</p>
+<h2>Peer Dependencies</h2>
+<p>If you have a Grunt plugin that includes <code>grunt</code> in the <code>peerDependencies</code> section of your <code>package.json</code>, we recommend tagging with <code>&quot;grunt&quot;: &quot;&gt;=0.4.0&quot;</code>. Otherwise when <code>grunt@1.0.0</code> is released, npm@2 users will receive a hard error when trying to install your plugin and npm@3 users will get a warning.</p>
+<p>Be aware, peer dependencies are no longer installed for users as of npm@3. Users of Grunt plugins are expected to <code>npm install grunt --save-dev</code> alongside any Grunt plugin install.</p>
+<p><strong>We ask you to send pull requests to your favourite plugins and ask them to update the <code>peerDependencies</code> section of their <code>package.json</code>.</strong></p>
+<h2>Request For Comments</h2>
+<p>We have created an <a href="https://github.com/gruntjs/rfcs">new repo</a> to encourage
+members of the community interested in shaping the future of Grunt to submit a
+RFC.</p>
+<p>Submitting an RFC will allow you to formally propose a significant change to
+Grunt and elicit feedback from the core team and community.</p>
+<p>The active proposals will help portray the future roadmap for Grunt and hopefully
+expedite community contributions into future Grunt releases.</p>
+<h2>npm scripts</h2>
+<p>We now install <code>grunt-cli</code> as part of <code>grunt</code>. Many users do not wish to perform
+the extra step of <code>npm install grunt-cli -g</code>. To better conform to the idioms
+of Node.js, you can now <code>npm install grunt --save-dev</code> then include Grunt in your
+npm scripts:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">"scripts"</span>: {
+    <span class="hljs-string">"grunt"</span>: <span class="hljs-string">"grunt"</span>
+  }
+}</code></pre>
+<p>Your users now only have to <code>npm install</code> and <code>npm run grunt</code> to run your
+<code>Gruntfile.js</code>.</p>
+<p>Users on <code>npm &gt;= 2.0.0</code> can also pass tasks and options with:
+<code>npm run grunt -- task --option=foo</code> which is equivalent to
+<code>grunt task --option=foo</code>.</p>
+<p>If you would like the <code>grunt</code> command on your computer, please continue to
+<code>npm install grunt-cli -g</code> and use as before.</p>
+<h2>API Changes</h2>
+<p>Be aware, some APIs have changed warranting a major version update:</p>
+<ul>
+<li><code>coffee-script</code> is upgraded to <code>~1.10.0</code> which could incur breaking changes
+when using the language with plugins and Gruntfiles.</li>
+<li><code>nopt</code> is upgraded to <code>~3.0.6</code> which has fixed many issues, including passing
+multiple arguments and dealing with numbers as options. Be aware previously
+<code>--foo bar</code> used to pass the value <code>&#39;bar&#39;</code> to the option <code>foo</code>. It will now
+set the option <code>foo</code> to <code>true</code> and run the task <code>bar</code>.</li>
+<li><code>glob</code> is upgraded to <code>~6.0.4</code> and <code>minimatch</code> is upgraded to <code>~3.0.0</code>. Results
+are now sorted by default with <code>grunt.file.expandMapping()</code>. Pass the
+<code>nosort: true</code> option if you don&#39;t want the results to be sorted.</li>
+<li><code>lodash</code> was upgraded to <code>~4.3.0</code>. Many changes have occurred. Some of which
+that directly affect Grunt are <code>grunt.util._.template()</code> returns a compile
+function and <code>grunt.util._.flatten</code> no longer flattens deeply.
+<code>grunt.util._</code> is deprecated and we highly encourage you to
+<code>npm install lodash</code> and <code>var _ = require(&#39;lodash&#39;)</code> to use <code>lodash</code>.
+Please see the lodash changelog for a full list of changes: <a href="https://github.com/lodash/lodash/wiki/Changelog">https://github.com/lodash/lodash/wiki/Changelog</a></li>
+<li><code>iconv-lite</code> is upgraded to <code>~0.4.13</code> and strips the BOM by default.</li>
+<li><code>js-yaml</code> is upgraded to <code>~3.5.2</code> and may affect <code>grunt.file.readYAML</code>.
+We encourage you to please <code>npm install js-yaml</code> and use
+<code>var YAML = require(&#39;js-yaml&#39;)</code> directly in case of future deprecations.</li>
+<li>A file <code>mode</code> option can be passed into
+<a href="https://gruntjs.com/api/grunt.file#grunt.file.write">grunt.file.write()</a>.</li>
+<li><code>Done, without errors.</code> was changed to <code>Done.</code> to avoid failing by mistake on the word <code>errors</code>.</li>
+</ul>
+<p>We encourage you to try out this release.</p>
+<p>We are also looking for contributors to all <a href="https://github.com/gruntjs/">Grunt repositories</a> and are willing to mentor you to get more experience with open source.</p>
+<p><a href="https://gruntjs.com/blog/2016-02-11-grunt-1.0.0-rc1-released" rel="nofollow">Read more</a></p>]]></content><id>tag:2016-02-11-grunt-1.0.0-rc1-released,2016-02-11:/20160211000000000,2016-02-11T08:00:00-08:00</id><updated>2016-02-11T00:00:00.000Z</updated><author><name>Grunt Team</name></author></entry><entry><title> Grunt 0.4.5 released</title><link href="https://gruntjs.com/blog/2014-05-12-grunt-0.4.5-released"></link><content type="html"><![CDATA[
+<p>Grunt 0.4.5 is now available on <a href="https://www.npmjs.org/package/grunt">npm</a>.</p>
+<p>Thanks to <a href="https://github.com/garyb">Gary Burgess</a>, <a href="https://github.com/jmeas">James Smith</a> and <a href="https://github.com/ceoaliongroo">Carlos Mantilla</a> for their patches. Also, thanks to <a href="https://github.com/vladikoff">Vlad Filippov</a> for helping triage issues, troubleshooting Windows CI testing and putting together the changelog.</p>
+<p>In this release, we closed around a dozen issues, added the much-requested <a href="https://gruntjs.com/api/grunt.task#grunt.task.exists">grunt.task.exists</a> and <a href="https://gruntjs.com/api/grunt.config#grunt.config.merge">grunt.config.merge</a> methods, and set up Windows CI testing through <a href="http://www.appveyor.com/">AppVeyor</a>. Additionally, the logging API has been broken out into a separate module, <a href="https://github.com/gruntjs/grunt-legacy-log">grunt-legacy-log</a>, in order to facilitate maintenance.</p>
+<p>For a full list of changes, see the <a href="https://github.com/gruntjs/grunt/blob/v0.4.5/CHANGELOG">0.4.5 changelog</a>.</p>
+<p>Additionally, we have accepted a number of patches for <a href="https://gruntjs.com/plugins/contrib">Grunt contrib plugins</a> and would like to thank <a href="https://github.com/kevva">Kevin Mårtensson</a>, <a href="https://github.com/futekov">Alexander Futekov</a>, <a href="https://github.com/shinnn">Shinnosuke Watanabe</a>, <a href="https://github.com/simshanith">Shane Daniel</a>, <a href="https://github.com/sapegin">Artem Sapegin</a>, <a href="https://github.com/cpojer">Christoph Pojer</a>, <a href="https://github.com/echaozh">Zhang Yichao</a>, <a href="https://github.com/soundasleep">Jevon Wright</a>, <a href="https://github.com/Jacse">Jacob Lauritzen</a>, <a href="https://github.com/XhmikosR">XhmikosR</a> and <a href="https://github.com/eschwartz">Edan Schwartz</a> for their contributions.</p>
+<p><strong>Happy Grunting!</strong></p>
+<p><a href="https://gruntjs.com/blog/2014-05-12-grunt-0.4.5-released" rel="nofollow">Read more</a></p>]]></content><id>tag:2014-05-12-grunt-0.4.5-released,2014-05-12:/20140512000000000,2014-05-12T08:00:00-08:00</id><updated>2014-05-12T00:00:00.000Z</updated><author><name>Grunt Team</name></author></entry><entry><title> Grunt 0.4.4 released</title><link href="https://gruntjs.com/blog/2014-03-14-grunt-0.4.4-released"></link><content type="html"><![CDATA[
+<p>Grunt 0.4.4 is now available on <a href="https://www.npmjs.org/package/grunt">npm</a>.</p>
+<p>This release fixes a <a href="https://github.com/gruntjs/grunt/pull/1026">regression</a> that was introduced in version 0.4.3.</p>
+<p>See the changelog <a href="https://github.com/gruntjs/grunt/blob/v0.4.4/CHANGELOG">here</a>.</p>
+<p><a href="https://gruntjs.com/blog/2014-03-14-grunt-0.4.4-released" rel="nofollow">Read more</a></p>]]></content><id>tag:2014-03-14-grunt-0.4.4-released,2014-03-14:/20140314000000000,2014-03-14T08:00:00-08:00</id><updated>2014-03-14T00:00:00.000Z</updated><author><name>Grunt Team</name></author></entry><entry><title> Grunt 0.4.3 released</title><link href="https://gruntjs.com/blog/2014-03-07-grunt-0.4.3-released"></link><content type="html"><![CDATA[
+<p>Grunt 0.4.3 is now available on <a href="https://www.npmjs.org/package/grunt">npm</a>.</p>
+<p>This is mostly a bugfix release. Thanks to <a href="https://github.com/jonykrause">Jonathan Krause</a>,
+<a href="https://github.com/gdi2290">PatrickJS</a>, <a href="https://github.com/GlobalDomestic">Jason Cust</a>,
+<a href="https://github.com/piuccio">Fabio Crisci</a>, <a href="https://github.com/JamesMGreene">James M. Greene</a>
+and <a href="https://github.com/jugglinmike">Mike Pennisi</a> for their pull requests.</p>
+<p>In addition to closing over 30 issues, we have extracted <code>grunt.util</code> into
+<a href="https://github.com/gruntjs/grunt-legacy-util">its own module</a>. As mentioned
+in the <a href="https://gruntjs.com/blog/2013-11-21-grunt-0.4.2-released">0.4.2</a> release,
+we are in process of deprecating the <code>grunt.util.*</code> API. Task developers who use
+these APIs should update their plugins to use the libraries recommended in
+the <a href="https://github.com/gruntjs/grunt-legacy-util">grunt-legacy-util</a> README.
+You may use <code>grunt-legacy-util</code> directly as a stopgap, but we will no longer be supporting it.</p>
+<p>For a full list of changes, see the 0.4.3 changelog <a href="https://github.com/gruntjs/grunt/blob/v0.4.3/CHANGELOG">here</a>.</p>
+<p><strong>Happy Grunting!</strong></p>
+<p><a href="https://gruntjs.com/blog/2014-03-07-grunt-0.4.3-released" rel="nofollow">Read more</a></p>]]></content><id>tag:2014-03-07-grunt-0.4.3-released,2014-03-07:/20140307000000000,2014-03-07T08:00:00-08:00</id><updated>2014-03-07T00:00:00.000Z</updated><author><name>Grunt Team</name></author></entry><entry><title> Grunt 0.4.2 released</title><link href="https://gruntjs.com/blog/2013-11-21-grunt-0.4.2-released"></link><content type="html"><![CDATA[
+<p>Grunt 0.4.2 is now available on <a href="https://www.npmjs.org/package/grunt">npm</a>.</p>
+<p>This release should address a lot of issues for Windows developers, such as pipe-redirection, console output and BOM preservation.</p>
+<p>Besides a number of bug fixes, we have made a few decisions going forward regarding external dependencies in Grunt. <strong>These external libraries are deprecated and should now be required as npm modules:</strong></p>
+<ul>
+<li>Use <a href="https://www.npmjs.org/package/glob">glob</a> instead of <code>grunt.file.glob</code></li>
+<li>Use <a href="https://www.npmjs.org/package/minimatch">minimatch</a> instead of <code>grunt.file.minimatch</code></li>
+<li>Use <a href="https://www.npmjs.org/package/findup">findup</a> instead of <code>grunt.file.findup</code></li>
+<li>Use <a href="https://www.npmjs.org/package/lodash">lodash</a> instead of <code>grunt.util._</code></li>
+<li>Use <a href="https://www.npmjs.org/package/underscore.string">underscore.string</a> instead of <code>grunt.util._.str</code></li>
+<li>Use <a href="https://www.npmjs.org/package/hooker">hooker</a> instead of <code>grunt.util.hooker</code></li>
+<li>Use <a href="https://www.npmjs.org/package/async">async</a> instead of <code>grunt.util.async</code></li>
+<li>Use <a href="https://github.com/cowboy/node-getobject">getobject</a> instead of <code>grunt.util.namespace</code></li>
+</ul>
+<p>If you want to use these external libraries in your tasks, please install them as you would <a href="https://gruntjs.com/getting-started#installing-grunt-and-gruntplugins">Grunt or any Grunt plugin</a> using <code>npm install &lt;module&gt; --save-dev</code>. For example, if you used <code>grunt.util._</code> before, you&#39;ll now require <a href="http://lodash.com/">Lo-Dash</a> instead with <code>npm install lodash --save-dev</code>.</p>
+<pre><code class="lang-js"><span class="hljs-comment">// Then change this code:</span>
+<span class="hljs-keyword">var</span> newArr = grunt.util._.map(arr, fn);
+
+<span class="hljs-comment">// To this:</span>
+<span class="hljs-keyword">var</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>);
+<span class="hljs-keyword">var</span> newArr = _.map(arr, fn);</code></pre>
+<p>The team is also looking for feedback about the future of Grunt, so if you have time, please join the 0.5.0 milestone
+<a href="https://github.com/gruntjs/grunt/issues?direction=desc&amp;milestone=7&amp;page=1&amp;sort=updated&amp;state=open">discussions</a>.</p>
+<p>See the 0.4.2 changelog <a href="https://github.com/gruntjs/grunt/blob/v0.4.2/CHANGELOG">here</a>.</p>
+<p><strong>Happy Grunting!</strong></p>
+<p><a href="https://gruntjs.com/blog/2013-11-21-grunt-0.4.2-released" rel="nofollow">Read more</a></p>]]></content><id>tag:2013-11-21-grunt-0.4.2-released,2013-11-21:/20131121000000000,2013-11-21T08:00:00-08:00</id><updated>2013-11-21T00:00:00.000Z</updated><author><name>Grunt Team</name></author></entry><entry><title> Grunt 0.4.1 released</title><link href="https://gruntjs.com/blog/2013-03-13-grunt-0.4.1-released"></link><content type="html"><![CDATA[
+<p>Grunt 0.4.1 is now available from <a href="https://www.npmjs.org/package/grunt">npm</a>.</p>
+<p>This patch release fixes a number of minor issues that cropped up with the recent release of <a href="http://blog.nodejs.org/2013/03/11/node-v0-10-0-stable/">Node.js v0.10.0</a>, most notably due to changes in the <a href="https://nodejs.org/api/path.html">path</a> API. If you want to use the latest version of Node.js in your projects, you should probably update Grunt to <code>~0.4.1</code> in the <a href="https://gruntjs.com/getting-started#package.json">package.json</a> file for those projects.</p>
+<p>Either way, Grunt still works with Node.js v0.8.x, so you don&#39;t <em>need</em> to update if you haven&#39;t upgraded to Node.js v0.10.0.</p>
+<p>In addition to the Node.js v0.10.0 changes, we used this opportunity to fix a number of other small issues, like properly handling multibyte I/O when spawning child processes and ensuring the <a href="https://gruntjs.com/getting-started#the-gruntfile">Gruntfile</a> name is case-insensitive. For a complete list of changes, see the <a href="https://github.com/gruntjs/grunt/compare/v0.4.0...v0.4.1">v0.4.0 - v0.4.1 changelog</a>.</p>
+<p><a href="https://gruntjs.com/blog/2013-03-13-grunt-0.4.1-released" rel="nofollow">Read more</a></p>]]></content><id>tag:2013-03-13-grunt-0.4.1-released,2013-03-13:/20130313000000000,2013-03-13T08:00:00-08:00</id><updated>2013-03-13T00:00:00.000Z</updated><author><name>Grunt Team</name></author></entry><entry><title> Grunt 0.4.0 released</title><link href="https://gruntjs.com/blog/2013-02-18-grunt-0.4.0-released"></link><content type="html"><![CDATA[
+<p>As of this morning, Grunt v0.4 final is available on npm! For a lengthy writeup on the release, please see <a href="http://goingslowly.com">@tkellen&#39;s</a> article <a href="http://weblog.bocoup.com/tearing-grunt-apart/">on the Bocoup blog</a>.</p>
+<h3>The Biggest Stuff</h3>
+<ol>
+<li>Grunt no longer ships with built in tasks. They&#39;ve been extracted into officially maintained, standalone plugins under the grunt-contrib namespace. See the <a href="https://gruntjs.com/plugins">plugin listing</a> on our website for more details.</li>
+<li>Grunt no longer ships with a binary. In order to get the <code>grunt</code> command, install <a href="https://github.com/gruntjs/grunt-cli">grunt-cli</a> globally with <code>npm install -g grunt-cli</code>. This package will run any version of Grunt (including 0.3x) after it&#39;s been installed locally to your project.</li>
+</ol>
+<h3>The Future</h3>
+<p>Grunt v0.5 will ship with support for a new plugin format called <a href="https://github.com/tkellen/node-task">node-task</a>. It defines a stateless, promise-based, event emitting API that doesn&#39;t depend on Grunt. It has a real-live spec, and the Grunt team is working with the front-end developer community in the hopes that compliant modules will be compatible with every task runner under the sun.</p>
+<h3>Grunt on</h3>
+<p>If you&#39;d like to know more about Grunt, please read our <a href="https://gruntjs.com/getting-started">Getting Started Guide</a>, and check out all of the ways you can <a href="https://gruntjs.com/configuring-tasks">configure your tasks</a>, too.</p>
+<p><a href="https://gruntjs.com/blog/2013-02-18-grunt-0.4.0-released" rel="nofollow">Read more</a></p>]]></content><id>tag:2013-02-18-grunt-0.4.0-released,2013-02-18:/20130218000000000,2013-02-18T08:00:00-08:00</id><updated>2013-02-18T00:00:00.000Z</updated><author><name>Grunt Team</name></author></entry><entry><title> Updating plugins to Grunt 0.4</title><link href="https://gruntjs.com/blog/2013-02-15-updating-plugins-to-grunt-0.4"></link><content type="html"><![CDATA[
+<p>If your plugin is not already Grunt 0.4 compatible, would you please consider updating it? For an overview of what&#39;s changed, please see our <a href="https://github.com/gruntjs/grunt/wiki/Upgrading-from-0.3-to-0.4">migration guide</a>.</p>
+<p>If you&#39;d like to develop against the final version of Grunt before Monday, please specify <code>&quot;grunt&quot;: &quot;0.4.0rc8&quot;</code> as a devDependency in your project. After Monday&#39;s release, you&#39;ll be able to use <code>&quot;grunt&quot;: &quot;~0.4.0&quot;</code> to actually publish your plugin. If you depend on any plugins from the grunt-contrib series, please see our <a href="https://github.com/gruntjs/grunt/wiki/Plugin-Release-Candidate-Versions">list of release candidates</a> for compatible versions. All of these will be updated to final status when Grunt 0.4 is published.</p>
+<p>Also, in an effort to reduce duplication of effort and fragmentation in the developer community, could you review the <a href="https://github.com/gruntjs">grunt-contrib</a> series of plugins to see if any of your functionality overlaps significantly with them? Grunt-contrib is community maintained with 40+ contributors—we&#39;d love to discuss any additions you&#39;d like to make.</p>
+<p>Finally, we&#39;re working on a new task format that doesn&#39;t depend on Grunt: it&#39;s called <a href="https://github.com/tkellen/node-task">node-task</a>. Once this is complete, there will be one more conversion, and then we&#39;ll never ask you to upgrade your plugins to support our changes again. Until that happens, thanks for bearing with us!</p>
+<p>If you have any questions about how to proceed, please respond here, or join us in <code>#grunt on irc.freenode.net</code>.</p>
+<p>Thanks, we really appreciate your work!</p>
+<p><a href="https://gruntjs.com/blog/2013-02-15-updating-plugins-to-grunt-0.4" rel="nofollow">Read more</a></p>]]></content><id>tag:2013-02-15-updating-plugins-to-grunt-0.4,2013-02-15:/20130215000000000,2013-02-15T08:00:00-08:00</id><updated>2013-02-15T00:00:00.000Z</updated><author><name>Grunt Team</name></author></entry></feed>

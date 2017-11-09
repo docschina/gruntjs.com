@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>grunt.file - Grunt: The JavaScript Task Runner</title><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"><link rel="stylesheet" href="/css/main.css"><link rel="apple-touch-icon" href="/img/favicons/apple-touch-icon.png" sizes="180x180"><link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="/img/favicons/manifest.json"><link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#e48632"><link rel="shortcut icon" href="/img/favicons/favicon.ico" type="image/x-icon"><meta name="msapplication-config" content="/img/favicons/browserconfig.xml"><meta name="theme-color" content="#e48632"><meta property="og:title" content="grunt.file - Grunt: The JavaScript Task Runner"><meta property="og:type" content="website"><meta property="og:url" content="https://gruntjs.com/"><meta property="og:image" content="https://gruntjs.com/img/og.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="256"><meta property="og:image:height" content="256"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@gruntjs"><meta name="twitter:site" content="@gruntjs"><meta name="twitter:title" content="grunt.file - Grunt: The JavaScript Task Runner"><meta itemprop="name" content="Grunt"><meta itemprop="image" content="/img/og.png"><link href="/rss" rel="alternate" title="Grunt Blog Feed" type="application/atom+xml"></head><body class="page-api page-secondary"><div class="navbar navbar-inverse"><div class="navbar-inner"><div class="container"><a class="brand" href="/"><span class="logo"></span></a><div class="nav-collapse collapse"><ul class="nav"><li><a href="/getting-started"><i class="icon-arrow-right"></i><span>Getting Started</span></a></li><li><a href="/configuring-tasks"><i class="icon-cog"></i><span>Configuring Tasks</span></a></li><li><a href="/plugins"><i class="icon-power-cord"></i><span>Plugins</span></a></li><li><a href="/getting-started"><i class="icon-file-text"></i><span>Documentation</span></a></li></ul><form class="navbar-search pull-right"><input class="search-query" type="text" placeholder="Search"></form></div><!--.nav-collapse--></div></div></div><div class="content"><div class="container grunt.file"><div class="row-fluid"><div class="span9 page"><div class="hero-unit"><h1>grunt.file</h1><h1><a class="anchor" href="#grunt.file" id="grunt.file"></a>grunt.file</h1>
+<p>这里提供了很多用于读写文件、遍历文件系统和通过模式匹配查找文件的方法。其中很多方法都是Node.js中的文件操作函数的封装，但是提供了额外的错误处理、日志记录和字符编码转换。 </p>
+<p><em>注意：所有的文件路径都是参照 <code>Gruntfile</code> 文件的相对路径，除非通过 <code>grunt.file.setBase</code> 函数或在命令行中指定 <code>--base</code> 参数改变当前工作目录。</em></p>
+<h2>字符编码</h2>
+<h3><a class="anchor" href="#grunt.file.defaultencoding" id="grunt.file.defaultencoding"></a>grunt.file.defaultEncoding</h3>
+<p>设置此属性可以改变所有 <code>grunt.file</code> 方法的默认编码。默认是 <code>&#39;utf8&#39;</code>。如果必须改变这个值，建议你在Gruntfile文件中尽可能早改变。</p>
+<pre><code class="lang-js">grunt.file.defaultEncoding = <span class="hljs-string">'utf8'</span>;</code></pre>
+<h3><a class="anchor" href="#grunt.file.preservebom" id="grunt.file.preservebom"></a>grunt.file.preserveBOM</h3>
+<p><em>添加于 0.4.2 版本</em></p>
+<p>是否在 <code>file.read</code> 时保留字节顺序标记（BOM）。</p>
+<pre><code class="lang-js">grunt.file.preserveBOM = <span class="hljs-literal">false</span>;</code></pre>
+<h2>读写文件</h2>
+<h3><a class="anchor" href="#grunt.file.read" id="grunt.file.read"></a>grunt.file.read</h3>
+<p>读取并返回文件的内容。返回值为一个字符串，如果 <code>options.encoding</code> 为 <code>null</code> ，则返回一个 <a href="https://nodejs.org/docs/latest/api/buffer.html">Buffer</a>。</p>
+<pre><code class="lang-js">grunt.file.read(filepath [, options])</code></pre>
+<p><code>options</code> 对象可以设置以下属性： </p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> options = {
+  <span class="hljs-comment">// If an encoding is not specified, default to grunt.file.defaultEncoding.</span>
+  <span class="hljs-comment">// If specified as null, returns a non-decoded Buffer instead of a string.</span>
+  encoding: encodingName
+};</code></pre>
+<h3><a class="anchor" href="#grunt.file.readjson" id="grunt.file.readjson"></a>grunt.file.readJSON</h3>
+<p>读取一个文件的内容，将其按照JSON格式解析，返回结果。参见 <code>grunt.file.read</code> 获取其所支持的参数列表。</p>
+<pre><code class="lang-js">grunt.file.readJSON(filepath [, options])</code></pre>
+<h3><a class="anchor" href="#grunt.file.readyaml" id="grunt.file.readyaml"></a>grunt.file.readYAML</h3>
+<p>读取一个文件的内容，将其按照YAML格式解析，返回结果。参见 <code>grunt.file.read</code> 获取其所支持的参数列表。</p>
+<pre><code class="lang-js">grunt.file.readYAML(filepath [, options])</code></pre>
+<h3><a class="anchor" href="#grunt.file.write" id="grunt.file.write"></a>grunt.file.write</h3>
+<p>将指定的内容写入文件中，如果需要，将创建文件路径中所有不存在的目录。字符串将按照指定的字符编码进行编码，<a href="https://nodejs.org/docs/latest/api/buffer.html">Buffers</a> 将会按照指定的方式写入磁盘。</p>
+<p><em>如果指定了 <code>--no-write</code> 命令行参数，将不会真正写入文件。</em></p>
+<pre><code class="lang-js">grunt.file.write(filepath, contents [, options])</code></pre>
+<p><code>options</code> 对象可设置以下属性：</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> options = {
+  <span class="hljs-comment">// If an encoding is not specified, default to grunt.file.defaultEncoding.</span>
+  <span class="hljs-comment">// If `contents` is a Buffer, encoding is ignored.</span>
+  encoding: encodingName
+};</code></pre>
+<h3><a class="anchor" href="#grunt.file.copy" id="grunt.file.copy"></a>grunt.file.copy</h3>
+<p>将原文件拷贝到指定路径，如果需要，将创建文件路径中所有不存在的目录</p>
+<p><em>如果指定了 <code>--no-write</code> 命令行参数，将不会真正写入文件。</em></p>
+<pre><code class="lang-js">grunt.file.copy(srcpath, destpath [, options])</code></pre>
+<p><code>options</code> 对象可设置以下属性：</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> options = {
+  <span class="hljs-comment">// If an encoding is not specified, default to grunt.file.defaultEncoding.</span>
+  <span class="hljs-comment">// If null, the `process` function will receive a Buffer instead of String.</span>
+  encoding: encodingName,
+  <span class="hljs-comment">// The source file contents, source file path, and destination file path</span>
+  <span class="hljs-comment">// are passed into this function, whose return value will be used as the</span>
+  <span class="hljs-comment">// destination file's contents. If this function returns `false`, the file</span>
+  <span class="hljs-comment">// copy will be aborted.</span>
+  process: processFunction,
+  <span class="hljs-comment">// These optional globbing patterns will be matched against the filepath</span>
+  <span class="hljs-comment">// (not the filename) using grunt.file.isMatch. If any specified globbing</span>
+  <span class="hljs-comment">// pattern matches, the file won't be processed via the `process` function.</span>
+  <span class="hljs-comment">// If `true` is specified, processing will be prevented.</span>
+  noProcess: globbingPatterns
+};</code></pre>
+<h3><a class="anchor" href="#grunt.file.delete" id="grunt.file.delete"></a>grunt.file.delete</h3>
+<p>删除指定的文件。文件和目录会被依次递归删除。</p>
+<p><em>Will not delete the current working directory or files outside the current working directory unless the <code>--force</code> command-line option is specified.</em></p>
+<p><em>如果指定了 <code>--no-write</code> 命令行参数，那么，文件路径将不会真的被删除。</em></p>
+<pre><code class="lang-js">grunt.file.delete(filepath [, options])</code></pre>
+<p><code>options</code> 对象只可以设置以下属性：</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> options = {
+  <span class="hljs-comment">// Enable deleting outside the current working directory. This option may</span>
+  <span class="hljs-comment">// be overridden by the --force command-line option.</span>
+  force: <span class="hljs-literal">true</span>
+};</code></pre>
+<h2>目录操作</h2>
+<h3><a class="anchor" href="#grunt.file.mkdir" id="grunt.file.mkdir"></a>grunt.file.mkdir</h3>
+<p>工作方式类似 <code>mkdir -p</code>。创建一个目录和所有的中间目录。如果没有指定 <code>mode</code> ，默认是 <code>0777 &amp; (~process.umask())</code>.</p>
+<p><em>如果没有 <code>--no-write</code> 命令行参数，目录不会被真正创建。</em></p>
+<pre><code class="lang-js">grunt.file.mkdir(dirpath [, mode])</code></pre>
+<h3><a class="anchor" href="#grunt.file.recurse" id="grunt.file.recurse"></a>grunt.file.recurse</h3>
+<p>递归遍历整个目录，对每个文件都执行 <code>callback</code> 函数。</p>
+<pre><code class="lang-js">grunt.file.recurse(rootdir, callback)</code></pre>
+<p>callback 函数接收以下参数：</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callback</span>(<span class="hljs-params">abspath, rootdir, subdir, filename</span>) </span>{
+  <span class="hljs-comment">// The full path to the current file, which is nothing more than</span>
+  <span class="hljs-comment">// the rootdir + subdir + filename arguments, joined.</span>
+  abspath
+  <span class="hljs-comment">// The root director, as originally specified.</span>
+  rootdir
+  <span class="hljs-comment">// The current file's directory, relative to rootdir.</span>
+  subdir
+  <span class="hljs-comment">// The filename of the current file, without any directory parts.</span>
+  filename
+}</code></pre>
+<h2>模式匹配</h2>
+<p>有时单独指定所有原始文件路径是不现实的，因此，Grunt通过内置的<a href="https://github.com/isaacs/node-glob">node-glob</a> 库支持文件名 expansion (或者叫做 globbing)  。</p>
+<p>参见 <a href="/configuring-tasks">配置任务</a> 指南中的 &quot;Globbing patterns&quot; 章节以获取 globbing pattern 实例。</p>
+<h3><a class="anchor" href="#grunt.file.expand" id="grunt.file.expand"></a>grunt.file.expand</h3>
+<p>返回包含匹配给定通配符模式的文件或者目录路径的特殊数组。这个方法接收一个逗号分割的匹配模式或者一个匹配模式数组。如果路径匹配模式以<code>!</code>开头，它会从返回的数组排除所匹配的项。模式是按指定的顺序进行处理的， 因此包含和排除文件的顺序是很重要的。</p>
+<pre><code class="lang-js">grunt.file.expand([options, ] patterns)</code></pre>
+<p>文件路径都是参照 <code>Gruntfile</code> 文件的相对路径，除非通过 <code>grunt.file.setBase</code> 或 <code>--base</code> 命令行参数修改了当前工作目录。</p>
+<p><code>options</code> 对象支持所有 <a href="https://github.com/isaacs/minimatch">minimatch library</a> 的参数，也支持额外的一些，如下：</p>
+<ul>
+<li><code>filter</code> E接受一个有效的 <a href="https://nodejs.org/docs/latest/api/fs.html#fs_class_fs_stats">fs.Stats 方法名</a> 或者一个已经通过了<code>src</code>文件路径匹配的函数，这个函数会返回<code>true</code>或<code>false</code>。</li>
+<li><code>nonull</code> 会保留<code>src</code>匹配模式，即使文件匹配失败。结合Grunt的<code>-verbose</code>标志，这个选项有助于文件路径问题的调试。</li>
+<li><code>matchBase</code> 不带斜线的模式只会匹配基本的名称部分。例如，这会使<code>*.js</code>就像<code>**/*.js</code>一样。</li>
+<li><code>cwd</code> 会让模式相对于当前路径进行模式匹配，所有返回的文件路径也是相对于当前路径的。</li>
+</ul>
+<h3><a class="anchor" href="#grunt.file.expandmapping" id="grunt.file.expandmapping"></a>grunt.file.expandMapping</h3>
+<p>返回一个<code>src-dest</code>文件映射对象的数组。通过所指定的模式来匹配每一个源文件，然后将匹配的文件路径加入指定的<code>dest</code>中(dest存放匹配的文件路径)。这个文件路径会按照指定的选项加工或者重命名过。 查看<code>grunt.file.expand</code>方法文档可以了解如何指定<code>patterns</code>和<code>options</code></p>
+<pre><code class="lang-js">grunt.file.expandMapping(patterns, dest [, options])</code></pre>
+<p><em>注意：这个方法可以用于以编程的方式针对多任务的情况生成一个<code>files</code>数组，它会优先使用在<a href="//configuring-tasks">配置任务</a>指南中&quot;动态构建文件对象&quot;一节所描述的语法。</em></p>
+<p>除了支持那些<code>grunt.file.expand</code>方法之外，<code>options</code>对象还支持下面这些属性:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> options = {
+  <span class="hljs-comment">// The directory from which patterns are matched. Any string specified as</span>
+  <span class="hljs-comment">// cwd is effectively stripped from the beginning of all matched paths.</span>
+  cwd: <span class="hljs-built_in">String</span>,
+  <span class="hljs-comment">// Remove the path component from all matched src files. The src file path</span>
+  <span class="hljs-comment">// is still joined to the specified dest.</span>
+  flatten: <span class="hljs-built_in">Boolean</span>,
+  <span class="hljs-comment">// Remove anything after (and including) either the first or last "." in the</span>
+  <span class="hljs-comment">// destination path (indicated by options.extDot), then append this value.</span>
+  ext: <span class="hljs-built_in">String</span>,
+  <span class="hljs-comment">// *Added in 0.4.3*</span>
+  <span class="hljs-comment">// Indicates where the period demarcating the extension is located. Can take:</span>
+  <span class="hljs-comment">// - 'first' (extension begins after the first period in the file name)</span>
+  <span class="hljs-comment">// - 'last' (extension begins after the last period)</span>
+  <span class="hljs-comment">// Default: 'first'</span>
+  extDot: <span class="hljs-built_in">String</span>,
+  <span class="hljs-comment">// If specified, this function will be responsible for returning the final</span>
+  <span class="hljs-comment">// dest filepath. By default, it joins dest and matchedSrcPath like so:</span>
+  rename: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dest, matchedSrcPath, options</span>) </span>{
+    <span class="hljs-keyword">return</span> path.join(dest, matchedSrcPath);
+  }
+};</code></pre>
+<h3><a class="anchor" href="#grunt.file.match" id="grunt.file.match"></a>grunt.file.match</h3>
+<p>针对一个或者多个文件路径来匹配一个或者多个匹配模式。返回一个特殊的数组，这个数组包含与指定的通配符模式任意匹配的所有文件路径。<code>patterns</code>和<code>filepaths</code>参数可以是一个单一的字符串或者也可以是一个字符串数组.如果匹配模式以<code>!</code>开头，就会从返回的数组从排除模式匹配的路径。模式会按指定的顺序进行处理，因此包含和排除文件的顺序是重要的。</p>
+<pre><code class="lang-js">grunt.file.match([options, ] patterns, filepaths)</code></pre>
+<p><code>options</code>对象也支持<a href="https://github.com/isaacs/minimatch">minimatch库</a>提供的所有选项。例如：如果<code>options.matchBase</code>为true，即使模式中不带斜线，这个模式也会匹配包含斜线的基本名称。例如：<code>*.js</code>模式将匹配<code>path/to/file.js</code>文件路径。</p>
+<h3><a class="anchor" href="#grunt.file.ismatch" id="grunt.file.ismatch"></a>grunt.file.isMatch</h3>
+<p>这个方法与<code>grunt.file.match</code>方法包含同样的签名和逻辑，但是如果它匹配任意文件，就会简单的返回<code>ture</code>，否则返回<code>false</code>。</p>
+<h2>判断文件类型</h2>
+<h3><a class="anchor" href="#grunt.file.exists" id="grunt.file.exists"></a>grunt.file.exists</h3>
+<p>检测给定的路径是否存在，返回boolean类型的值。</p>
+<p>和Node.js 中的 <a href="https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2">path.join</a> 方法一样，此方法将所有参数连接在一起，并对结果做规范化。</p>
+<pre><code class="lang-js">grunt.file.exists(path1 [, path2 [, ...]])</code></pre>
+<h3><a class="anchor" href="#grunt.file.islink" id="grunt.file.islink"></a>grunt.file.isLink</h3>
+<p>给定的路径是否是符号链接，返回boolean类型的值。</p>
+<p>和 Node.js 中的 <a href="https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2">path.join</a> 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。</p>
+<pre><code class="lang-js">grunt.file.isLink(path1 [, path2 [, ...]])</code></pre>
+<p>如果路径不存在则返回false。</p>
+<h3><a class="anchor" href="#grunt.file.isdir" id="grunt.file.isdir"></a>grunt.file.isDir</h3>
+<p>指定的路径是否是一个目录？返回boolean类型的值。</p>
+<p>和 Node.js 中的 <a href="https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2">path.join</a> 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。</p>
+<pre><code class="lang-js">grunt.file.isDir(path1 [, path2 [, ...]])</code></pre>
+<p>如果路径不存在它也会返回false。</p>
+<h3><a class="anchor" href="#grunt.file.isfile" id="grunt.file.isfile"></a>grunt.file.isFile</h3>
+<p>指定的路径是否是一个文件？ 返回boolean类型的值。</p>
+<p>和 Node.js 中的 <a href="https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2">path.join</a> 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。</p>
+<pre><code class="lang-js">grunt.file.isFile(path1 [, path2 [, ...]])</code></pre>
+<p>如果路径不存在将返回false。</p>
+<h2>路径</h2>
+<h3><a class="anchor" href="#grunt.file.ispathabsolute" id="grunt.file.ispathabsolute"></a>grunt.file.isPathAbsolute</h3>
+<p>指定的文件路径是否是绝对路径？ 返回boolean类型的值。</p>
+<p>和 Node.js 中的 <a href="https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2">path.join</a> 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。</p>
+<pre><code class="lang-js">grunt.file.isPathAbsolute(path1 [, path2 [, ...]])</code></pre>
+<h3><a class="anchor" href="#grunt.file.arepathsequivalent" id="grunt.file.arepathsequivalent"></a>grunt.file.arePathsEquivalent</h3>
+<p>所有给出的路径是否都是同一个路径？返回boolean类型的值。</p>
+<pre><code class="lang-js">grunt.file.arePathsEquivalent(path1 [, path2 [, ...]])</code></pre>
+<h3><a class="anchor" href="#grunt.file.doespathcontain" id="grunt.file.doespathcontain"></a>grunt.file.doesPathContain</h3>
+<p>所有descendant路径是否全部包含在指定的ancestor路径中？返回boolean类型的值。</p>
+<p><em>注意：不需要检查路径是否真的存在。</em></p>
+<pre><code class="lang-js">grunt.file.doesPathContain(ancestorPath, descendantPath1 [, descendantPath2 [, ...]])</code></pre>
+<h3><a class="anchor" href="#grunt.file.ispathcwd" id="grunt.file.ispathcwd"></a>grunt.file.isPathCwd</h3>
+<p>指定的文件路径是否是CWD？返回boolean类型的值。</p>
+<p>和 Node.js 中的 <a href="https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2">path.join</a> 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。</p>
+<pre><code class="lang-js">grunt.file.isPathCwd(path1 [, path2 [, ...]])</code></pre>
+<h3><a class="anchor" href="#grunt.file.ispathincwd" id="grunt.file.ispathincwd"></a>grunt.file.isPathInCwd</h3>
+<p>指定的文件路径是否在在CWD中？注意：CWD不在CWD<em>中</em> 。返回boolean类型的值。</p>
+<p>和 Node.js 中的 <a href="https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2">path.join</a> 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。</p>
+<pre><code class="lang-js">grunt.file.isPathInCwd(path1 [, path2 [, ...]])</code></pre>
+<h3><a class="anchor" href="#grunt.file.setbase" id="grunt.file.setbase"></a>grunt.file.setBase</h3>
+<p>改变Grunt的当前工作目录(CWD)。默认情况下，所有文件路径都是参照 <code>Gruntfile</code> 文件的相对路径。此函数和
+ <code>--base</code> 命令行参数的工作方式一致。</p>
+<pre><code class="lang-js">grunt.file.setBase(path1 [, path2 [, ...]])</code></pre>
+<p>和 Node.js 中的 <a href="https://nodejs.org/docs/latest/api/path.html#path_path_join_path1_path2">path.join</a> 方法一样，此方法此方法将所有参数连接在一起，并对结果做规范化。</p>
+<h2>外部工具库</h2>
+<p><em>不建议使用</em></p>
+<p><strong>下面列出的所有外部工具库已经不再建议使用了。</strong></p>
+<p>请使用 <strong>npm</strong> 管理项目中对第三方工具库的依赖。</p>
+<p>例如，如果你需要使用 <a href="https://www.npmjs.org/package/lodash">Lo-Dash</a>，首先通过 <code>npm install lodash</code> 安装，然后在 <code>Gruntfile</code> 文件中使用即可： <code>var _ = require(&#39;lodash&#39;);</code></p>
+<h3><a class="anchor" href="#grunt.file.glob" id="grunt.file.glob"></a>grunt.file.glob</h3>
+<p><em>不建议使用</em></p>
+<p><a href="https://github.com/isaacs/node-glob">glob</a> - File globbing utility.</p>
+<h3><a class="anchor" href="#grunt.file.minimatch" id="grunt.file.minimatch"></a>grunt.file.minimatch</h3>
+<p><em>不建议使用</em></p>
+<p><a href="https://github.com/isaacs/minimatch">minimatch</a> - File pattern matching utility.</p>
+<h3><a class="anchor" href="#grunt.file.findup" id="grunt.file.findup"></a>grunt.file.findup</h3>
+<p><em>不建议使用</em></p>
+<p><a href="https://github.com/cowboy/node-findup-sync">findup-sync</a> - Search upwards for matching file patterns.</p>
+<div class="end-link">Found an error in the documentation?
+<a href='https://github.com/gruntjs/grunt-docs/issues'>File an issue</a>.</div></div></div><div class="span3"><div class="well sidebar-nav"><ul class="nav nav-list"><li class="nav-header"><i class="icon-cog"></i><span>API</span></li><li><a href="/api/grunt">grunt</a></li><li><a href="/api/grunt.config">grunt.config</a></li><li><a href="/api/grunt.event">grunt.event</a></li><li><a href="/api/grunt.fail">grunt.fail</a></li><li><a class="active" href="/api/grunt.file">grunt.file</a></li><li><a href="/api/grunt.log">grunt.log</a></li><li><a href="/api/grunt.option">grunt.option</a></li><li><a href="/api/grunt.task">grunt.task</a></li><li><a href="/api/grunt.template">grunt.template</a></li><li><a href="/api/grunt.util">grunt.util</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Other</span></li><li><a href="/api/inside-tasks">Inside Tasks</a></li><li><a href="/api/exit-codes">Exit Codes</a></li></ul><div class="advertisements"><script>var m3_u = (location.protocol=='https:'?'https://revive.bocoup.com/www/delivery/ajs.php':'http://revive.bocoup.com/www/delivery/ajs.php');var m3_r = Math.floor(Math.random()*99999999999);if (!document.MAX_used) document.MAX_used = ',';document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);document.write ("?zoneid=5");document.write ('&amp;cb=' + m3_r);if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));document.write ("&amp;loc=" + escape(window.location));if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));if (document.context) document.write ("&context=" + escape(document.context));if (document.mmm_fo) document.write ("&amp;mmm_fo=1");document.write ("'><\/scr"+"ipt>");</script><noscript><a href='http://revive.bocoup.com/www/delivery/ck.php?n=a656788f&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://revive.bocoup.com/www/delivery/avw.php?zoneid=5&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a656788f' alt='' /></a></noscript><span class="adsbybocoup">Ads by <a href="http://bocoup.com">Bocoup</a>.</span></div></div></div></div></div></div><footer class="grunt-footer"><div class="inner"><div class="container"><ul class="pull-right"><li><a href="/blog">Blog</a></li><li><a href="/upgrading-from-0.3-to-0.4">Migration Guides</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li><li class="social"><a href="https://github.com/gruntjs/" title="Grunt on GitHub"><span class="icon-github"></span></a></li><li class="social"><a href="https://twitter.com/gruntjs/" title="Grunt on Twitter"><span class="icon-twitter"></span></a></li><li class="social"><a href="/rss" title="Grunt blog RSS feed"><span class="icon-rss"></span></a></li></ul></div></div></footer><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34623937-1', 'gruntjs.com');
+ga('send', 'pageview');</script></body></html>

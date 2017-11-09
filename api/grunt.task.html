@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>grunt.task - Grunt: The JavaScript Task Runner</title><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"><link rel="stylesheet" href="/css/main.css"><link rel="apple-touch-icon" href="/img/favicons/apple-touch-icon.png" sizes="180x180"><link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="/img/favicons/manifest.json"><link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#e48632"><link rel="shortcut icon" href="/img/favicons/favicon.ico" type="image/x-icon"><meta name="msapplication-config" content="/img/favicons/browserconfig.xml"><meta name="theme-color" content="#e48632"><meta property="og:title" content="grunt.task - Grunt: The JavaScript Task Runner"><meta property="og:type" content="website"><meta property="og:url" content="https://gruntjs.com/"><meta property="og:image" content="https://gruntjs.com/img/og.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="256"><meta property="og:image:height" content="256"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@gruntjs"><meta name="twitter:site" content="@gruntjs"><meta name="twitter:title" content="grunt.task - Grunt: The JavaScript Task Runner"><meta itemprop="name" content="Grunt"><meta itemprop="image" content="/img/og.png"><link href="/rss" rel="alternate" title="Grunt Blog Feed" type="application/atom+xml"></head><body class="page-api page-secondary"><div class="navbar navbar-inverse"><div class="navbar-inner"><div class="container"><a class="brand" href="/"><span class="logo"></span></a><div class="nav-collapse collapse"><ul class="nav"><li><a href="/getting-started"><i class="icon-arrow-right"></i><span>Getting Started</span></a></li><li><a href="/configuring-tasks"><i class="icon-cog"></i><span>Configuring Tasks</span></a></li><li><a href="/plugins"><i class="icon-power-cord"></i><span>Plugins</span></a></li><li><a href="/getting-started"><i class="icon-file-text"></i><span>Documentation</span></a></li></ul><form class="navbar-search pull-right"><input class="search-query" type="text" placeholder="Search"></form></div><!--.nav-collapse--></div></div></div><div class="content"><div class="container grunt.task"><div class="row-fluid"><div class="span9 page"><div class="hero-unit"><h1>grunt.task</h1><h1><a class="anchor" href="#grunt.task" id="grunt.task"></a>grunt.task</h1>
+<p>注册、执行和加载外部任务。</p>
+<p>参见 <a href="https://github.com/gruntjs/grunt/blob/master/lib/grunt/task.js">task lib source</a> 和 <a href="https://github.com/gruntjs/grunt/blob/master/lib/util/task.js">task util lib source</a> 获取更多信息。</p>
+<h2><a class="anchor" href="#the-task-api" id="the-task-api"></a>The task API</h2>
+<p>当一个任务正在执行时，Grunt 通过<code>this</code> 对象向此任务函数暴露了很多任务特定的属性和方法。参见 <a href="/inside-tasks{{深入任务内幕}}/">Inside tasks{{深入任务内幕}}</a>指南，这里可以找到完整的属性和方法列表。</p>
+<p>很多属性和方法都可以通过 <code>this</code> 对象访问到。</p>
+<p>注意，任何标记为的 ☃ (unicode snowman) 方法也可以直接通过 <code>grunt</code> 对象直接访问到。参见 <a href="/grunt">API首页</a> 以获取更多信息。</p>
+<h2>创建任务</h2>
+<h3><a class="anchor" href="#grunt.task.registertask" id="grunt.task.registertask"></a>grunt.task.registerTask ☃</h3>
+<p>注册 &quot;别名任务&quot; 或 任务函数。此方法支持以下两种类型：</p>
+<p><strong>别名任务</strong></p>
+<p>如果指定了一个任务列表，那么，新注册的任务将会是这一个或多个任务的别名（alias）。当此&quot;别名任务&quot;执行时，<code>taskList</code>中的所有任务都将按指定的顺序依次执行。<code>taskList</code> 参数必须是一个任务数组。</p>
+<pre><code class="lang-js">grunt.task.registerTask(taskName, taskList)</code></pre>
+<p>When the optional <code>description</code> string is passed it will be displayed when <code>grunt --help</code> is run:</p>
+<pre><code class="lang-js">grunt.task.registerTask(taskName, description, taskList)</code></pre>
+<p>下面这个案例展示的是定义一个&quot;default&quot; 任务，当执行 Grunt 且不通过参数指定任务时， &quot;jshint&quot;、 &quot;qunit&quot;、&quot;concat&quot; 和 &quot;uglify&quot; 任务将自动执行：</p>
+<pre><code class="lang-js">task.registerTask(<span class="hljs-string">'default'</span>, [<span class="hljs-string">'jshint'</span>, <span class="hljs-string">'qunit'</span>, <span class="hljs-string">'concat'</span>, <span class="hljs-string">'uglify'</span>]);</code></pre>
+<p>还可以指定任务的参数。下面的这个案例中，别名&quot;dist&quot;执行了 &quot;concat&quot; 和 &quot;uglify&quot; 这两个任务，并且都指定了&quot;dist&quot; 参数：</p>
+<pre><code class="lang-js">task.registerTask(<span class="hljs-string">'dist'</span>, [<span class="hljs-string">'concat:dist'</span>, <span class="hljs-string">'uglify:dist'</span>]);</code></pre>
+<p><strong>任务函数</strong></p>
+<p>如果传入<code>description</code>和<code>taskFunction</code>，每当任务运行时，指定的函数（<code>taskFunction</code>）都会被执行。此外，当执行 <code>grunt --help</code>时，前面指定的描述（<code>description</code>）就会显示出来。特定任务的属性和方法在任务函数内部通过<code>this</code>对象的属性即可访问。如果任务函数返回<code>false</code>表示任务失败。</p>
+<p>注意，<code>grunt.task.registerMultiTask</code>方法将稍候介绍，它可以被用于定义一种特殊类型的任务，即&quot;复合任务&quot;。</p>
+<pre><code class="lang-js">grunt.task.registerTask(taskName, description, taskFunction)</code></pre>
+<p>下面这个案例中，当 Grunt 运行<code>grunt foo:testing:123</code>时，日志输出<code>foo, testing 123</code>。如果运行这个任务时不带参数，如<code>grunt foo</code>，日志输出<code>foo, no args</code>。</p>
+<pre><code class="lang-js">grunt.task.registerTask(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'A sample task that logs stuff.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">arg1, arg2</span>) </span>{
+  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">arguments</span>.length === <span class="hljs-number">0</span>) {
+    grunt.log.writeln(<span class="hljs-keyword">this</span>.name + <span class="hljs-string">", no args"</span>);
+  } <span class="hljs-keyword">else</span> {
+    grunt.log.writeln(<span class="hljs-keyword">this</span>.name + <span class="hljs-string">", "</span> + arg1 + <span class="hljs-string">" "</span> + arg2);
+  }
+});</code></pre>
+<p>参见 <a href="/creating-tasks">创建任务</a> 文档,查看更多任务实现案例和别名任务。</p>
+<p><em>此方法还可以通过 <a href="/grunt">grunt.registerTask</a>调用。</em></p>
+<h3><a class="anchor" href="#grunt.task.registermultitask" id="grunt.task.registermultitask"></a>grunt.task.registerMultiTask ☃</h3>
+<p>注册一个 &quot;复合任务（multi task）&quot;。 复合任务是指在不指定目标（target）时，将依次执行其所包含的所有已命名的子属性（sub-properties） (也就是 目标) 。除了默认的属性和方法外，还可以通过<code>this</code>对象访问复合任务独有的属性。</p>
+<p>大多数的contrib任务，包括 <a href="https://github.com/gruntjs/grunt-contrib-jshint">jshint task</a>、<a href="https://github.com/gruntjs/grunt-contrib-concat">concat task</a> 和 <a href="https://github.com/gruntjs/grunt-contrib-uglify">uglify task</a> 都是复合任务。</p>
+<pre><code class="lang-js">grunt.task.registerMultiTask(taskName, description, taskFunction)</code></pre>
+<p>给定以下配置信息，当执行<code>grunt log:foo</code>时，下面的复合任务将输出日志<code>foo: 1,2,3</code>；当执行<code>grunt log:bar</code>时，将输出日志<code>bar: hello world</code>。如果只是执行<code>grunt log</code>，那么，将先输出日志<code>foo: 1,2,3</code>，然后是<code>bar: hello world</code>，最后是<code>baz: false</code>。</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">log</span>: {
+    <span class="hljs-attr">foo</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>],
+    <span class="hljs-attr">bar</span>: <span class="hljs-string">'hello world'</span>,
+    <span class="hljs-attr">baz</span>: <span class="hljs-literal">false</span>
+  }
+});
+
+grunt.task.registerMultiTask(<span class="hljs-string">'log'</span>, <span class="hljs-string">'Log stuff.'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  grunt.log.writeln(<span class="hljs-keyword">this</span>.target + <span class="hljs-string">': '</span> + <span class="hljs-keyword">this</span>.data);
+});</code></pre>
+<p>参见 <a href="/creating-tasks">创建任务</a> 文档以获取更多复合任务的案例。</p>
+<p><em>此方法还可以通过 <a href="/grunt">grunt.registerMultiTask</a> 调用。</em></p>
+<h3><a class="anchor" href="#grunt.task.requires" id="grunt.task.requires"></a>grunt.task.requires</h3>
+<p>Fail the task if some other task failed or never ran.</p>
+<pre><code class="lang-js">grunt.task.requires(taskName);</code></pre>
+<h3><a class="anchor" href="#grunt.task.exists" id="grunt.task.exists"></a>grunt.task.exists</h3>
+<p><em>Added in 0.4.5</em></p>
+<p>Check with the name, if a task exists in the registered tasks. Return a boolean.</p>
+<pre><code class="lang-js">grunt.task.exists(name)</code></pre>
+<h3><a class="anchor" href="#grunt.task.renametask" id="grunt.task.renametask"></a>grunt.task.renameTask ☃</h3>
+<p>重命名任务。如果你希望覆盖某个任务的默认行为，并且希望保留原来的名字，这个函数将会很有用。</p>
+<p><em>注意，如果一个任务已经被重命名了， <a href="/inside-tasks#this.name">this.name</a> 和 <a href="/nside-tasks#this.nameargs">this.nameArgs</a> 属性都会发生相应的变化。</em></p>
+<pre><code class="lang-js">grunt.task.renameTask(oldname, newname)</code></pre>
+<p><em>此方法还可以通过 <a href="/grunt">grunt.renameTask</a> 调用。</em></p>
+<h2>加载外部定义的任务</h2>
+<p>对于多数项目来说，<a href="/getting-started">Gruntfile</a> 文件中可能会定义很多任务。对于大型项目或者需要在多个项目中共享任务的情况，可以从一个或多个外部目录加载任务，或者从npm安装的 Grunt 插件加载任务。 </p>
+<h3><a class="anchor" href="#grunt.task.loadtasks" id="grunt.task.loadtasks"></a>grunt.task.loadTasks ☃</h3>
+<p>从指定的目录（注意：相对于 <a href="/getting-started">Gruntfile</a> 所在目录）加载任务相关的文件。此方法可以从本地Grunt插件加载任务相关的文件，只需指定包含&quot;tasks&quot;子目录的插件目录即可。</p>
+<pre><code class="lang-js">grunt.task.loadTasks(tasksPath)</code></pre>
+<p><em>此方法还可以通过 <a href="/grunt">grunt.loadTasks</a> 调用。</em></p>
+<h3><a class="anchor" href="#grunt.task.loadnpmtasks" id="grunt.task.loadnpmtasks"></a>grunt.task.loadNpmTasks ☃</h3>
+<p>从指定的 Grunt 插件中加载任务。此插件必须通过npm安装到本地，并且是参照 <a href="/getting-started">Gruntfile</a> 文件的相对路径。Grunt插件还可以通过 <a href="https://github.com/gruntjs/grunt-init">grunt-init grunt插件模版</a>创建： <code>grunt init:gruntplugin</code>。</p>
+<pre><code class="lang-js">grunt.task.loadNpmTasks(pluginName)</code></pre>
+<p><em>此方法还可以通过 <a href="/grunt">grunt.loadNpmTasks</a> 调用。</em></p>
+<h2>队列任务</h2>
+<p>Grunt自动将命令行中指定的任务加入队列并执行，但是，一些独特的任务可以向队列中加入额外需要执行的任务。</p>
+<h3><a class="anchor" href="#grunt.task.run" id="grunt.task.run"></a>grunt.task.run</h3>
+<p>将一个或多个任务放入队列中。 <code>taskList</code> 中的每个任务都会按照其在队列中的顺序，在当前任务执行完毕后立即执行。任务列表可以是一个任务数组或单个任务。</p>
+<pre><code class="lang-js">grunt.task.run(taskList)</code></pre>
+<h3><a class="anchor" href="#grunt.task.clearqueue" id="grunt.task.clearqueue"></a>grunt.task.clearQueue</h3>
+<p>完全清空任务队列。除非将额外的任务加入队列，否则将不会执行任何任务。</p>
+<pre><code class="lang-js">grunt.task.clearQueue()</code></pre>
+<h3><a class="anchor" href="#grunt.task.normalizemultitaskfiles" id="grunt.task.normalizemultitaskfiles"></a>grunt.task.normalizeMultiTaskFiles</h3>
+<p>将目标（target）的配置对象标准化为一个src-dest文件映射数组。此方法在内部由复合任务系统的<a href="/grunt.task#wiki-this-files">this.files / grunt.task.current.files</a>属性调用。</p>
+<pre><code class="lang-js">grunt.task.normalizeMultiTaskFiles(data [, targetname])</code></pre>
+<div class="end-link">Found an error in the documentation?
+<a href='https://github.com/gruntjs/grunt-docs/issues'>File an issue</a>.</div></div></div><div class="span3"><div class="well sidebar-nav"><ul class="nav nav-list"><li class="nav-header"><i class="icon-cog"></i><span>API</span></li><li><a href="/api/grunt">grunt</a></li><li><a href="/api/grunt.config">grunt.config</a></li><li><a href="/api/grunt.event">grunt.event</a></li><li><a href="/api/grunt.fail">grunt.fail</a></li><li><a href="/api/grunt.file">grunt.file</a></li><li><a href="/api/grunt.log">grunt.log</a></li><li><a href="/api/grunt.option">grunt.option</a></li><li><a class="active" href="/api/grunt.task">grunt.task</a></li><li><a href="/api/grunt.template">grunt.template</a></li><li><a href="/api/grunt.util">grunt.util</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Other</span></li><li><a href="/api/inside-tasks">Inside Tasks</a></li><li><a href="/api/exit-codes">Exit Codes</a></li></ul><div class="advertisements"><script>var m3_u = (location.protocol=='https:'?'https://revive.bocoup.com/www/delivery/ajs.php':'http://revive.bocoup.com/www/delivery/ajs.php');var m3_r = Math.floor(Math.random()*99999999999);if (!document.MAX_used) document.MAX_used = ',';document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);document.write ("?zoneid=5");document.write ('&amp;cb=' + m3_r);if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));document.write ("&amp;loc=" + escape(window.location));if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));if (document.context) document.write ("&context=" + escape(document.context));if (document.mmm_fo) document.write ("&amp;mmm_fo=1");document.write ("'><\/scr"+"ipt>");</script><noscript><a href='http://revive.bocoup.com/www/delivery/ck.php?n=a656788f&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://revive.bocoup.com/www/delivery/avw.php?zoneid=5&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a656788f' alt='' /></a></noscript><span class="adsbybocoup">Ads by <a href="http://bocoup.com">Bocoup</a>.</span></div></div></div></div></div></div><footer class="grunt-footer"><div class="inner"><div class="container"><ul class="pull-right"><li><a href="/blog">Blog</a></li><li><a href="/upgrading-from-0.3-to-0.4">Migration Guides</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li><li class="social"><a href="https://github.com/gruntjs/" title="Grunt on GitHub"><span class="icon-github"></span></a></li><li class="social"><a href="https://twitter.com/gruntjs/" title="Grunt on Twitter"><span class="icon-twitter"></span></a></li><li class="social"><a href="/rss" title="Grunt blog RSS feed"><span class="icon-rss"></span></a></li></ul></div></div></footer><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34623937-1', 'gruntjs.com');
+ga('send', 'pageview');</script></body></html>

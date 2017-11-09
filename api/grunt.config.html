@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>grunt.config - Grunt: The JavaScript Task Runner</title><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"><link rel="stylesheet" href="/css/main.css"><link rel="apple-touch-icon" href="/img/favicons/apple-touch-icon.png" sizes="180x180"><link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="/img/favicons/manifest.json"><link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#e48632"><link rel="shortcut icon" href="/img/favicons/favicon.ico" type="image/x-icon"><meta name="msapplication-config" content="/img/favicons/browserconfig.xml"><meta name="theme-color" content="#e48632"><meta property="og:title" content="grunt.config - Grunt: The JavaScript Task Runner"><meta property="og:type" content="website"><meta property="og:url" content="https://gruntjs.com/"><meta property="og:image" content="https://gruntjs.com/img/og.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="256"><meta property="og:image:height" content="256"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@gruntjs"><meta name="twitter:site" content="@gruntjs"><meta name="twitter:title" content="grunt.config - Grunt: The JavaScript Task Runner"><meta itemprop="name" content="Grunt"><meta itemprop="image" content="/img/og.png"><link href="/rss" rel="alternate" title="Grunt Blog Feed" type="application/atom+xml"></head><body class="page-api page-secondary"><div class="navbar navbar-inverse"><div class="navbar-inner"><div class="container"><a class="brand" href="/"><span class="logo"></span></a><div class="nav-collapse collapse"><ul class="nav"><li><a href="/getting-started"><i class="icon-arrow-right"></i><span>Getting Started</span></a></li><li><a href="/configuring-tasks"><i class="icon-cog"></i><span>Configuring Tasks</span></a></li><li><a href="/plugins"><i class="icon-power-cord"></i><span>Plugins</span></a></li><li><a href="/getting-started"><i class="icon-file-text"></i><span>Documentation</span></a></li></ul><form class="navbar-search pull-right"><input class="search-query" type="text" placeholder="Search"></form></div><!--.nav-collapse--></div></div></div><div class="content"><div class="container grunt.config"><div class="row-fluid"><div class="span9 page"><div class="hero-unit"><h1>grunt.config</h1><h1><a class="anchor" href="#grunt.config" id="grunt.config"></a>grunt.config</h1>
+<p>从 <code>Gruntfile</code> 中获取针对当前项目的配置数据。</p>
+<p>注意，任何标记为 ☃ (unicode snowman) 的方法也是可以直接通过 <code>grunt</code> 对象访问的；任何标记为 ☆ (white star) 的方法都可以在task内部通过 <code>this</code> 对象访问的。请知晓。</p>
+<h2>初始化配置数据</h2>
+<p><em>注意，下面列出的方法也可以通过 <code>grunt</code> 对象访问，访问形式为 <code>grunt.initConfig</code>。</em></p>
+<h3><a class="anchor" href="#grunt.config.init" id="grunt.config.init"></a>grunt.config.init ☃</h3>
+<p>为当前项目初始化一个配置对象。其中传入的 <code>configObject</code> 参数可以用在后续的task中，可以通过 <code>grunt.config</code> 方法访问。几乎每个项目的 <code>Gruntfile</code> 都会调用此方法。</p>
+<pre><code class="lang-js">grunt.config.init(configObject)</code></pre>
+<p>注意，任何 <code>&lt;% %&gt;</code> 模板字符串只会在取到配置数据后才被处理。</p>
+<p>下面的案例展示了针对 <a href="https://github.com/gruntjs/grunt-contrib-jshint">grunt-contrib-jshint插件</a> 中的 <code>jshint</code> task的配置数据：</p>
+<pre><code class="lang-js">grunt.config.init({
+  <span class="hljs-attr">jshint</span>: {
+    <span class="hljs-attr">all</span>: [<span class="hljs-string">'lib/*.js'</span>, <span class="hljs-string">'test/*.js'</span>, <span class="hljs-string">'Gruntfile.js'</span>]
+  }
+});</code></pre>
+<p>查看 <a href="/getting-started">Getting started</a> 指南可以获取更多的配置案例。</p>
+<p><em>此方法还可以以  <code>grunt.initConfig</code> 的形式访问。</em></p>
+<h2>获取配置数据</h2>
+<p>The following methods allow Grunt configuration data to be accessed either via dot-delimited string like <code>&#39;pkg.author.name&#39;</code> or via array of property name parts like <code>[&#39;pkg&#39;, &#39;author&#39;, &#39;name&#39;]</code>.</p>
+<p>Note that if a specified property name contains a <code>.</code> dot, it must be escaped with a literal backslash, eg. <code>&#39;concat.dist/built\\.js&#39;</code>. If an array of parts is specified, Grunt will handle the escaping internally with the <code>grunt.config.escape</code> method.</p>
+<h3><a class="anchor" href="#grunt.config" id="grunt.config"></a>grunt.config</h3>
+<p>从项目的 Grunt 配置中获取或者设置一个值。这个方法作为其他方法的别名；如果传递两个参数，<code>grunt.config.set</code>被调用，另一方面<code>grunt.config.get</code>也被调用。Get or set a value from the project&#39;s grunt configuration. This method serves as an alias to other methods; if two arguments are passed, <code>grunt.config.set</code> is called, otherwise <code>grunt.config.get</code> is called.</p>
+<pre><code class="lang-js">grunt.config([prop [, value]])</code></pre>
+<h3><a class="anchor" href="#grunt.config.get" id="grunt.config.get"></a>grunt.config.get</h3>
+<p>Get a value from the project&#39;s Grunt configuration. If <code>prop</code> is specified, that property&#39;s value is returned, or <code>null</code> if that property is not defined. If <code>prop</code> isn&#39;t specified, a copy of the entire config object is returned. Templates strings will be recursively processed using the <code>grunt.config.process</code> method.</p>
+<pre><code class="lang-js">grunt.config.get([prop])</code></pre>
+<h3><a class="anchor" href="#grunt.config.process" id="grunt.config.process"></a>grunt.config.process</h3>
+<p>Process a value, recursively expanding <code>&lt;% %&gt;</code> templates (via the <code>grunt.template.process</code> method) in the context of the Grunt config, as they are encountered. this method is called automatically by <code>grunt.config.get</code> but <em>not</em> by <code>grunt.config.getRaw</code>.</p>
+<pre><code class="lang-js">grunt.config.process(value)</code></pre>
+<p>If any retrieved value is entirely a single <code>&#39;&lt;%= foo %&gt;&#39;</code> or <code>&#39;&lt;%= foo.bar %&gt;&#39;</code> template string, and the specified <code>foo</code> or <code>foo.bar</code> property is a non-string (and not <code>null</code> or <code>undefined</code>) value, it will be expanded to the <em>actual</em> value. That, combined with grunt&#39;s task system automatically flattening arrays, can be extremely useful.</p>
+<h3><a class="anchor" href="#grunt.config.getraw" id="grunt.config.getraw"></a>grunt.config.getRaw</h3>
+<p>Get a raw value from the project&#39;s Grunt configuration, without processing <code>&lt;% %&gt;</code> template strings. If <code>prop</code> is specified, that property&#39;s value is returned, or <code>null</code> if that property is not defined. If <code>prop</code> isn&#39;t specified, a copy of the entire config object is returned.</p>
+<pre><code class="lang-js">grunt.config.getRaw([prop])</code></pre>
+<h3><a class="anchor" href="#grunt.config.set" id="grunt.config.set"></a>grunt.config.set</h3>
+<p>给当前项目的 Grunt 配置中的某个属性设置一个值。</p>
+<pre><code class="lang-js">grunt.config.set(prop, value)</code></pre>
+<p>注意，任何 <code>&lt;% %&gt;</code> 模板字符串只会在取到配置数据后才被处理。</p>
+<h3><a class="anchor" href="#grunt.config.escape" id="grunt.config.escape"></a>grunt.config.escape</h3>
+<p>忽略给定的<code>propString</code>中的<code>.</code>点号。这应该用于包含点号的属性名。Escape <code>.</code> dots in the given <code>propString</code>. This should be used for property names that contain dots.</p>
+<pre><code class="lang-js">grunt.config.escape(propString)</code></pre>
+<h3><a class="anchor" href="#grunt.config.merge" id="grunt.config.merge"></a>grunt.config.merge</h3>
+<p><em>Added in 0.4.5</em></p>
+<p>Recursively merges properties of the specified <code>configObject</code> into the current project configuration. Array and plain object properties are merged recursively while other value types are overridden.</p>
+<pre><code class="lang-js">grunt.config.merge(configObject)</code></pre>
+<p>You can use this method to append configuration options, targets, etc., to already defined tasks, for example:</p>
+<pre><code class="lang-js">grunt.config.merge({
+  <span class="hljs-attr">watch</span>: {
+    <span class="hljs-attr">files</span>: [<span class="hljs-string">"path/to/files"</span>],
+    <span class="hljs-attr">tasks</span>: [<span class="hljs-string">"task"</span>]
+  }
+});</code></pre>
+<p>Array values are merged based on their index. Consider the following code:</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">jshint</span>: {
+    <span class="hljs-attr">files</span>: [<span class="hljs-string">'Gruntfile.js'</span>, <span class="hljs-string">'src/**/*.js'</span>],
+  }
+);
+
+<span class="hljs-keyword">var</span> config = {
+  <span class="hljs-attr">jshint</span>: {
+    <span class="hljs-attr">files</span>: [<span class="hljs-string">'hello.js'</span>],
+  }
+};
+
+grunt.config.merge(config);</code></pre>
+<p>It&#39;ll result in the configuration shown below:</p>
+<pre><code class="lang-js">jshint: {
+  <span class="hljs-attr">files</span>: [<span class="hljs-string">'hello.js'</span>, <span class="hljs-string">'src/**/*.js'</span>],
+}</code></pre>
+<p>In conclusion, the first value of the <code>files</code> array defined in the <code>config</code> variable (<code>hello.js</code>) overriddes the first value specified in the <code>initConfig</code> configuration call (<code>Gruntfile.js</code>).</p>
+<h2><a class="anchor" href="#requiring-config-data" id="requiring-config-data"></a>Requiring Config Data</h2>
+<p><em>注意，下面列出的方法都可以在task内部通过 <code>this</code> 对象访问，访问形式为 <code>this.requiresConfig</code>。</em></p>
+<h3><a class="anchor" href="#grunt.config.requires" id="grunt.config.requires"></a>grunt.config.requires ☆</h3>
+<p>如果需要的配置属性有一个或多个不存在、值为<code>null</code> 或 <code>undefined</code>，当前task将失败。此方法可以指定一个或多个字符串、配置属性数组作为参数。</p>
+<pre><code class="lang-js">grunt.config.requires(prop [, prop [, ...]])</code></pre>
+<p><em>此方法在task内部以 <code>this.requiresConfig</code> 形式调用。</em></p>
+<div class="end-link">Found an error in the documentation?
+<a href='https://github.com/gruntjs/grunt-docs/issues'>File an issue</a>.</div></div></div><div class="span3"><div class="well sidebar-nav"><ul class="nav nav-list"><li class="nav-header"><i class="icon-cog"></i><span>API</span></li><li><a href="/api/grunt">grunt</a></li><li><a class="active" href="/api/grunt.config">grunt.config</a></li><li><a href="/api/grunt.event">grunt.event</a></li><li><a href="/api/grunt.fail">grunt.fail</a></li><li><a href="/api/grunt.file">grunt.file</a></li><li><a href="/api/grunt.log">grunt.log</a></li><li><a href="/api/grunt.option">grunt.option</a></li><li><a href="/api/grunt.task">grunt.task</a></li><li><a href="/api/grunt.template">grunt.template</a></li><li><a href="/api/grunt.util">grunt.util</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Other</span></li><li><a href="/api/inside-tasks">Inside Tasks</a></li><li><a href="/api/exit-codes">Exit Codes</a></li></ul><div class="advertisements"><script>var m3_u = (location.protocol=='https:'?'https://revive.bocoup.com/www/delivery/ajs.php':'http://revive.bocoup.com/www/delivery/ajs.php');var m3_r = Math.floor(Math.random()*99999999999);if (!document.MAX_used) document.MAX_used = ',';document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);document.write ("?zoneid=5");document.write ('&amp;cb=' + m3_r);if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));document.write ("&amp;loc=" + escape(window.location));if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));if (document.context) document.write ("&context=" + escape(document.context));if (document.mmm_fo) document.write ("&amp;mmm_fo=1");document.write ("'><\/scr"+"ipt>");</script><noscript><a href='http://revive.bocoup.com/www/delivery/ck.php?n=a656788f&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://revive.bocoup.com/www/delivery/avw.php?zoneid=5&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a656788f' alt='' /></a></noscript><span class="adsbybocoup">Ads by <a href="http://bocoup.com">Bocoup</a>.</span></div></div></div></div></div></div><footer class="grunt-footer"><div class="inner"><div class="container"><ul class="pull-right"><li><a href="/blog">Blog</a></li><li><a href="/upgrading-from-0.3-to-0.4">Migration Guides</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li><li class="social"><a href="https://github.com/gruntjs/" title="Grunt on GitHub"><span class="icon-github"></span></a></li><li class="social"><a href="https://twitter.com/gruntjs/" title="Grunt on Twitter"><span class="icon-twitter"></span></a></li><li class="social"><a href="/rss" title="Grunt blog RSS feed"><span class="icon-rss"></span></a></li></ul></div></div></footer><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34623937-1', 'gruntjs.com');
+ga('send', 'pageview');</script></body></html>

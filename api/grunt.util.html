@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>grunt.util - Grunt: The JavaScript Task Runner</title><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"><link rel="stylesheet" href="/css/main.css"><link rel="apple-touch-icon" href="/img/favicons/apple-touch-icon.png" sizes="180x180"><link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="/img/favicons/manifest.json"><link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#e48632"><link rel="shortcut icon" href="/img/favicons/favicon.ico" type="image/x-icon"><meta name="msapplication-config" content="/img/favicons/browserconfig.xml"><meta name="theme-color" content="#e48632"><meta property="og:title" content="grunt.util - Grunt: The JavaScript Task Runner"><meta property="og:type" content="website"><meta property="og:url" content="https://gruntjs.com/"><meta property="og:image" content="https://gruntjs.com/img/og.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="256"><meta property="og:image:height" content="256"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@gruntjs"><meta name="twitter:site" content="@gruntjs"><meta name="twitter:title" content="grunt.util - Grunt: The JavaScript Task Runner"><meta itemprop="name" content="Grunt"><meta itemprop="image" content="/img/og.png"><link href="/rss" rel="alternate" title="Grunt Blog Feed" type="application/atom+xml"></head><body class="page-api page-secondary"><div class="navbar navbar-inverse"><div class="navbar-inner"><div class="container"><a class="brand" href="/"><span class="logo"></span></a><div class="nav-collapse collapse"><ul class="nav"><li><a href="/getting-started"><i class="icon-arrow-right"></i><span>Getting Started</span></a></li><li><a href="/configuring-tasks"><i class="icon-cog"></i><span>Configuring Tasks</span></a></li><li><a href="/plugins"><i class="icon-power-cord"></i><span>Plugins</span></a></li><li><a href="/getting-started"><i class="icon-file-text"></i><span>Documentation</span></a></li></ul><form class="navbar-search pull-right"><input class="search-query" type="text" placeholder="Search"></form></div><!--.nav-collapse--></div></div></div><div class="content"><div class="container grunt.util"><div class="row-fluid"><div class="span9 page"><div class="hero-unit"><h1>grunt.util</h1><h1><a class="anchor" href="#grunt.util" id="grunt.util"></a>grunt.util</h1>
+<p>各色工具函数/库，包括 Lo-Dash、Async 和 Hooker。</p>
+<h3><a class="anchor" href="#grunt.util.kindof" id="grunt.util.kindof"></a>grunt.util.kindOf</h3>
+<p>返回给定值的&quot;类型（kind）&quot;。就像<code>typeof</code>，但是其返回的是内部的<code>[Class](class/)</code>值。可能返回的结果是<code>&quot;number&quot;</code>、<code>&quot;string&quot;</code>、<code>&quot;boolean&quot;</code>、<code>&quot;function&quot;</code>、<code>&quot;regexp&quot;</code>、<code>&quot;array&quot;</code>、<code>&quot;date&quot;</code>、<code>&quot;error&quot;</code>、<code>&quot;null&quot;</code>、<code>&quot;undefined&quot;</code> 和可以表示一切类型的 <code>&quot;object&quot;</code>。</p>
+<pre><code class="lang-js">grunt.util.kindOf(value)</code></pre>
+<h3><a class="anchor" href="#grunt.util.error" id="grunt.util.error"></a>grunt.util.error</h3>
+<p>返回一个新的Error实例（也可以抛出）与相应的消息。如果指定的是Error对象而不是<code>message</code>，则返回对象。</p>
+<p>另外，如果为 <code>origError</code> 参数指定的是Error对象，并且使用 <code>--stack</code> 选项运行Grunt，则输出原始的Error堆栈。</p>
+<pre><code class="lang-js">grunt.util.error(message [, origError])</code></pre>
+<h3><a class="anchor" href="#grunt.util.linefeed" id="grunt.util.linefeed"></a>grunt.util.linefeed</h3>
+<p>将换行符转换为当前系统所采用的形式（Window上是<code>\r\n</code>，其他系统为<code>\n</code>）。</p>
+<h3><a class="anchor" href="#grunt.util.normalizelf" id="grunt.util.normalizelf"></a>grunt.util.normalizelf</h3>
+<p>对于一个给定的字符串，将其所有换行符转换为当前系统所采用的形式，然后返回一个新的字符串。（Window上是<code>\r\n</code>，其他系统为<code>\n</code>）</p>
+<pre><code class="lang-js">grunt.util.normalizelf(string)</code></pre>
+<h3><a class="anchor" href="#grunt.util.recurse" id="grunt.util.recurse"></a>grunt.util.recurse</h3>
+<p>递归嵌套的对象和数组，为每个非对象值执行<code>callbackFunction</code>。如果<code>continueFunction</code>返回<code>false</code>, 给定的对象或值将会被跳过。</p>
+<pre><code class="lang-js">grunt.util.recurse(object, callbackFunction, continueFunction)</code></pre>
+<h3><a class="anchor" href="#grunt.util.repeat" id="grunt.util.repeat"></a>grunt.util.repeat</h3>
+<p>返回被重复<code>n</code>次的字符串<code>str</code>。</p>
+<pre><code class="lang-js">grunt.util.repeat(n, str)</code></pre>
+<h3><a class="anchor" href="#grunt.util.pluralize" id="grunt.util.pluralize"></a>grunt.util.pluralize</h3>
+<p>给定一个<code>&quot;a/b&quot;</code>形式的<code>str</code>，如果<code>n</code>为<code>1</code>，返回<code>&quot;a&quot;</code>，否则返回<code>&quot;b&quot;</code>。如果不能使用&#39;/&#39;，也可以指定一个自定义的分隔符。</p>
+<pre><code class="lang-js">grunt.util.pluralize(n, str, separator)</code></pre>
+<h3><a class="anchor" href="#grunt.util.spawn" id="grunt.util.spawn"></a>grunt.util.spawn</h3>
+<p>生成一个子进程，并跟踪其stdout、stderr和退出码。此方法返回子进程的引用。当子进程退出时，<code>doneFunction</code> 函数被调用。</p>
+<pre><code class="lang-js">grunt.util.spawn(options, doneFunction)</code></pre>
+<p><code>options</code> 对象可以指定以下属性：</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> options = {
+  <span class="hljs-comment">// The command to execute. It should be in the system path.</span>
+  cmd: commandToExecute,
+  <span class="hljs-comment">// If specified, the same grunt bin that is currently running will be</span>
+  <span class="hljs-comment">// spawned as the child command, instead of the "cmd" option. Defaults</span>
+  <span class="hljs-comment">// to false.</span>
+  grunt: boolean,
+  <span class="hljs-comment">// An array of arguments to pass to the command.</span>
+  args: arrayOfArguments,
+  <span class="hljs-comment">// Additional options for the Node.js child_process spawn method.</span>
+  opts: nodeSpawnOptions,
+  <span class="hljs-comment">// If this value is set and an error occurs, it will be used as the value</span>
+  <span class="hljs-comment">// and null will be passed as the error value.</span>
+  fallback: fallbackValue
+};</code></pre>
+<p><code>doneFunction</code> 函数可以接收以下参数：</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doneFunction</span>(<span class="hljs-params">error, result, code</span>) </span>{
+  <span class="hljs-comment">// If the exit code was non-zero and a fallback wasn't specified, an Error</span>
+  <span class="hljs-comment">// object, otherwise null.</span>
+  error
+  <span class="hljs-comment">// The result object is an object with the properties .stdout, .stderr, and</span>
+  <span class="hljs-comment">// .code (exit code).</span>
+  result
+  <span class="hljs-comment">// When result is coerced to a string, the value is stdout if the exit code</span>
+  <span class="hljs-comment">// was zero, the fallback if the exit code was non-zero and a fallback was</span>
+  <span class="hljs-comment">// specified, or stderr if the exit code was non-zero and a fallback was</span>
+  <span class="hljs-comment">// not specified.</span>
+  <span class="hljs-built_in">String</span>(result)
+  <span class="hljs-comment">// The numeric exit code.</span>
+  code
+}</code></pre>
+<h3><a class="anchor" href="#grunt.util.toarray" id="grunt.util.toarray"></a>grunt.util.toArray</h3>
+<p>对于传入的数组或类数组对象，返回一个数组。对于将<code>arguments</code>对象转换为数组是非常有用的。</p>
+<pre><code class="lang-js">grunt.util.toArray(arrayLikeObject)</code></pre>
+<h3><a class="anchor" href="#grunt.util.callbackify" id="grunt.util.callbackify"></a>grunt.util.callbackify</h3>
+<p>标准化&quot;返回值&quot;和&quot;传递结果给回调&quot;的函数，总是传递一个结果给指定的回调函数。如果原始函数返回一个值，该值将即刻传递给回调函数,，并指定为最后一个参数，在所有的预定义参数之后。如果原始函数传递一个值给回调函数,，它也会继续照样如此。</p>
+<pre><code class="lang-js">grunt.util.callbackify(syncOrAsyncFunction)</code></pre>
+<p>下面这个例子也许能够更好的说明：</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add1</span>(<span class="hljs-params">a, b</span>) </span>{
+  <span class="hljs-keyword">return</span> a + b;
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add2</span>(<span class="hljs-params">a, b, callback</span>) </span>{
+  callback(a + b);
+}
+
+<span class="hljs-keyword">var</span> fn1 = grunt.util.callbackify(add1);
+<span class="hljs-keyword">var</span> fn2 = grunt.util.callbackify(add2);
+
+fn1(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'1 plus 2 equals '</span> + result);
+});
+fn2(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'1 plus 2 equals '</span> + result);
+});</code></pre>
+<h2>内部工具库</h2>
+<h3><a class="anchor" href="#grunt.util.namespace" id="grunt.util.namespace"></a>grunt.util.namespace</h3>
+<p>此内部工具库用于解析对象中深度嵌套的属性。</p>
+<h3><a class="anchor" href="#grunt.util.task" id="grunt.util.task"></a>grunt.util.task</h3>
+<p>用于task执行的内部工具库。</p>
+<h2>外部工具库</h2>
+<p><em>不建议使用</em></p>
+<p><strong>下面列出的所有外部工具库已经不再建议使用了。</strong></p>
+<p>请使用 <strong>npm</strong> 管理项目中对第三方工具库的依赖。</p>
+<p>例如，如果你需要使用 <a href="https://www.npmjs.org/package/lodash">Lo-Dash</a>，首先通过 <code>npm install lodash</code> 安装，然后在 <code>Gruntfile</code> 文件中使用即可： <code>var _ = require(&#39;lodash&#39;);</code></p>
+<h3><a class="anchor" href="#grunt.util._" id="grunt.util._"></a>grunt.util._</h3>
+<p><em>不建议使用</em></p>
+<p><a href="http://lodash.com/">Lo-Dash</a> - 很多有用的数组、函数和对象工具方法。
+<a href="https://github.com/epeli/underscore.string">Underscore.string</a> - 很多实用的字符串工具函数。</p>
+<p><code>grunt.util._.str</code> is available for methods that conflict with existing Lo-Dash methods.</p>
+<h3><a class="anchor" href="#grunt.util.async" id="grunt.util.async"></a>grunt.util.async</h3>
+<p><em>不建议使用</em></p>
+<p><a href="https://github.com/caolan/async">Async</a> - 对node和浏览器都适用的异步工具。</p>
+<h4><a class="anchor" href="#grunt.util.hooker" id="grunt.util.hooker"></a>grunt.util.hooker</h4>
+<p><em>不建议使用</em></p>
+<p><a href="https://github.com/cowboy/javascript-hooker">JavaScript Hooker</a> - 用于调试和做些其他事情的钩子（hook）函数。</p>
+<div class="end-link">Found an error in the documentation?
+<a href='https://github.com/gruntjs/grunt-docs/issues'>File an issue</a>.</div></div></div><div class="span3"><div class="well sidebar-nav"><ul class="nav nav-list"><li class="nav-header"><i class="icon-cog"></i><span>API</span></li><li><a href="/api/grunt">grunt</a></li><li><a href="/api/grunt.config">grunt.config</a></li><li><a href="/api/grunt.event">grunt.event</a></li><li><a href="/api/grunt.fail">grunt.fail</a></li><li><a href="/api/grunt.file">grunt.file</a></li><li><a href="/api/grunt.log">grunt.log</a></li><li><a href="/api/grunt.option">grunt.option</a></li><li><a href="/api/grunt.task">grunt.task</a></li><li><a href="/api/grunt.template">grunt.template</a></li><li><a class="active" href="/api/grunt.util">grunt.util</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Other</span></li><li><a href="/api/inside-tasks">Inside Tasks</a></li><li><a href="/api/exit-codes">Exit Codes</a></li></ul><div class="advertisements"><script>var m3_u = (location.protocol=='https:'?'https://revive.bocoup.com/www/delivery/ajs.php':'http://revive.bocoup.com/www/delivery/ajs.php');var m3_r = Math.floor(Math.random()*99999999999);if (!document.MAX_used) document.MAX_used = ',';document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);document.write ("?zoneid=5");document.write ('&amp;cb=' + m3_r);if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));document.write ("&amp;loc=" + escape(window.location));if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));if (document.context) document.write ("&context=" + escape(document.context));if (document.mmm_fo) document.write ("&amp;mmm_fo=1");document.write ("'><\/scr"+"ipt>");</script><noscript><a href='http://revive.bocoup.com/www/delivery/ck.php?n=a656788f&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://revive.bocoup.com/www/delivery/avw.php?zoneid=5&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a656788f' alt='' /></a></noscript><span class="adsbybocoup">Ads by <a href="http://bocoup.com">Bocoup</a>.</span></div></div></div></div></div></div><footer class="grunt-footer"><div class="inner"><div class="container"><ul class="pull-right"><li><a href="/blog">Blog</a></li><li><a href="/upgrading-from-0.3-to-0.4">Migration Guides</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li><li class="social"><a href="https://github.com/gruntjs/" title="Grunt on GitHub"><span class="icon-github"></span></a></li><li class="social"><a href="https://twitter.com/gruntjs/" title="Grunt on Twitter"><span class="icon-twitter"></span></a></li><li class="social"><a href="/rss" title="Grunt blog RSS feed"><span class="icon-rss"></span></a></li></ul></div></div></footer><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34623937-1', 'gruntjs.com');
+ga('send', 'pageview');</script></body></html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="en" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Configuring tasks - Grunt: The JavaScript Task Runner</title><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700"><link rel="stylesheet" href="/css/main.css"><link rel="apple-touch-icon" href="/img/favicons/apple-touch-icon.png" sizes="180x180"><link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32"><link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16"><link rel="manifest" href="/img/favicons/manifest.json"><link rel="mask-icon" href="/img/favicons/safari-pinned-tab.svg" color="#e48632"><link rel="shortcut icon" href="/img/favicons/favicon.ico" type="image/x-icon"><meta name="msapplication-config" content="/img/favicons/browserconfig.xml"><meta name="theme-color" content="#e48632"><meta property="og:title" content="Configuring tasks - Grunt: The JavaScript Task Runner"><meta property="og:type" content="website"><meta property="og:url" content="https://gruntjs.com/"><meta property="og:image" content="https://gruntjs.com/img/og.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="256"><meta property="og:image:height" content="256"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@gruntjs"><meta name="twitter:site" content="@gruntjs"><meta name="twitter:title" content="Configuring tasks - Grunt: The JavaScript Task Runner"><meta itemprop="name" content="Grunt"><meta itemprop="image" content="/img/og.png"><link href="/rss" rel="alternate" title="Grunt Blog Feed" type="application/atom+xml"></head><body class="page-docs page-secondary"><div class="navbar navbar-inverse"><div class="navbar-inner"><div class="container"><a class="brand" href="/"><span class="logo"></span></a><div class="nav-collapse collapse"><ul class="nav"><li><a href="/getting-started"><i class="icon-arrow-right"></i><span>Getting Started</span></a></li><li><a href="/configuring-tasks"><i class="icon-cog"></i><span>Configuring Tasks</span></a></li><li><a href="/plugins"><i class="icon-power-cord"></i><span>Plugins</span></a></li><li><a href="/getting-started"><i class="icon-file-text"></i><span>Documentation</span></a></li></ul><form class="navbar-search pull-right"><input class="search-query" type="text" placeholder="Search"></form></div><!--.nav-collapse--></div></div></div><div class="content"><div class="container configuring-tasks"><div class="row-fluid"><div class="span9 page"><div class="hero-unit"><h1>Configuring tasks</h1><h1>配置任务</h1>
+<p>这个指南解释了如何使用 <code>Gruntfile</code> 来为你的项目配置task。如果你还不知道 <code>Gruntfile</code> 是什么，请先阅读 <a href="/getting-started{{快速入门}}/">Getting Started{{快速入门}}</a> 指南并看看这个<a href="/sample-gruntfile{{-gruntfile-实例}}/">Sample Gruntfile{{ Gruntfile 实例}}</a>。</p>
+<h2><a class="anchor" href="#grunt" id="grunt"></a>Grunt配置</h2>
+<p>Grunt的task配置都是在 <code>Gruntfile</code> 中的<code>grunt.initConfig</code>方法中指定的。此配置主要是以任务名称命名的属性，也可以包含其他任意数据。一旦这些代表任意数据的属性与任务所需要的属性相冲突，就将被忽略。</p>
+<p>此外，由于这本身就是JavaScript，因此你不仅限于使用JSON；你可以在这里使用任何有效的JavaScript。必要的情况下，你甚至可以以编程的方式生成配置。</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">concat</span>: {
+    <span class="hljs-comment">// 这里是concat任务的配置信息。</span>
+  },
+  <span class="hljs-attr">uglify</span>: {
+    <span class="hljs-comment">// 这里是uglify任务的配置信息</span>
+  },
+  <span class="hljs-comment">// 任意数据。</span>
+  my_property: <span class="hljs-string">'whatever'</span>,
+  <span class="hljs-attr">my_src_files</span>: [<span class="hljs-string">'foo/*.js'</span>, <span class="hljs-string">'bar/*.js'</span>],
+});</code></pre>
+<h2>任务配置和目标</h2>
+<p>当运行一个任务时，Grunt会自动查找配置对象中的同名属性。多任务（multi-task）可以通过任意命名的“目标（target）”来定义多个配置。在下面的案例中，<code>concat</code>任务有名为<code>foo</code>和<code>bar</code>两个目标，而<code>uglify</code>任务仅仅只有一个名为<code>bar</code>目标。</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">concat</span>: {
+    <span class="hljs-attr">foo</span>: {
+      <span class="hljs-comment">// concat task "foo" target options and files go here.</span>
+    },
+    <span class="hljs-attr">bar</span>: {
+      <span class="hljs-comment">// concat task "bar" target options and files go here.</span>
+    },
+  },
+  <span class="hljs-attr">uglify</span>: {
+    <span class="hljs-attr">bar</span>: {
+      <span class="hljs-comment">// uglify task "bar" target options and files go here.</span>
+    },
+  },
+});</code></pre>
+<p>同时指定任务（task）和目标（target），例如<code>grunt concat:foo</code>或者<code>grunt concat:bar</code>，将只会处理指定目标（target）的配置，而运行<code>grunt concat</code>将遍历<em>所有</em>目标（target）并依次处理。注意，如果一个任务使用<a href="/grunt.task#grunt.task.renametask">grunt.task.renameTask</a>重命名过，Grunt将在配置对象中查找以<em>新的</em>任务名命名的属性。</p>
+<h2><a class="anchor" href="#options" id="options"></a>options属性</h2>
+<p>在一个任务配置中，<code>options</code>属性可以用来指定覆盖内置属性的默认值。此外，每一个目标（target）中还可以拥有一个专门针对此目标（target）的<code>options</code>属性。目标（target）级的平options将会覆盖任务级的options。</p>
+<p><code>options</code>对象是可选的，如果不需要，可以忽略。</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">concat</span>: {
+    <span class="hljs-attr">options</span>: {
+      <span class="hljs-comment">// 这里是任务级的Options，覆盖默认值 </span>
+    },
+    <span class="hljs-attr">foo</span>: {
+      <span class="hljs-attr">options</span>: {
+        <span class="hljs-comment">// "foo" target options may go here, overriding task-level options.</span>
+      },
+    },
+    <span class="hljs-attr">bar</span>: {
+      <span class="hljs-comment">// No options specified; this target will use task-level options.</span>
+    },
+  },
+});</code></pre>
+<h2>文件</h2>
+<p>由于大多的任务都是执行文件操作，Grunt 有一个强大的抽象层用于声明任务应该操作哪些文件。这里有好几种定义<strong>src-dest</strong>(源文件-目标文件)文件映射的方式，均提供了不同程度的描述和控制操作方式。任何一种多任务（multi-task）都能理解下面的格式，所以你只需要选择满足你需求的格式就行。</p>
+<p>All files formats support <code>src</code> and <code>dest</code> but the <a href="/configuring-tasks#compact-format">Compact</a> and <a href="/configuring-tasks#files-array-format">Files Array</a> formats support a few additional properties:</p>
+<ul>
+<li><code>filter</code> 它通过接受任意一个有效的<a href="https://nodejs.org/docs/latest/api/fs.html#fs_class_fs_stats">fs.Stats方法名</a>或者一个函数来匹配<code>src</code>文件路径并根据匹配结果返回<code>true</code>或者<code>false</code>。 <a href="/configuring-tasks#custom-filter-function">See examples</a></li>
+<li><code>nonull</code> 如果被设置为 <code>true</code>，未匹配的模式也将执行。结合Grunt的<code>--verbore</code>标志, 这个选项可以帮助用来调试文件路径的问题。</li>
+<li><code>dot</code> 它允许模式模式匹配句点开头的文件名，即使模式并不明确文件名开头部分是否有句点。</li>
+<li><code>matchBase</code>如果设置这个属性，缺少斜线的模式(意味着模式中不能使用斜线进行文件路径的匹配)将不会匹配包含在斜线中的文件名。 例如，<code>a?b</code> 将匹配 <code>/xyz/123/acb</code> 但不匹配 <code>/xyz/acb/123</code>。</li>
+<li><code>expand</code> 处理动态的<code>src-dest</code>文件映射，更多的信息请查看<a href="/configuring-tasks#building-the-files-object-dynamically">动态构建文件对象</a>。</li>
+<li>其他的属性将作为匹配项传递给底层的库。 请查看<a href="https://github.com/isaacs/node-glob">node-glob</a> 和<a href="https://github.com/isaacs/minimatch">minimatch</a> 文档以获取更多信息。</li>
+</ul>
+<h3><a class="anchor" href="#difference-between-grunt-and-task-options" id="difference-between-grunt-and-task-options"></a>Difference Between Grunt and Task Options</h3>
+<p>Most tasks perform file operations, so Grunt provides a built-in infrastructure to retrieve the files a task should process. The advantage is that this logic doesn&#39;t have to be implemented again by tasks authors. To allow a user to specify these files, Grunt provides options such as <code>nonull</code> and <code>filter</code>.</p>
+<p>In addition to the files to work on, each task has its own specific needs. A task author may want to allow its user to configure some options to override the default behavior. These task-specific options shall not be confused with the Grunt options described before.</p>
+<p>To further clarify this difference, let&#39;s see an example that uses <a href="https://github.com/gruntjs/grunt-contrib-jshint">grunt-contrib-jshint</a>:</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">jshint</span>: {
+    <span class="hljs-attr">ignore_warning</span>: {
+      <span class="hljs-attr">options</span>: {
+        <span class="hljs-string">'-W015'</span>: <span class="hljs-literal">true</span>,
+      },
+      <span class="hljs-attr">src</span>: <span class="hljs-string">'js/**'</span>,
+      <span class="hljs-attr">filter</span>: <span class="hljs-string">'isFile'</span>
+    }
+  }
+});</code></pre>
+<p>This configuration employs the Grunt options <code>src</code> and <code>filter</code> to specify the files to process. It also uses the grunt-contrib-jshint task-specific option <code>-W015</code> to ignore a specific warning (the one having code <code>W015</code>).</p>
+<h3>简洁格式</h3>
+<p>这种形式允许每个目标对应一个<strong>src-dest</strong>文件映射。通常情况下它用于只读任务，比如<a href="https://github.com/gruntjs/grunt-contrib-jshint">grunt-contrib-jshint</a>，它就只需要一个单一的<code>src</code>属性，而不需要关联的<code>dest</code>选项. 这种格式还支给每个<code>src-dest</code>文件映射指定额外的属性。</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">jshint</span>: {
+    <span class="hljs-attr">foo</span>: {
+      <span class="hljs-attr">src</span>: [<span class="hljs-string">'src/aa.js'</span>, <span class="hljs-string">'src/aaa.js'</span>]
+    },
+  },
+  <span class="hljs-attr">concat</span>: {
+    <span class="hljs-attr">bar</span>: {
+      <span class="hljs-attr">src</span>: [<span class="hljs-string">'src/bb.js'</span>, <span class="hljs-string">'src/bbb.js'</span>],
+      <span class="hljs-attr">dest</span>: <span class="hljs-string">'dest/b.js'</span>,
+    },
+  },
+});</code></pre>
+<h3>文件对象格式</h3>
+<p>这种形式支持每个目标对应多个<code>src-dest</code>形式的文件映射，属性名就是目标文件，源文件就是它的值(源文件列表则使用数组格式声明)。可以使用这种方式指定数个<code>src-dest</code>文件映射， 但是不能够给每个映射指定附加的属性。</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">concat</span>: {
+    <span class="hljs-attr">foo</span>: {
+      <span class="hljs-attr">files</span>: {
+        <span class="hljs-string">'dest/a.js'</span>: [<span class="hljs-string">'src/aa.js'</span>, <span class="hljs-string">'src/aaa.js'</span>],
+        <span class="hljs-string">'dest/a1.js'</span>: [<span class="hljs-string">'src/aa1.js'</span>, <span class="hljs-string">'src/aaa1.js'</span>],
+      },
+    },
+    <span class="hljs-attr">bar</span>: {
+      <span class="hljs-attr">files</span>: {
+        <span class="hljs-string">'dest/b.js'</span>: [<span class="hljs-string">'src/bb.js'</span>, <span class="hljs-string">'src/bbb.js'</span>],
+        <span class="hljs-string">'dest/b1.js'</span>: [<span class="hljs-string">'src/bb1.js'</span>, <span class="hljs-string">'src/bbb1.js'</span>],
+      },
+    },
+  },
+});</code></pre>
+<h3>文件数组格式</h3>
+<p>这种形式支持每个目标对应多个<code>src-dest</code>文件映射，同时也允许每个映射拥有额外属性：</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">concat</span>: {
+    <span class="hljs-attr">foo</span>: {
+      <span class="hljs-attr">files</span>: [
+        {<span class="hljs-attr">src</span>: [<span class="hljs-string">'src/aa.js'</span>, <span class="hljs-string">'src/aaa.js'</span>], <span class="hljs-attr">dest</span>: <span class="hljs-string">'dest/a.js'</span>},
+        {<span class="hljs-attr">src</span>: [<span class="hljs-string">'src/aa1.js'</span>, <span class="hljs-string">'src/aaa1.js'</span>], <span class="hljs-attr">dest</span>: <span class="hljs-string">'dest/a1.js'</span>},
+      ],
+    },
+    <span class="hljs-attr">bar</span>: {
+      <span class="hljs-attr">files</span>: [
+        {<span class="hljs-attr">src</span>: [<span class="hljs-string">'src/bb.js'</span>, <span class="hljs-string">'src/bbb.js'</span>], <span class="hljs-attr">dest</span>: <span class="hljs-string">'dest/b/'</span>, <span class="hljs-attr">nonull</span>: <span class="hljs-literal">true</span>},
+        {<span class="hljs-attr">src</span>: [<span class="hljs-string">'src/bb1.js'</span>, <span class="hljs-string">'src/bbb1.js'</span>], <span class="hljs-attr">dest</span>: <span class="hljs-string">'dest/b1/'</span>, <span class="hljs-attr">filter</span>: <span class="hljs-string">'isFile'</span>},
+      ],
+    },
+  },
+});</code></pre>
+<h3>较老的格式</h3>
+<p><strong>dest-as-target</strong>文件格式在多任务和目标出现之前是一个过渡形式，目标文件路径实际上就是目标名称。遗憾的是, 由于目标名称是文件路径，那么运行<code>grunt task:target</code>可能不合适。此外，你也不能指定一个目标级的<code>options</code>或者给每个<code>src-dest</code>文件映射指定额外属性。</p>
+<p>此种格式已经不赞成使用，请尽量不要使用。</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">concat</span>: {
+    <span class="hljs-string">'dest/a.js'</span>: [<span class="hljs-string">'src/aa.js'</span>, <span class="hljs-string">'src/aaa.js'</span>],
+    <span class="hljs-string">'dest/b.js'</span>: [<span class="hljs-string">'src/bb.js'</span>, <span class="hljs-string">'src/bbb.js'</span>],
+  },
+});</code></pre>
+<h3>自定义过滤函数</h3>
+<p><code>filter</code>属性可以给你的目标文件提供一个更高级的详细帮助信息。只需要使用一个有效的<a href="https://nodejs.org/docs/latest/api/fs.html#fs_class_fs_stats">fs.Stats 方法名</a>。下面的配置仅仅清理一个与模式匹配的真实的文件：</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">clean</span>: {
+    <span class="hljs-attr">foo</span>: {
+      <span class="hljs-attr">src</span>: [<span class="hljs-string">'tmp/**/*'</span>],
+      <span class="hljs-attr">filter</span>: <span class="hljs-string">'isFile'</span>,
+    },
+  },
+});</code></pre>
+<p>或者创建你自己的<code>filter</code>函数，根据文件是否匹配来返回<code>true</code>或者<code>false</code>。下面的例子将仅仅清理一个空目录：</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">clean</span>: {
+    <span class="hljs-attr">foo</span>: {
+      <span class="hljs-attr">src</span>: [<span class="hljs-string">'tmp/**/*'</span>],
+      <span class="hljs-attr">filter</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">filepath</span>) </span>{
+        <span class="hljs-keyword">return</span> (grunt.file.isDir(filepath) &amp;&amp; <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>).readdirSync(filepath).length === <span class="hljs-number">0</span>);
+      },
+    },
+  },
+});</code></pre>
+<p>Another example—which utilizes the <a href="/configuring-tasks#globbing-patterns">globbing</a> and <a href="/configuring-tasks#building-the-files-object-dynamically">expand: true</a> features—allows you to avoid overwriting files which already exist in the destination:</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">copy</span>: {
+    <span class="hljs-attr">templates</span>: {
+      <span class="hljs-attr">files</span>: [{
+        <span class="hljs-attr">expand</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">cwd</span>: [<span class="hljs-string">'templates/css/'</span>],     <span class="hljs-comment">// Parent folder of original CSS templates</span>
+        src: <span class="hljs-string">'**/*.css'</span>,             <span class="hljs-comment">// Collects all `*.css` files within the parent folder (and its subfolders)</span>
+        dest: <span class="hljs-string">'src/css/'</span>,            <span class="hljs-comment">// Stores the collected `*.css` files in your `src/css/` folder</span>
+        filter: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">dest</span>) </span>{    <span class="hljs-comment">// `dest`, in this instance, is the filepath of each matched `src`</span>
+          <span class="hljs-keyword">var</span> cwd = <span class="hljs-keyword">this</span>.cwd,        <span class="hljs-comment">// Configures variables (these are documented for your convenience only)</span>
+              src = dest.replace(<span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">'^'</span> + cwd), <span class="hljs-string">''</span>);
+              dest = grunt.task.current.data.files[<span class="hljs-number">0</span>].dest;
+          <span class="hljs-keyword">return</span> (!grunt.file.exists(dest + src));    <span class="hljs-comment">// Copies `src` files ONLY if their destinations are unoccupied</span>
+        }
+      }]
+    }
+  }
+});</code></pre>
+<p>Keep in mind the above technique does not account for the <a href="/configuring-tasks#building-the-files-object-dynamically">rename property</a> when checking if the destination exists.</p>
+<h3>通配符模式</h3>
+<p>通常分别指定所有源文件路径是不切实际的，因此Grunt通过内置支持<a href="https://github.com/isaacs/node-glob">node-glob</a> 和 <a href="https://github.com/isaacs/minimatch">minimatch</a> 库来匹配文件名(又叫作<code>globbing</code>)。</p>
+<p>然这并不是一个综合的匹配模式方面的教程，你只需要知道如何在文件路径匹配过程中使用它们即可：</p>
+<ul>
+<li><code>*</code> 匹配任意数量的字符，但不匹配 <code>/</code></li>
+<li><code>?</code> 匹配单个字符，但不匹配 <code>/</code></li>
+<li><code>**</code> 匹配任意数量的字符，包括 <code>/</code>，只要它是路径中唯一的一部分</li>
+<li><code>{}</code> 允许使用一个逗号分割的“或”表达式列表</li>
+<li><code>!</code> 在模式的开头用于排除一个匹配模式所匹配的任何文件</li>
+</ul>
+<p>每个人都需要知道的是：<code>foo/*.js</code>将匹配位于<code>foo/</code>目录下的所有的<code>.js</code>结尾的文件；而<code>foo/**/*js</code>将匹配<code>foo/</code>目录以<em>及其子目录</em>中所有以<code>.js</code>结尾的文件。</p>
+<p>此外, 为了简化原本复杂的通配符模式，Grunt允许指定一个数组形式的文件路径或者一个通配符模式。所有模式按顺序处理，模式处理的过程中，带有<code>!</code>前缀的模式所匹配的文件将不包含在结果集中。 而且其结果集中的每一项也是唯一的。</p>
+<p>例如：</p>
+<pre><code class="lang-js"><span class="hljs-comment">// 指定单个文件：</span>
+{<span class="hljs-attr">src</span>: <span class="hljs-string">'foo/this.js'</span>, <span class="hljs-attr">dest</span>: ...}
+<span class="hljs-comment">// 指定一个文件数组：</span>
+{<span class="hljs-attr">src</span>: [<span class="hljs-string">'foo/this.js'</span>, <span class="hljs-string">'foo/that.js'</span>, <span class="hljs-string">'foo/the-other.js'</span>], <span class="hljs-attr">dest</span>: ...}
+<span class="hljs-comment">// 使用一个匹配模式：</span>
+{<span class="hljs-attr">src</span>: <span class="hljs-string">'foo/th*.js'</span>, <span class="hljs-attr">dest</span>: ...}
+
+<span class="hljs-comment">// 一个独立的node-glob模式：</span>
+{<span class="hljs-attr">src</span>: <span class="hljs-string">'foo/{a,b}*.js'</span>, <span class="hljs-attr">dest</span>: ...}
+<span class="hljs-comment">// 也可以这样编写：</span>
+{<span class="hljs-attr">src</span>: [<span class="hljs-string">'foo/a*.js'</span>, <span class="hljs-string">'foo/b*.js'</span>], <span class="hljs-attr">dest</span>: ...}
+
+<span class="hljs-comment">// foo目录中所有的.js文件，按字母顺序排序：</span>
+{<span class="hljs-attr">src</span>: [<span class="hljs-string">'foo/*.js'</span>], <span class="hljs-attr">dest</span>: ...}
+<span class="hljs-comment">// 首先是bar.js，接着是剩下的.js文件，并按字母顺序排序：</span>
+{<span class="hljs-attr">src</span>: [<span class="hljs-string">'foo/bar.js'</span>, <span class="hljs-string">'foo/*.js'</span>], <span class="hljs-attr">dest</span>: ...}
+
+<span class="hljs-comment">// 除bar.js之外的所有的.js文件，按字母顺序排序：</span>
+{<span class="hljs-attr">src</span>: [<span class="hljs-string">'foo/*.js'</span>, <span class="hljs-string">'!foo/bar.js'</span>], <span class="hljs-attr">dest</span>: ...}
+<span class="hljs-comment">// 按字母顺序排序的所有.js文件，但是bar.js在最后。</span>
+{<span class="hljs-attr">src</span>: [<span class="hljs-string">'foo/*.js'</span>, <span class="hljs-string">'!foo/bar.js'</span>, <span class="hljs-string">'foo/bar.js'</span>], <span class="hljs-attr">dest</span>: ...}
+
+<span class="hljs-comment">// 模板也可以用于文件路径或者匹配模式中：</span>
+{<span class="hljs-attr">src</span>: [<span class="hljs-string">'src/&lt;%= basename %&gt;.js'</span>], <span class="hljs-attr">dest</span>: <span class="hljs-string">'build/&lt;%= basename %&gt;.min.js'</span>}
+<span class="hljs-comment">// 它们也可以引用在配置中定义的其他文件列表：</span>
+{<span class="hljs-attr">src</span>: [<span class="hljs-string">'foo/*.js'</span>, <span class="hljs-string">'&lt;%= jshint.all.src %&gt;'</span>], <span class="hljs-attr">dest</span>: ...}</code></pre>
+<p>更多关于通配符模式的语法，请查看<a href="https://github.com/isaacs/node-glob">node-glob</a> 和 <a href="https://github.com/isaacs/minimatch">minimatch</a> 的文档。</p>
+<h3>动态构建文件对象</h3>
+<p>当你希望处理大量的单个文件时，这里有一些附加的属性可以用来动态的构建一个文件列表。这些属性都可以用于  <a href="/configuring-tasks#compact-format">Compact</a> 和 <a href="/configuring-tasks#files-array-format">Files Array</a> 文件映射格式。</p>
+<p><code>expand</code> 设置为<code>true</code>将启用下面的选项：</p>
+<ul>
+<li><code>cwd</code> 所有<code>src</code>指定的匹配都将相对于此处指定的路径（但不包括此路径） 。</li>
+<li><code>src</code> 相对于<code>cwd</code>路径的匹配模式。</li>
+<li><code>dest</code> 目标文件路径前缀。</li>
+<li><code>ext</code> 对于生成的<code>dest</code>路径中所有实际存在文件，均使用这个属性值替换扩展名。</li>
+<li><code>extDot</code> 用于指定标记扩展名的英文点号的所在位置。可以赋值 <code>&#39;first&#39;</code> （扩展名从文件名中的第一个英文点号开始） 或 <code>&#39;last&#39;</code> （扩展名从最后一个英文点号开始），默认值为 <code>&#39;first&#39;</code> <em>[添加于 0.4.3 版本]</em></li>
+<li><code>flatten</code> 从生成的<code>dest</code>路径中移除所有的路径部分。</li>
+<li><code>rename</code> Embeds a customized function, which returns a string containing the new destination and filename. This function is called for each matched <code>src</code> file (after extension renaming and flattening). <a href="/configuring-tasks#the-rename-property">More information</a></li>
+</ul>
+<p>在下面的例子中，<code>uglify</code> 任务中的<code>static_mappings</code>和<code>dynamic_mappings</code>两个目标具有相同的<code>src-dest</code>文件映射列表, 这是因为任务运行时Grunt会自动展开<code>dynamic_mappings</code>文件对象为4个单独的静态<code>src-dest</code>文件映射--假设这4个文件能够找到。</p>
+<p>可以指定任意静态<code>src-dest</code>和动态的<code>src-dest</code>文件映射相互结合。</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">uglify</span>: {
+    <span class="hljs-attr">static_mappings</span>: {
+      <span class="hljs-comment">// Because these src-dest file mappings are manually specified, every</span>
+      <span class="hljs-comment">// time a new file is added or removed, the Gruntfile has to be updated.</span>
+      files: [
+        {<span class="hljs-attr">src</span>: <span class="hljs-string">'lib/a.js'</span>, <span class="hljs-attr">dest</span>: <span class="hljs-string">'build/a.min.js'</span>},
+        {<span class="hljs-attr">src</span>: <span class="hljs-string">'lib/b.js'</span>, <span class="hljs-attr">dest</span>: <span class="hljs-string">'build/b.min.js'</span>},
+        {<span class="hljs-attr">src</span>: <span class="hljs-string">'lib/subdir/c.js'</span>, <span class="hljs-attr">dest</span>: <span class="hljs-string">'build/subdir/c.min.js'</span>},
+        {<span class="hljs-attr">src</span>: <span class="hljs-string">'lib/subdir/d.js'</span>, <span class="hljs-attr">dest</span>: <span class="hljs-string">'build/subdir/d.min.js'</span>},
+      ],
+    },
+    <span class="hljs-attr">dynamic_mappings</span>: {
+      <span class="hljs-comment">// Grunt will search for "**/*.js" under "lib/" when the "uglify" task</span>
+      <span class="hljs-comment">// runs and build the appropriate src-dest file mappings then, so you</span>
+      <span class="hljs-comment">// don't need to update the Gruntfile when files are added or removed.</span>
+      files: [
+        {
+          <span class="hljs-attr">expand</span>: <span class="hljs-literal">true</span>,     <span class="hljs-comment">// Enable dynamic expansion.</span>
+          cwd: <span class="hljs-string">'lib/'</span>,      <span class="hljs-comment">// Src matches are relative to this path.</span>
+          src: [<span class="hljs-string">'**/*.js'</span>], <span class="hljs-comment">// Actual pattern(s) to match.</span>
+          dest: <span class="hljs-string">'build/'</span>,   <span class="hljs-comment">// Destination path prefix.</span>
+          ext: <span class="hljs-string">'.min.js'</span>,   <span class="hljs-comment">// Dest filepaths will have this extension.</span>
+          extDot: <span class="hljs-string">'first'</span>   <span class="hljs-comment">// Extensions in filenames begin after the first dot</span>
+        },
+      ],
+    },
+  },
+});</code></pre>
+<h4><a class="anchor" href="#the-rename-property" id="the-rename-property"></a>The rename Property</h4>
+<p>The <code>rename</code> property is unique, as the only valid value for it is a JavaScript function. Although the function returns a string, you cannot simply use a string as a value for <code>rename</code> (doing so results in an error: <code>Property &#39;rename&#39; of object # is not a function</code>). In the following example, the <code>copy</code> task will create a backup of README.md.</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">copy</span>: {
+    <span class="hljs-attr">backup</span>: {
+      <span class="hljs-attr">files</span>: [{
+        <span class="hljs-attr">expand</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">src</span>: [<span class="hljs-string">'docs/README.md'</span>],    <span class="hljs-comment">// The README.md file has been specified for backup</span>
+        rename: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{       <span class="hljs-comment">// The value for rename must be a function</span>
+          <span class="hljs-keyword">return</span> <span class="hljs-string">'docs/BACKUP.txt'</span>; <span class="hljs-comment">// The function must return a string with the complete destination</span>
+        }
+      }]
+    }
+  }
+});</code></pre>
+<p>When the function is called, the <code>dest</code> and matched <code>src</code> path are passed in and can be used for returning the output string. In the following example, files are copied from the <code>dev</code> folder to the <code>dist</code> folder, and renamed to have the word &quot;beta&quot; removed .</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">copy</span>: {
+    <span class="hljs-attr">production</span>: {
+      <span class="hljs-attr">files</span>: [{
+        <span class="hljs-attr">expand</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">cwd</span>: <span class="hljs-string">'dev/'</span>,
+        <span class="hljs-attr">src</span>: [<span class="hljs-string">'*'</span>],
+        <span class="hljs-attr">dest</span>: <span class="hljs-string">'dist/'</span>,
+        <span class="hljs-attr">rename</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">dest, src</span>) </span>{          <span class="hljs-comment">// The `dest` and `src` values can be passed into the function</span>
+          <span class="hljs-keyword">return</span> dest + src.replace(<span class="hljs-string">'beta'</span>,<span class="hljs-string">''</span>); <span class="hljs-comment">// The `src` is being renamed; the `dest` remains the same</span>
+        }
+      }]
+    }
+  }
+});</code></pre>
+<p>If multiple matched <code>src</code> paths are renamed to an identical destination (i.e. if two different files get renamed to the same file), each output will be added to an array of sources for it.</p>
+<h2>模板</h2>
+<p>使用<code>&lt;% %&gt;</code>分隔符指定的模板会在任务从它们的配置中读取相应的数据时将自动扩展扫描。模板会被递归的展开，直到配置中不再存在遗留的模板相关的信息(与模板匹配的)。</p>
+<p>整个配置对象决定了属性上下文(模板中的属性)。此外，在模板中使用<code>grunt</code>以及它的方法都是有效的，例如： <code>&lt;%= grunt.template.today(&#39;yyyy-mm-dd&#39;) %&gt;</code>。</p>
+<ul>
+<li><code>&lt;%= prop.subprop %&gt;</code> 将会自动展开配置信息中的<code>prop.subprop</code>的值，不管是什么类型。像这样的模板不仅可以用来引用字符串值，还可以引用数组或者其他对象类型的值。</li>
+<li><code>&lt;% %&gt;</code> 执行任意内联的JavaScript代码。对于控制流或者循环来说是非常有用的。</li>
+</ul>
+<p>下面以<code>concat</code>任务配置为例，运行<code>grunt concat:sample</code>时将通过banner中的<code>/* abcde */</code>连同<code>foo/*.js</code>+<code>bar/*.js</code>+<code>bar/*.js</code>匹配的所有文件来生成一个名为<code>build/abcde.js</code>的文件。</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">concat</span>: {
+    <span class="hljs-attr">sample</span>: {
+      <span class="hljs-attr">options</span>: {
+        <span class="hljs-attr">banner</span>: <span class="hljs-string">'/* &lt;%= baz %&gt; */\n'</span>,   <span class="hljs-comment">// '/* abcde */\n'</span>
+      },
+      <span class="hljs-attr">src</span>: [<span class="hljs-string">'&lt;%= qux %&gt;'</span>, <span class="hljs-string">'baz/*.js'</span>],  <span class="hljs-comment">// [['foo/*.js', 'bar/*.js'], 'baz/*.js']</span>
+      dest: <span class="hljs-string">'build/&lt;%= baz %&gt;.js'</span>,      <span class="hljs-comment">// 'build/abcde.js'</span>
+    },
+  },
+  <span class="hljs-comment">//用于任务配置模板的任意属性</span>
+  foo: <span class="hljs-string">'c'</span>,
+  <span class="hljs-attr">bar</span>: <span class="hljs-string">'b&lt;%= foo %&gt;d'</span>, <span class="hljs-comment">// 'bcd'</span>
+  baz: <span class="hljs-string">'a&lt;%= bar %&gt;e'</span>, <span class="hljs-comment">// 'abcde'</span>
+  qux: [<span class="hljs-string">'foo/*.js'</span>, <span class="hljs-string">'bar/*.js'</span>],
+});</code></pre>
+<h2>导入外部数据</h2>
+<p>在下面的Gruntfile中，项目的元数据是从<code>package.json</code>文件中导入到Grunt配置中的，并且<a href="https://github.com/gruntjs/grunt-contrib-uglify">grunt-contrib-uglify 插件</a>中的 <code>uglify</code> 任务被配置用于压缩一个源文件以及使用该元数据动态的生成一个banner注释。</p>
+<p>Grunt有<code>grunt.file.readJSON</code>和<code>grunt.file.readYAML</code>两个方法分别用于引入JSON和YAML数据。</p>
+<pre><code class="lang-js">grunt.initConfig({
+  <span class="hljs-attr">pkg</span>: grunt.file.readJSON(<span class="hljs-string">'package.json'</span>),
+  <span class="hljs-attr">uglify</span>: {
+    <span class="hljs-attr">options</span>: {
+      <span class="hljs-attr">banner</span>: <span class="hljs-string">'/*! &lt;%= pkg.name %&gt; &lt;%= grunt.template.today("yyyy-mm-dd") %&gt; */\n'</span>
+    },
+    <span class="hljs-attr">dist</span>: {
+      <span class="hljs-attr">src</span>: <span class="hljs-string">'src/&lt;%= pkg.name %&gt;.js'</span>,
+      <span class="hljs-attr">dest</span>: <span class="hljs-string">'dist/&lt;%= pkg.name %&gt;.min.js'</span>
+    }
+  }
+});</code></pre>
+<div class="end-link">Found an error in the documentation?
+<a href='https://github.com/gruntjs/grunt-docs/issues'>File an issue</a>.</div></div></div><div class="span3"><div class="well sidebar-nav"><ul class="nav nav-list"><li class="nav-header"><i class="icon-file-text"></i><span>Documentation</span></li><li><a href="/getting-started">Getting Started</a></li><li><a class="active" href="/configuring-tasks">Configuring Tasks</a></li><li><a href="/sample-gruntfile">Sample Gruntfile</a></li><li><a href="/creating-tasks">Creating Tasks</a></li><li><a href="/creating-plugins">Creating Plugins</a></li><li><a href="/using-the-cli">Using the CLI</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Advanced</span></li><li><a href="/api">API</a></li><li><a href="/installing-grunt">Installing Grunt</a></li><li><a href="/frequently-asked-questions">Frequently Asked Questions</a></li><li><a href="/project-scaffolding">Project Scaffolding</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Community</span></li><li><a href="/help-resources">Help Resources</a></li><li><a href="/who-uses-grunt">Who uses Grunt</a></li><li><a href="/built-with-grunt-badge">Built with Grunt Badge</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li></ul><ul class="nav nav-list"><li class="nav-header"><span>Migration guides</span></li><li><a href="/upgrading-from-0.3-to-0.4">Upgrading from 0.3 to 0.4</a></li><li><a href="/upgrading-from-0.4-to-1.0">Upgrading from 0.4 to 1.0</a></li></ul><div class="advertisements"><script>var m3_u = (location.protocol=='https:'?'https://revive.bocoup.com/www/delivery/ajs.php':'http://revive.bocoup.com/www/delivery/ajs.php');var m3_r = Math.floor(Math.random()*99999999999);if (!document.MAX_used) document.MAX_used = ',';document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);document.write ("?zoneid=5");document.write ('&amp;cb=' + m3_r);if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));document.write ("&amp;loc=" + escape(window.location));if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));if (document.context) document.write ("&context=" + escape(document.context));if (document.mmm_fo) document.write ("&amp;mmm_fo=1");document.write ("'><\/scr"+"ipt>");</script><noscript><a href='http://revive.bocoup.com/www/delivery/ck.php?n=a656788f&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://revive.bocoup.com/www/delivery/avw.php?zoneid=5&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a656788f' alt='' /></a></noscript><span class="adsbybocoup">Ads by <a href="http://bocoup.com">Bocoup</a>.</span></div></div></div></div></div></div><footer class="grunt-footer"><div class="inner"><div class="container"><ul class="pull-right"><li><a href="/blog">Blog</a></li><li><a href="/upgrading-from-0.3-to-0.4">Migration Guides</a></li><li><a href="/contributing">Contributing</a></li><li><a href="/development-team">Development Team</a></li><li class="social"><a href="https://github.com/gruntjs/" title="Grunt on GitHub"><span class="icon-github"></span></a></li><li class="social"><a href="https://twitter.com/gruntjs/" title="Grunt on Twitter"><span class="icon-twitter"></span></a></li><li class="social"><a href="/rss" title="Grunt blog RSS feed"><span class="icon-rss"></span></a></li></ul></div></div></footer><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-34623937-1', 'gruntjs.com');
+ga('send', 'pageview');</script></body></html>

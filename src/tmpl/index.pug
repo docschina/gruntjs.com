@@ -1,7 +1,7 @@
 extends layout
 
 mixin gettingStarted
-  p Read the <a href="/getting-started">Getting Started</a> guide for instructions on using Grunt in your projects. Once you've done that, check out a <a href="/sample-gruntfile">Sample Gruntfile</a> and learn more about <a href="/configuring-tasks">Configuring Tasks</a>.
+  p <a href="/getting-started">快速入门</a> 文档能告诉你如何在项目中使用 Grunt。 当你读完了此文档，请继续阅读<a href="/sample-gruntfile">Gruntfile 案例</a> 和 <a href="/configuring-tasks">配置任务</a>.
 
 block content
   .container
@@ -106,7 +106,7 @@ block content
       .span3
         .well.sidebar-nav
           .latest-version
-            h3 Latest Version
+            h3 最新版本
             ul
               li Stable:
                 = ' '
@@ -120,7 +120,7 @@ block content
           include blocks/advertisements
 
           .latest-news
-            h3 Latest News
+            h3 最新消息
             ul
               each article, i in news
                 if i < 3
@@ -130,7 +130,7 @@ block content
                       span.date= article.postDate
 
           .getting-started
-            h3 Getting Started
+            h3 快速入门
             +gettingStarted
 
           .social

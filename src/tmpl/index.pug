@@ -11,19 +11,19 @@ block content
           .home-header
             .title-header
               span.grunt-name Grunt
-              span.tag-line The JavaScript Task Runner
+              span.tag-line JavaScript 世界的构建工具
 
           .why.pull-left
-            h2 Why use a task runner?
-            p In one word: automation. The less work you have to do when performing repetitive tasks like minification, compilation, unit testing, linting, etc, the easier your job becomes. After you've configured it through a <a href="/sample-gruntfile">Gruntfile</a>, a task runner can do most of that mundane work for you—and your team—with basically zero effort.
+            h2 为何要用构建工具？
+            p 一言以蔽之：自动化。对于需要反复重复的任务，例如压缩（minification）、编译、单元测试、linting等，自动化工具可以减轻你的劳动，简化你的工作。当你在 <a href="/sample-gruntfile">Gruntfile</a>, 文件正确配置好了任务，任务运行器就会自动帮你或你的小组完成大部分无聊的工作。
 
           .why.pull-right
-            h2 Why use Grunt?
-            p The Grunt ecosystem is huge and it's growing every day. With literally hundreds of plugins to choose from, you can use Grunt to automate just about anything with a minimum of effort. If someone hasn't already built what you need, authoring and publishing your own Grunt plugin to npm is a breeze. See how to <a href="/getting-started">get started</a>.
+            h2 为什么要使用Grunt？
+            p Grunt生态系统非常庞大，并且一直在增长。由于拥有数量庞大的插件可供选择，因此，你可以利用Grunt自动完成任何事，并且花费最少的代价。如果找不到你所需要的插件，那就自己动手创造一个Grunt插件，然后将其发布到npm上吧。先看看 <a href="/getting-started">入门文档</a>吧.
 
           .technology
-            h2 Available Grunt plugins
-            p Many of the tasks you need are already available as Grunt Plugins, and new plugins are published every day. While the <a href="/plugins">plugin listing</a> is more complete, here's a few you may have heard of.
+            h2 可用的Grunt插件
+            p 你所需要的大多数task都已经作为Grunt插件被开发了出来，并且每天都有更多的插件诞生。尽管 <a href="/plugins">插件列表</a> 所列出的插件更为全面，但这里有一些你可能已经听过。
             div
               a.technology(href='https://www.npmjs.com/package/grunt-contrib-coffee')
                 img(src='/img/logo-coffeescript.jpg', alt='CoffeeScript', width='175', height='110')
@@ -43,44 +43,44 @@ block content
                 img(src='/img/logo-sylus.jpg', alt='Stylus', width='175', height='110')
 
           .grunt-preview
-            h2 Here's a preview!
-            p While installing grunt is simple, it's slightly more involved to get it running on your project. To see what your effort will win you, take a look at this example output from running Grunt in a <a href="https://github.com/cowboy/jquery-tiny-pubsub">sample project</a>.
+            h2 提前感受一下 Grunt 吧！
+            p 安装 grunt 虽然很简单，更多涉及到如何运行项目。看看下面的演示，这是为 <a href="https://github.com/cowboy/jquery-tiny-pubsub">项目案例</a>运行 grunt 后的输出.
             // THX 2 @GF3 4 THE CSS <3!!
             pre.terminal
               span.command-prompt grunt
-              | 
+              |
               |Running "jshint:gruntfile" (jshint) task
               |<span class="green">&gt;&gt;</span> 1 file lint free.
-              | 
+              |
               |Running "jshint:src" (jshint) task
               |<span class="green">&gt;&gt;</span> 1 file lint free.
-              | 
+              |
               |Running "jshint:test" (jshint) task
               |<span class="green">&gt;&gt;</span> 1 file lint free.
-              | 
+              |
               |Running "qunit:files" (qunit) task
               |Testing test/tiny-pubsub.html....<span class="green">OK</span>
               |<span class="green">&gt;&gt;</span> 4 assertions passed (23ms)
-              | 
+              |
               |Running "clean:files" (clean) task
               |Cleaning "dist"...<span class="green">OK</span>
-              | 
+              |
               |Running "concat:dist" (concat) task
               |File "dist/ba-tiny-pubsub.js" created.
-              | 
+              |
               |Running "uglify:dist" (uglify) task
               |File "dist/ba-tiny-pubsub.min.js" created.
               |Uncompressed size: <span class="green">389</span> bytes.
               |Compressed size: <span class="green">119</span> bytes gzipped (<span class="green">185</span> bytes minified).
-              | 
+              |
               |<span class="green">Done.</span>
-              | 
+              |
               |<span class="command-prompt active"><span class="active-prompt"></span></span>
 
           .who-uses-grunt
-            h2 Who uses Grunt?
-            p These are just a few companies and projects that are using Grunt. 
-              a(href='/who-uses-grunt') See more here.
+            h2 谁在使用Grunt？
+            p 以下列出了一部分正在使用Grunt的公司或项目。
+              a(href='/who-uses-grunt') 查看更多。
             div
               a.technology(href='/who-uses-grunt')
                 img(src='/img/logo-twitter.jpg', alt='Twitter', width='175', height='110')
@@ -100,7 +100,7 @@ block content
                 img(src='/img/logo-bitovi.jpg', alt='Bitovi', width='175', height='110')
 
           .how-get-started
-            h2 How do I get started?
+            h2 如何开始使用Grunt？
             +gettingStarted
 
       .span3

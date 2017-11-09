@@ -5,6 +5,7 @@ node_js:
   - "6"
 script:
   - grunt build
+  - bash ./shell/deploy.sh
 matrix:
   fast_finish: true
 cache:

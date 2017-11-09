@@ -13,7 +13,7 @@ block content
           else
             each article in content
               h2
-                a(href='/blog/' + article.url)= article.title
+                a(href='/blog/' + article.url + '.html')= article.title
                 span.post-date= "Posted on " + article.postDate
               != article.content
       .span3
@@ -24,4 +24,4 @@ block content
               span Blog
             each article in articleList
               li
-                a(href='/blog/' + article.url, class=locals.url == article.url && 'active')= article.title
+                a(href='/blog/' + article.url + '.html', class=locals.url == article.url && 'active')= article.title

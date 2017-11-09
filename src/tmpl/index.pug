@@ -1,7 +1,7 @@
 extends layout
 
 mixin gettingStarted
-  p <a href="/getting-started">快速入门</a> 文档能告诉你如何在项目中使用 Grunt。 当你读完了此文档，请继续阅读<a href="/sample-gruntfile">Gruntfile 案例</a> 和 <a href="/configuring-tasks">配置任务</a>.
+  p <a href="/docs/getting-started.html">快速入门</a> 文档能告诉你如何在项目中使用 Grunt。 当你读完了此文档，请继续阅读<a href="/sample-gruntfile">Gruntfile 案例</a> 和 <a href="/docs/configuring-tasks.html">配置任务</a>.
 
 block content
   .container
@@ -15,15 +15,15 @@ block content
 
           .why.pull-left
             h2 为何要用构建工具？
-            p 一言以蔽之：自动化。对于需要反复重复的任务，例如压缩（minification）、编译、单元测试、linting等，自动化工具可以减轻你的劳动，简化你的工作。当你在 <a href="/sample-gruntfile">Gruntfile</a>, 文件正确配置好了任务，任务运行器就会自动帮你或你的小组完成大部分无聊的工作。
+            p 一言以蔽之：自动化。对于需要反复重复的任务，例如压缩（minification）、编译、单元测试、linting等，自动化工具可以减轻你的劳动，简化你的工作。当你在 <a href="/docs/sample-gruntfile.html">Gruntfile</a>, 文件正确配置好了任务，任务运行器就会自动帮你或你的小组完成大部分无聊的工作。
 
           .why.pull-right
             h2 为什么要使用Grunt？
-            p Grunt生态系统非常庞大，并且一直在增长。由于拥有数量庞大的插件可供选择，因此，你可以利用Grunt自动完成任何事，并且花费最少的代价。如果找不到你所需要的插件，那就自己动手创造一个Grunt插件，然后将其发布到npm上吧。先看看 <a href="/getting-started">入门文档</a>吧.
+            p Grunt生态系统非常庞大，并且一直在增长。由于拥有数量庞大的插件可供选择，因此，你可以利用Grunt自动完成任何事，并且花费最少的代价。如果找不到你所需要的插件，那就自己动手创造一个Grunt插件，然后将其发布到npm上吧。先看看 <a href="/docs/getting-started.html">入门文档</a>吧.
 
           .technology
             h2 可用的Grunt插件
-            p 你所需要的大多数task都已经作为Grunt插件被开发了出来，并且每天都有更多的插件诞生。尽管 <a href="/plugins">插件列表</a> 所列出的插件更为全面，但这里有一些你可能已经听过。
+            p 你所需要的大多数task都已经作为Grunt插件被开发了出来，并且每天都有更多的插件诞生。尽管 <a href="/plugins.html">插件列表</a> 所列出的插件更为全面，但这里有一些你可能已经听过。
             div
               a.technology(href='https://www.npmjs.com/package/grunt-contrib-coffee')
                 img(src='/img/logo-coffeescript.jpg', alt='CoffeeScript', width='175', height='110')
@@ -125,7 +125,7 @@ block content
               each article, i in news
                 if i < 3
                   li
-                    a(href='/blog/' + article.url)
+                    a(href='/blog/' + article.url + '.html')
                       span.title= article.title
                       span.date= article.postDate
 
@@ -138,5 +138,5 @@ block content
               span.icon-github
             a.twitter(href='https://twitter.com/gruntjs/', title='Grunt on Twitter')
               span.icon-twitter
-            a.feed(href='/rss', title='Grunt blog RSS feed')
+            a.feed(href='/atom.xml', title='Grunt blog RSS feed')
               span.icon-rss

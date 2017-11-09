@@ -15,7 +15,8 @@
   "scripts": {
     "start": "node server.js",
     "postinstall": "grunt",
-    "test": "grunt test"
+    "test": "grunt test",
+    "deploy": "gh-pages -d build"
   },
   "private": true,
   "dependencies": {
@@ -45,6 +46,7 @@
     "request": "~2.81.0"
   },
   "devDependencies": {
+    "gh-pages": "^1.0.0",
     "grunt-concurrent": "~2.3.0",
     "grunt-contrib-jshint": "~1.1.0",
     "grunt-contrib-watch": "~1.0.0",

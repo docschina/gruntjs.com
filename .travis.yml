@@ -3,6 +3,8 @@ dist: trusty
 language: node_js
 node_js:
   - "6"
+script:
+  - grunt build
 matrix:
   fast_finish: true
 cache:

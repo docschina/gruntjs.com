@@ -2,313 +2,313 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://gruntjs.com/api/exit-codes</loc>
-    <lastmod>2017-11-12T18:29:21.517Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.194Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/api/grunt.config</loc>
-    <lastmod>2017-11-12T18:29:20.713Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.454Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/api/grunt.event</loc>
-    <lastmod>2017-11-12T18:29:20.781Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.518Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/api/grunt.fail</loc>
-    <lastmod>2017-11-12T18:29:20.849Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.578Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/api/grunt.file</loc>
-    <lastmod>2017-11-12T18:29:20.929Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.642Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/api/grunt</loc>
-    <lastmod>2017-11-12T18:29:21.381Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.058Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/api/grunt.log</loc>
-    <lastmod>2017-11-12T18:29:21.005Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.714Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/api/grunt.option</loc>
-    <lastmod>2017-11-12T18:29:21.073Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.778Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/api/grunt.task</loc>
-    <lastmod>2017-11-12T18:29:21.145Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.842Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/api/grunt.template</loc>
-    <lastmod>2017-11-12T18:29:21.217Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.914Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/api/grunt.util</loc>
-    <lastmod>2017-11-12T18:29:21.313Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.994Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/api/inside-tasks</loc>
-    <lastmod>2017-11-12T18:29:21.449Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.126Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/blog</loc>
-    <lastmod>2017-11-12T18:29:22.214Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.762Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/blog/2013-02-15-updating-plugins-to-grunt-0.4</loc>
-    <lastmod>2017-11-12T18:29:22.154Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.710Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/blog/2013-02-18-grunt-0.4.0-released</loc>
-    <lastmod>2017-11-12T18:29:22.086Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.658Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/blog/2013-03-13-grunt-0.4.1-released</loc>
-    <lastmod>2017-11-12T18:29:22.010Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.610Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/blog/2013-11-21-grunt-0.4.2-released</loc>
-    <lastmod>2017-11-12T18:29:21.949Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.562Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/blog/2014-03-07-grunt-0.4.3-released</loc>
-    <lastmod>2017-11-12T18:29:21.869Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.502Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/blog/2014-03-14-grunt-0.4.4-released</loc>
-    <lastmod>2017-11-12T18:29:21.805Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.442Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/blog/2014-05-12-grunt-0.4.5-released</loc>
-    <lastmod>2017-11-12T18:29:21.737Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.382Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/blog/2016-02-11-grunt-1.0.0-rc1-released</loc>
-    <lastmod>2017-11-12T18:29:21.673Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.326Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/blog/2016-04-04-grunt-1.0.0-released</loc>
-    <lastmod>2017-11-12T18:29:21.601Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.266Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/built-with-grunt-badge</loc>
-    <lastmod>2017-11-12T18:29:18.148Z</lastmod>
+    <lastmod>2017-11-12T18:31:50.165Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/community</loc>
-    <lastmod>2017-11-12T18:29:18.380Z</lastmod>
+    <lastmod>2017-11-12T18:31:50.377Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/configuring-tasks</loc>
-    <lastmod>2017-11-12T18:29:18.504Z</lastmod>
+    <lastmod>2017-11-12T18:31:50.493Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/contributing</loc>
-    <lastmod>2017-11-12T18:29:18.596Z</lastmod>
+    <lastmod>2017-11-12T18:31:50.589Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/creating-plugins</loc>
-    <lastmod>2017-11-12T18:29:18.688Z</lastmod>
+    <lastmod>2017-11-12T18:31:50.673Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/creating-tasks</loc>
-    <lastmod>2017-11-12T18:29:18.772Z</lastmod>
+    <lastmod>2017-11-12T18:31:50.749Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/development-helpers</loc>
-    <lastmod>2017-11-12T18:29:18.848Z</lastmod>
+    <lastmod>2017-11-12T18:31:50.825Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/development-team</loc>
-    <lastmod>2017-11-12T18:29:18.924Z</lastmod>
+    <lastmod>2017-11-12T18:31:50.977Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/documentation</loc>
-    <lastmod>2017-11-12T18:29:19.004Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.093Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/exit-codes</loc>
-    <lastmod>2017-11-12T18:29:19.076Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.165Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/frequently-asked-questions</loc>
-    <lastmod>2017-11-12T18:29:19.160Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.241Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/getting-started</loc>
-    <lastmod>2017-11-12T18:29:19.264Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.309Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/grunt-brand-guide</loc>
-    <lastmod>2017-11-12T18:29:19.344Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.374Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/grunt-plugins</loc>
-    <lastmod>2017-11-12T18:29:19.420Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.434Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/help-resources</loc>
-    <lastmod>2017-11-12T18:29:19.496Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.498Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/home</loc>
-    <lastmod>2017-11-12T18:29:19.572Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.562Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/inside-tasks</loc>
-    <lastmod>2017-11-12T18:29:19.648Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.630Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/installing-grunt</loc>
-    <lastmod>2017-11-12T18:29:19.740Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.694Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/plugin-release-candidate-versions</loc>
-    <lastmod>2017-11-12T18:29:19.936Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.762Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/project-scaffolding</loc>
-    <lastmod>2017-11-12T18:29:20.037Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.834Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/roadmap</loc>
-    <lastmod>2017-11-12T18:29:20.113Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.918Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/sample-gruntfile</loc>
-    <lastmod>2017-11-12T18:29:20.193Z</lastmod>
+    <lastmod>2017-11-12T18:31:51.990Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/testing-tasks</loc>
-    <lastmod>2017-11-12T18:29:20.273Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.062Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/upgrading-from-0.3-to-0.4</loc>
-    <lastmod>2017-11-12T18:29:20.345Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.138Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/upgrading-from-0.4-to-1.0</loc>
-    <lastmod>2017-11-12T18:29:20.413Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.202Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/using-plugins</loc>
-    <lastmod>2017-11-12T18:29:20.485Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.266Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/using-the-cli</loc>
-    <lastmod>2017-11-12T18:29:20.565Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.326Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/docs/who-uses-grunt</loc>
-    <lastmod>2017-11-12T18:29:20.637Z</lastmod>
+    <lastmod>2017-11-12T18:31:52.390Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/</loc>
-    <lastmod>2017-11-12T18:29:22.426Z</lastmod>
+    <lastmod>2017-11-12T18:31:53.954Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://gruntjs.com/plugins</loc>
-    <lastmod>2017-11-12T18:29:22.502Z</lastmod>
+    <lastmod>2017-11-12T18:31:54.018Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>

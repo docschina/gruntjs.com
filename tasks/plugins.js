@@ -38,10 +38,13 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('downloadPlugins', 'Download Plugin Information', function () {
-    var done = this.async();
+    // var done = this.async();
 
-    plugins.download({cache: true}, function() {
-      done();
-    });
+    // plugins.download({cache: true}, function() {
+    //   done();
+    // });
+
+    var output = grunt.file.read('./plugin-list.json');
+    grunt.file.write('build/plugin-list.json', output);
   });
 };

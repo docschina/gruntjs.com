@@ -13,7 +13,7 @@
 
   $('#plugins-all').dataTable({
     // source
-    'ajax': '/plugin-list.json',
+    'ajax': 'https://gruntjs.com/plugin-list.json',
     // save search with a cookie
     'bStateSave': true,
     // search features

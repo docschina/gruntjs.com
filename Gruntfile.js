@@ -201,7 +201,7 @@ module.exports = function(grunt) {
   ]);
   grunt.registerTask('default', 'Build the site, download plugins, production ready', [
     'build',
-    // 'downloadPlugins',
+    'downloadPlugins',
     'less:production',
     'autoprefixer'
   ]);

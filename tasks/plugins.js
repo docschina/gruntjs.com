@@ -8,6 +8,9 @@
 
 'use strict';
 
+var request = require('request');
+var fs = require('fs');
+
 module.exports = function (grunt) {
 
   var pug = require('pug');
@@ -38,7 +41,16 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('downloadPlugins', 'Download Plugin Information', function () {
-    // var done = this.async();
+    var done = this.async();
+
+    request({
+      url: `https://gruntjs.com/plugin-list.json?_=${Date.now()}`,
+      json: true
+    }, function handlePlugin(error, response, body) {
+      // console.log(body);
+      fs.writeFileSync('build/plugin-list.json', JSON.stringify(body));
+      done();
+    });
 
     // plugins.download({cache: true}, function() {
     //   done();

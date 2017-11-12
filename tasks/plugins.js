@@ -44,7 +44,7 @@ module.exports = function (grunt) {
     //   done();
     // });
 
-    var output = grunt.file.read('./plugin-list.json');
-    grunt.file.write('build/plugin-list.json', output);
+    // var output = grunt.file.read('./plugin-list.json');
+    // grunt.file.write('build/plugin-list.json', output);
   });
 };
